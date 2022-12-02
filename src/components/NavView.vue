@@ -52,7 +52,7 @@ export default {
       color: #0600FF;
     }
       img{
-        width: 100px;
+        width: 50px;
         height: auto;
       }
     }

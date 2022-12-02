@@ -16,7 +16,7 @@ export default {
   data() {
    return {
      status: {
-       nav: 'school'
+       nav: 'company'
      }
    }
  }
