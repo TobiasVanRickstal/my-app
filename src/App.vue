@@ -5,9 +5,37 @@
   <router-view/>
 </template>
 
+<script setup>
+import { onMounted, ref } from 'vue';
+import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const isLoggedIn = ref(false);
+
+let auth;
+onMounted(() => {
+  auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if(user) {
+      isLoggedIn.value = true;
+    }
+    else{
+      isLoggedIn.value = false;
+    }
+  });
+});
+
+const handleSignOut = () => {
+  signOut(auth).then(() => {
+    router.push("/");
+  })
+}
+
+</script>
 <script>
-// @ is an alias to /src
 import NavView from '@/components/NavView.vue'
+
 
 export default {
   components: {
@@ -16,7 +44,7 @@ export default {
   data() {
    return {
      status: {
-       nav: 'company'
+       nav: 'not-logged-in'
      }
    }
  }
@@ -36,7 +64,7 @@ export default {
   body{
     max-width: 80%;
     margin: auto;
-    background: rgba(137, 142, 30, 0.5);
+    background: #ffffff;
     font-family: museo-sans,sans-serif;
     font-weight: 500;
     font-style: normal;

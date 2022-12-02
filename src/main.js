@@ -11,5 +11,5 @@ const firebaseConfig = {
   messagingSenderId: "778479687645",
   appId: "1:778479687645:web:2359e33c719469f784c834"
 };
-
-createApp(App).use(store).use(router).mount('#app').initializeApp(firebaseConfig)
+initializeApp(firebaseConfig)
+createApp(App).use(store).use(router).mount('#app')

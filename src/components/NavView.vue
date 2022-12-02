@@ -47,6 +47,7 @@ export default {
       display: block;
       width: 25px;
       height: auto;
+      margin:-10px auto 5px;
     }
     &:active{
       color: #0600FF;
