@@ -16,7 +16,7 @@ export default {
   data() {
    return {
      status: {
-       nav: 'not-logged-in'
+       nav: 'company'
      }
    }
  }
