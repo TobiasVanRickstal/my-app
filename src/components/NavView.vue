@@ -33,10 +33,23 @@ export default {
     justify-content: space-evenly;
 
     a{
-      color: red;
-      font-size: 150%;
-    &:hover{
-      color: turquoise;
+      color: #171717;
+      font-size: 16px;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      .hover-state{
+        display: none;
+      }
+    &:hover .hover-state{
+      display: block;
+      width: 25px;
+      height: auto;
+    }
+    &:active{
+      color: #0600FF;
     }
       img{
         width: 100px;
