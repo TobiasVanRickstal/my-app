@@ -1,7 +1,7 @@
 <template>
   <nav>
     <NavView :status='isLoggedIn'/>
-    <router-link to="/profile"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
+    <router-link to="/profile" v-if="isLoggedIn"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
     <button @click="handleSignOut" v-if="isLoggedIn">Sign out</button>
   </nav>
   <router-view/>
@@ -30,7 +30,7 @@ onMounted(() => {
 
 const handleSignOut = () => {
   signOut(auth).then(() => {
-    router.push("/");
+    router.push("/login");
   })
 }
 
