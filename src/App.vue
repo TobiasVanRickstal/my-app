@@ -1,6 +1,8 @@
 <template>
   <nav>
-    <NavView :status='status.nav'/>
+    <NavView :status='isLoggedIn'/>
+    <router-link to="/profile"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
+    <button @click="handleSignOut" v-if="isLoggedIn">Sign out</button>
   </nav>
   <router-view/>
 </template>
@@ -41,13 +43,13 @@ export default {
   components: {
     NavView,
   },
-  data() {
-   return {
-     status: {
-       nav: 'not-logged-in'
-     }
-   }
- }
+//   data() {
+//    return {
+//      status: {
+//        nav: 'not-logged-in'
+//      }
+//    }
+//  }
 }
 </script>
 

@@ -1,8 +1,8 @@
 <template>
   <nav>
-    <NavSchool class="nav" v-if="status == 'school'"/>
-    <NavCompany  class="nav" v-if="status == 'company'"/>
-    <NavNotLoggedIn class="nav" v-if="status == 'not-logged-in'"/>
+    <NavSchool class="nav" v-if="status"/>
+    <NavCompany  class="nav" v-if="status"/>
+    <NavNotLoggedIn class="nav" v-if="!status"/>
   </nav>
 </template>
 
@@ -13,13 +13,16 @@ import NavCompany from '@/components/subComponents/NavCompany.vue'
 import NavNotLoggedIn from '@/components/subComponents/NavNotLoggedIn.vue'
 
 export default {
+  created(){
+    console.log(this.status)
+  },
   components: {
     NavSchool,
     NavCompany,
     NavNotLoggedIn
   },
   props: {
-    status: String
+    status: Boolean
   }
 }
 </script>
