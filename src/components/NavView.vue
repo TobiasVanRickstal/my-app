@@ -32,7 +32,7 @@ export default {
     margin: 2% auto;
     width: 95%;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-evenly;
 
     a{
