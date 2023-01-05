@@ -64,7 +64,7 @@ export default {
     padding: 0;
   }
   body{
-    max-width: 80%;
+    max-width: 70%;
     margin: auto;
     background: #ffffff;
     font-family: museo-sans,sans-serif;
@@ -73,5 +73,24 @@ export default {
   }
   nav{
     font-family: "Blaak-bold";
+  }
+  .body{
+    width: 50%;
+    margin: auto;
+    text-align: center;
+  }
+  .form div:not(.insideDiv){
+    width: 70%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .form div label{
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  .form div select,.form div input{
+    padding: 5px;
   }
 </style>

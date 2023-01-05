@@ -1,18 +1,24 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-    <select name="type" id="type" v-model="type">
-      <option value="gastles">gastles</option>
-      <option value="service">service</option>
-    </select>
-    <img src="../assets/icons/hover-state.png" alt="" v-show="type == 'gastles'">
   </div>
+  <div class="body">
+    <div class="form">
+      <Form />
+    </div>
+  </div>
+  
 </template>
 
 <script>
+import Form from '@/components/Form.vue';
+
 export default({
   setup() {
     
+  },
+  components: {
+    Form
   },
   data(){
     return{

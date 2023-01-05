@@ -1,7 +1,7 @@
 <template>
   <nav>
-    <NavSchool class="nav" v-if="status"/>
-    <NavCompany  class="nav" v-if="status"/>
+    <NavSchool class="nav" v-if="status && school"/>
+    <NavCompany  class="nav" v-if="status && company"/>
     <NavNotLoggedIn class="nav" v-if="!status"/>
   </nav>
 </template>
@@ -23,6 +23,12 @@ export default {
   },
   props: {
     status: Boolean
+  },
+  data(){
+    return{
+      school: false,
+      company: true
+    }
   }
 }
 </script>

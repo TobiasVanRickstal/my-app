@@ -14,6 +14,13 @@ const router = createRouter({
         requiresAuth: true,
       }
     },
+    { 
+      path: "/ons-aanbod",
+      component: () => import("../views/OurOfferView.vue"),
+      meta: {
+        requiresAuth: true,
+      }
+    },
   ]
 })
 
