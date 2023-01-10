@@ -93,4 +93,7 @@ export default {
   .form div select,.form div input{
     padding: 5px;
   }
+  img{
+    width: 100%;
+  }
 </style>

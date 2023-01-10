@@ -21,6 +21,13 @@ const router = createRouter({
         requiresAuth: true,
       }
     },
+    { 
+      path: "/bedrijven-bekijken",
+      component: () => import("../views/ViewCompaniesView.vue"),
+      meta: {
+        requiresAuth: true,
+      }
+    },
   ]
 })
 
