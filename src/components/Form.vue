@@ -38,7 +38,7 @@
 
         <div class="input beschrijving" v-if="docent && type">
             <label for="beschrijving">beschrijving</label>
-            <textarea name="beschrijving" id="beschrijving" cols="30" rows="10"></textarea>
+            <textarea name="beschrijving" id="beschrijving" v-model="beschrijving" cols="30" rows="10"></textarea>
         </div>
         
         <div class="select topic" v-if="type !== 'goodies' && type && titel && docent">
@@ -102,6 +102,7 @@ export default{
         return{
         type: "",
         titel: "",
+        beschrijving: "",
         docent: "",
         topic: "",
         vak: "",
@@ -114,3 +115,4 @@ export default{
     }
 }
 </script>
+<!-- Goedkeuring als een veld niet ingevuld is => override error -->
