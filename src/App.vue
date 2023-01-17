@@ -48,17 +48,18 @@ export default {
   },
   methods:{
     getData(){
-      axios.get({
-        url: "../src/php/records.php",
-        method: "get",
+      axios.get('./php/records.php')
+      .then(function (response) {
+        // handle success
+        console.log(response);
       })
-        .then((res)=>{
-          console.log(res)
-          this.records = res.data.rows;
-        })
-        .catch((err)=>{
-          console.log(err)
-        })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
     }
   },
   mounted:  function (){
