@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { initializeApp } from "firebase/app";
+
+import axios, {isCancel, AxiosError} from 'axios';
+
 const firebaseConfig = {
   apiKey: "AIzaSyD_jZ5rOzC9ukOExVcpBpMEnivVJxOjceU",
   authDomain: "schoolproject-e8e80.firebaseapp.com",
