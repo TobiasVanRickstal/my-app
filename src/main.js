@@ -15,4 +15,4 @@ const firebaseConfig = {
   appId: "1:778479687645:web:2359e33c719469f784c834"
 };
 initializeApp(firebaseConfig)
-createApp(App).use(store).use(router).mount('#app')
+createApp(App).use(store).use(router).use(axios,{baseUrl: 'https://cataas.com/'}).mount('#app')

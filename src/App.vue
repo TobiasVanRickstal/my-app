@@ -37,12 +37,34 @@ const handleSignOut = () => {
 </script>
 <script>
 import NavView from '@/components/NavView.vue'
-
+import axios from 'axios';
 
 export default {
+  data(){
+    records:[]
+  },
   components: {
     NavView,
   },
+  methods:{
+    getData(){
+      axios.get({
+        url: "../src/php/records.php",
+        method: "get",
+      })
+        .then((res)=>{
+          console.log(res)
+          this.records = res.data.rows;
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
+    }
+  },
+  mounted:  function (){
+    this.getData();
+  }
+  
 //   data() {
 //    return {
 //      status: {
