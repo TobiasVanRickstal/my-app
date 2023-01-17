@@ -32,7 +32,7 @@
                     <div class="gegevens-mail">teste@gidjsgsj.erkg</div>
                 </div>
             </div>
-            <button @click="showMoreCapgemini =  !showMoreCapgemini"><span v-show="!showMoreCapgemini">meer zien</span><span v-show="showMoreCapgemini">minder zien</span></button>
+            <button class="showMore" @click="showMoreCapgemini =  !showMoreCapgemini"><span v-show="!showMoreCapgemini">meer zien</span><span v-show="showMoreCapgemini">minder zien</span></button>
         </div>
    </div> 
 </template>
@@ -96,5 +96,9 @@ export default{
 .gegevens div{
     margin: 3px auto;
     text-align: center;
+}
+.showMore{
+    width: fit-content;
+    margin: auto;
 }
 </style>

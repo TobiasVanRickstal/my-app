@@ -34,6 +34,7 @@
 
             <div class="titel">
                 <h2>Typography - how to?</h2>
+                <router-link to="/offer">Typography - how to?</router-link>
             </div>
 
             <div class="beschrijving">
