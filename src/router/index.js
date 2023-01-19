@@ -35,6 +35,13 @@ const router = createRouter({
         requiresAuth: true,
       }
     },
+    // { 
+    //   path: "/historiek",
+    //   component: () => import("../views/history"),
+    //   meta: {
+    //     requiresAuth: true,
+    //   }
+    // },
     { 
       path: "/:pathMatch(.*)*",
       name: "PageNotFound",

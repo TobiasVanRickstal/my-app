@@ -3,11 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { initializeApp } from "firebase/app";
-
-import axios from 'axios';
-import VueAxios from 'vue-axios';
-
-Vue.use(VueAxios, axios);
+import '@/SCSS/main.scss';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD_jZ5rOzC9ukOExVcpBpMEnivVJxOjceU",

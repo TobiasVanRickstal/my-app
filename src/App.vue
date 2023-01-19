@@ -48,7 +48,7 @@ export default {
   },
   methods:{
     getData(){
-      axios.get('./php/records.php')
+      axios.get('http://localhost:8080/#/php/config.php}')
       .then(function (response) {
         // handle success
         console.log(response);
@@ -56,6 +56,7 @@ export default {
       .catch(function (error) {
         // handle error
         console.log(error);
+        console.log("error");
       })
       .finally(function () {
         // always executed

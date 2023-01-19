@@ -1,0 +1,159 @@
+@font-face {
+    font-family: "Blaak-bold";
+    src: local("Blaak-bold"),
+    url(../fonts/BlaakBold_PERSONAL.ttf) format("truetype");
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 66%;
+    margin: auto;
+    background: #ffffff;
+    font-family: museo-sans,sans-serif;
+    font-weight: 500;
+    font-style: normal;
+
+    h1{
+        text-align: center;
+    }
+    img{
+        width: 100%;
+    }
+}
+// NAVIGATIE
+nav{
+    font-family: "Blaak-bold";
+    margin: 2% auto;
+    width: 95%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+
+    a{
+        color: #171717;
+        font-size: 16px;
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .hover-state{
+            display: none;
+        }
+
+        &:hover .hover-state{
+            display: block;
+            width: 25px;
+            height: auto;
+            margin:-10px auto 5px;
+        }
+
+        &:hover{
+            color: #0600FF;
+        }
+
+        img{
+            width: 50px;
+            height: auto;
+        }
+    }
+    a.router-link-active{
+        color: #0600FF;
+
+        .hover-state{
+            display: block;
+            width: 25px;
+            height: auto;
+            margin:-10px auto 5px;
+        }
+    }
+}
+// END
+.form div:not(.insideDiv){
+    width: 70%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.form div label{
+    margin-bottom: 15px;
+    text-align: left;
+}
+.form div select,.form div input{
+    padding: 5px;
+}
+//OurOfferView
+.filter-segment{
+    margin: 50px auto 20px;
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+}
+.filter{
+    width: 33%;
+    display: flex;
+    justify-content: space-between;
+
+    button{
+        padding: 5px 15px;
+        cursor: pointer;
+    }
+}
+.add-icon{
+    padding: 4px 8px;
+    background-color: grey;
+    cursor: pointer;
+}
+.typeSelect, .filterSelect, .form{
+    margin: auto;
+    width: 500px;
+}
+.item{
+    width: 500px;
+    height: auto;
+    margin: 20px auto;
+    padding: 7px;
+    background-color: grey;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+
+    div{
+        margin: 5px 0px;
+    }
+}
+.difficulty{
+    display: flex;
+}
+.circle{
+    width: 10px;
+    height: 10px;
+    margin: auto 3px;
+    border-radius: 100%;
+}
+.diff3{
+    background-color: red;
+}
+
+.diff2{
+    background-color: orange;
+}
+
+.diff1{
+    background-color: green;
+}
+.infographics{
+    width: 33%;
+    display: flex;
+    justify-content: space-between;
+
+    div span{
+        padding: 4px 8px;
+        background-color: darkslategrey;
+    }
+}
