@@ -4,7 +4,10 @@ import router from './router'
 import store from './store'
 import { initializeApp } from "firebase/app";
 
-import axios, {isCancel, AxiosError} from 'axios';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+
+Vue.use(VueAxios, axios);
 
 const firebaseConfig = {
   apiKey: "AIzaSyD_jZ5rOzC9ukOExVcpBpMEnivVJxOjceU",
