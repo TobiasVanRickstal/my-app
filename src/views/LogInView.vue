@@ -43,9 +43,3 @@ const register = () => {
     })
 }
 </script>
-
-<style scoped>
-    .error-message{
-        color: red;
-    }
-</style>

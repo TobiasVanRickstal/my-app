@@ -41,7 +41,9 @@ import axios from 'axios';
 
 export default {
   data(){
-    records:[]
+    return{
+      info:[],
+    }
   },
   components: {
     NavView,
@@ -49,21 +51,25 @@ export default {
   methods:{
     getData(){
       axios.get('http://localhost:8080/#/php/config.php}')
-      .then(function (response) {
-        // handle success
-        console.log(response);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-        console.log("error");
-      })
-      .finally(function () {
-        // always executed
-      });
+            .then(function (response) {
+              // handle success
+              console.log(response.data);
+              if(response.data.error){
+
+              }
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+              console.log("error");
+            })
+            .finally(function () {
+              // always executed
+            });
     }
   },
   mounted:  function (){
+    console.log('test voor')
     this.getData();
   }
   
