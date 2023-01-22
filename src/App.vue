@@ -42,35 +42,34 @@ import axios from 'axios';
 export default {
   data(){
     return{
-      info:[],
+      projects:null,
     }
   },
   components: {
     NavView,
   },
   methods:{
-    getData(){
-      axios.get('http://localhost:8080/#/php/config.php}')
-            .then(function (response) {
-              // handle success
-              console.log(response.data);
-              if(response.data.error){
-
-              }
-            })
-            .catch(function (error) {
-              // handle error
-              console.log(error);
-              console.log("error");
-            })
-            .finally(function () {
-              // always executed
-            });
+    getAllProjects: function () {
+    axios
+      .fetch("http://localhost:8080/#/php/config.php", {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Allow-Control-Allow-Origin': '*'
+                }
+            }) // This will work
+      .then(function (response) {
+        if (response.data.error) {
+          this.errorMsg = response.data.message;
+        } else {
+          console.log(response.data)
+          this.projects = response.data;
+        }
+      });
     }
   },
   mounted:  function (){
     console.log('test voor')
-    this.getData();
+    this.getAllProjects();
   }
   
 //   data() {

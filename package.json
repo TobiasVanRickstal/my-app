@@ -33,5 +33,17 @@
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ]
+  ],
+  "description": "## Project setup ``` npm install ```",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TobiasVanRickstal/my-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TobiasVanRickstal/my-app/issues"
+  },
+  "homepage": "https://github.com/TobiasVanRickstal/my-app#readme"
 }
