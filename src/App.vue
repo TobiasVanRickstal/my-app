@@ -1,7 +1,7 @@
 <template>
   <nav>
     <NavView :status='isLoggedIn'/>
-    <router-link to="/profile" v-if="isLoggedIn"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
+    <router-link to="/docents/1" v-if="isLoggedIn"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
     <button @click="handleSignOut" v-if="isLoggedIn">Sign out</button>
   </nav>
   <router-view/>
@@ -42,35 +42,12 @@ import axios from 'axios';
 export default {
   data(){
     return{
-      projects:null,
+      items:[],
     }
   },
   components: {
     NavView,
   },
-  methods:{
-    getAllProjects: function () {
-    axios
-      .fetch("http://localhost:8080/#/php/config.php", {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Allow-Control-Allow-Origin': '*'
-                }
-            }) // This will work
-      .then(function (response) {
-        if (response.data.error) {
-          this.errorMsg = response.data.message;
-        } else {
-          console.log(response.data)
-          this.projects = response.data;
-        }
-      });
-    }
-  },
-  mounted:  function (){
-    console.log('test voor')
-    this.getAllProjects();
-  }
   
 //   data() {
 //    return {

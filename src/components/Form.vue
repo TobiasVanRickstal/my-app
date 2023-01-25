@@ -84,12 +84,13 @@
             </select>
         </div>
 
-        <div class="insideDiv" v-if="(type && titel && docent && topic && vak && fase)|| type == 'goodies' && titel && docent && fase">
-            <periodeForm/>
+        <div class="insideDiv">
+            <periodeForm @clicked-show-detail="clickedShowDetailModal"/>
         </div>
 
-        <div class="button" v-if="(type && titel && docent && topic && vak && fase) || type == 'goodies' && titel && docent && fase">
+        <div class="button" v-if="(type && titel && docent && topic && vak && fase  && periodes) || type == 'goodies' && titel && docent && fase">
             <input type="submit" value="verzenden">
+            
         </div>
     </form>
 </template>
@@ -107,11 +108,19 @@ export default{
         topic: "",
         vak: "",
         fase: null,
-        periodes: ""
+        periodes: {}
         }
     },
     components: {
         periodeForm,
+    },
+    methods:{
+        clickedShowDetailModal: function (value) {
+            console.log(value);
+            this.periodes = value;
+            console.log(this.periodes)
+        }
+        // https://codepen.io/Kradek/pen/rmBBPo?editors=1010
     }
 }
 </script>

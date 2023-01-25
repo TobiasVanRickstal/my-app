@@ -11,11 +11,15 @@
     </div>
 </template>
 <script>
+
 export default{
     data() {
         return { 
-            activeItem: 'all',
+            activeItem: this.selectedType,
         }
+    },
+    props:{
+        selectedType:  String
     },
     methods: {
         isActive: function (menuItem) {
@@ -23,8 +27,9 @@ export default{
         },
         setActive: function (menuItem) {
             this.activeItem = menuItem // no need for Vue.set()
+            this.$emit("clicked-show-detail", menuItem)
         }
-    }
+    },
 }
 </script>
 <!-- active class -->

@@ -2,18 +2,15 @@
     <div class="filterBox">
         <div>
             <label for="docent">docent</label>
-            <select name="docent" id="docent" v-model="docent">
-                <option value="" selected>All</option>
-                <option value="Robby">Robby</option>
-                <option value="Christianne">Christianne</option>
-                <option value="Geert">Geert</option>
+            <select name="docent" id="docent" v-model="chosenDocent">
+                <option v-for="docent in docents" :value="docent.id">{{docent.naam}}</option>
             </select>
         </div>
         
         <div>
             <label for="topic">topic</label>
             <select name="topic" id="topic" v-model="topic">
-                <option value="" selected>All</option>
+                <option value="all" selected>All</option>
                 <option value="development">development</option>
                 <option value="design">design</option>
                 <option value="business">business</option>
@@ -23,7 +20,7 @@
         <div>
             <label for="vak">vak</label>
             <select name="vak" id="vak" v-model="vak">
-                <option value="" selected>All</option>
+                <option value="all" selected>All</option>
                 <option value="creatie 1">creatie 1</option>
                 <option value="creatie 2">creatie 2</option>
                 <option value="creatie 3">creatie 3</option>
@@ -48,36 +45,59 @@
         <div>
             <label for="fase">fase</label>
             <select name="fase" id="fase" v-model="fase">
-                <option value="" selected>All</option>
+                <option value="all" selected>All</option>
                 <option value="1">fase 1</option>
                 <option value="2">fase 2</option>
                 <option value="3">fase 3</option>
             </select>
         </div>
-
         <div>
-            <periodeForm/>
+            <button @click="filteredData()">Filter</button>
+            <button @click="resetData()">Reset</button>
         </div>
     </div>
 </template>
 
 <script>
-import periodeForm from './periodeForm.vue';
+import DocentDataService from '@/services/DocentDataService';
 
 export default{
     data(){
         return{
-        type: "",
-        titel: "",
-        docent: "",
-        topic: "",
-        vak: "",
-        fase: "",
-        periodes: ""
+            docents: [],
+            chosenDocent: "all",
+            topic: "all",
+            vak: "all",
+            fase: "all",
+            data:[]
         }
     },
-    components: {
-        periodeForm
+    methods:{
+        retrieveDocents() {
+            DocentDataService.getAll()
+                .then((response) => {
+                    this.docents = response.data;
+                    console.log(response.data);
+                })
+                .catch((e) => {
+                    console.log(e);
+            });
+        },
+        filteredData:  function (){
+            this.data = []
+            this.data.push({'docent': this.chosenDocent, 'topic': this.topic, 'vak': this.vak, 'fase': this.fase})
+            this.$emit('clicked-show-detail', this.data)
+        },
+        resetData: function (){
+            this.chosenDocent = "all"
+            this.topic = "all"
+            this.vak = "all"
+            this.fase = "all"
+            this.filteredData();
+        }
+    },
+    created(){
+        this.retrieveDocents();
     }
 }
 </script>

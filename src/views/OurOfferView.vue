@@ -8,8 +8,8 @@
             <div class="add-icon" @click="addItem = !addItem"><span v-show="!addItem">+</span><span v-show="addItem">x</span></div>
         </div>
         <div class="filter" v-show="!addItem">
-            <button @click="type = !type; filterBox = false">type</button>
-            <button @click="filterBox = !filterBox; type = false">filter</button>
+            <button @click="typeBox = !typeBox; filterBox = false">type</button>
+            <button @click="filterBox = !filterBox; typeBox = false">filter</button>
         </div>
     </div>
     <div class="form" v-show="addItem">
@@ -17,90 +17,39 @@
         <Form/>
         <!-- TODO When submitted refresh page -->
     </div>
-    <div class="typeSelect" v-if="type && !addItem && !filterBox">
-        <TypeFilter/>
+    <div class="typeSelect" v-if="typeBox && !addItem && !filterBox">
+        <TypeFilter @clicked-show-detail="activeType" :selectedType="type" />
         <!-- TODO  when clicked on a type close -->
     </div>
-    <div class="filterSelect" v-if="filterBox && !type && !addItem">
-        <Filter/>
+    <div class="filterSelect" v-if="filterBox && !typeBox && !addItem">
+        <Filter @clicked-show-detail="SendDataBack"/>
     </div>
-    <div class="items" v-show="!addItem">
-        <div class="item">
-            <div class="difficulty diff3">
+    <div class="items" v-show="!addItem" v-for="aanbod in aanbods">
+        <div class="item" v-if="(type ==  aanbod.type || type == 'all') && getFilteredAanbods(aanbod)">
+            <!-- can be added -->
+            <!-- <div class="difficulty diff3">
                 <span class="circle"></span>
                 <span class="circle"></span>
                 <span class="circle"></span>
-            </div>
+            </div> -->
 
             <div class="titel">
-                <h2>Typography - how to?</h2>
-                <router-link to="/offer">Typography - how to?</router-link>
+                <router-link to="/offer"><h2>{{aanbod.naam}}</h2></router-link>
             </div>
 
             <div class="beschrijving">
-                <p>Voor IMD zijn we opzoek naar een typograaf die ...</p>
+                <p>{{aanbod.informatie}}</p>
             </div>
 
             <div class="infographics">
                 <div class="bekeken">
-                    <span>12/50</span>
+                    <span>{{aanbod.views}}</span>
                 </div>
                 <div class="solicitanten">
-                    <span>P P</span>
+                    <span>{{aanbod.solicitanten}}</span>
                 </div>
                 <div class="kostprijs">
-                    <span>€ 200</span>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="difficulty diff2">
-                <span class="circle"></span>
-                <span class="circle"></span>
-            </div>
-
-            <div class="titel">
-                <h2>Typography - how to?</h2>
-            </div>
-
-            <div class="beschrijving">
-                <p>Voor IMD zijn we opzoek naar een typograaf die ...</p>
-            </div>
-
-            <div class="infographics">
-                <div class="bekeken">
-                    <span>12/50</span>
-                </div>
-                <div class="solicitanten">
-                    <span>P P</span>
-                </div>
-                <div class="kostprijs">
-                    <span>€ 200</span>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="difficulty diff1">
-                <span class="circle"></span>
-            </div>
-
-            <div class="titel">
-                <h2>Typography - how to?</h2>
-            </div>
-
-            <div class="beschrijving">
-                <p>Voor IMD zijn we opzoek naar een typograaf die ...</p>
-            </div>
-
-            <div class="infographics">
-                <div class="bekeken">
-                    <span>12/50</span>
-                </div>
-                <div class="solicitanten">
-                    <span>P P</span>
-                </div>
-                <div class="kostprijs">
-                    <span>€ 200</span>
+                    <span>€ {{aanbod.prijs}}</span>
                 </div>
             </div>
         </div>
@@ -111,19 +60,92 @@
 import Form from '@/components/Form.vue';
 import TypeFilter from '@/components/subComponents/TypeFilter.vue';
 import Filter from '@/components/subComponents/Filter.vue';
+import AanbodDataService from '@/services/AanbodDataService';
 
 export default{
     data(){
         return{
             addItem: false,
-            type: false,
-            filterBox: false
+            type: 'all',
+            typeBox: false,
+            filterBox: false,
+            aanbods:[],
+            filters:null
         }
     },
     components: {
         Form,
         TypeFilter,
         Filter
-    }
+    },
+    methods: {
+        retrieveAanbods() {
+            AanbodDataService.getAll()
+                .then((response) => {
+                    this.aanbods = response.data;
+                    console.log(response.data);
+                })
+                .catch((e) => {
+                    console.log(e);
+            });
+        },
+        activeType: function (value) {
+            this.type = value;
+        },
+        SendDataBack: function (data){
+            this.filters = data[0]
+        },
+        getFilteredAanbods:  function(aanbod){
+            if(this.filters){
+                let filtered = true
+                if(this.filters.docent){
+                    if(this.filters.docent == "all"){
+                        filtered = true
+                    }
+                    else{
+                        filtered = aanbod.docent == this.filters.docent
+                    }
+                }
+                if(filtered){
+                    if(this.filters.topic){
+                        if(this.filters.topic == "all"){
+                            filtered = true
+                        }
+                        else{
+                            filtered = aanbod.topic == this.filters.topic
+                        }
+                    }
+                }
+                if(filtered){
+                    if(this.filters.vak){
+                        if(this.filters.vak == "all"){
+                            filtered = true
+                        }
+                        else{
+                            filtered = aanbod.vak == this.filters.vak
+                        }
+                    }
+                }
+                if(filtered){
+                    if(this.filters.fase){
+                        if(this.filters.fase == "all"){
+                            filtered = true
+                        }
+                        else{
+                            filtered = aanbod.fase == this.filters.fase
+                        }
+                    }
+                }
+                return filtered
+                // https://stackoverflow.com/questions/49521851/how-to-filter-list-from-multiple-select-options-dropdowns-using-vuejs
+            }
+            else{
+                return true
+            }
+        }
+    },
+    mounted() {
+        this.retrieveAanbods();
+    },
 }
 </script>

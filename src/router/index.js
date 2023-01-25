@@ -47,6 +47,27 @@ const router = createRouter({
       name: "PageNotFound",
       component: () => import("../views/PageNotFound.vue"),
     },
+    {
+      path: "/add",
+      name: "add",
+      component: () => import("../components/AddTutorial.vue")
+    },
+    {
+      path: "/docents/:id",
+      name: "docent-details",
+      component: () => import("../views/ProfileView.vue"),
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    // {
+    //   path: "/aanbod-docent/:id",
+    //   name: "docent-details",
+    //   component: () => import("../views/ProfileView.vue"),
+    //   meta: {
+    //     requiresAuth: true,
+    //   }
+    // }
   ]
 })
 
