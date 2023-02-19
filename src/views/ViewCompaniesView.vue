@@ -1,7 +1,12 @@
 <template>
    <div class="bedrijven">
         <div class="bedrijf" id="capgemini">
-            <div class="logo"><img src="../assets/capgemini-logo.jpg" alt="capgemini"></div>
+            <div class="logo">
+                <img src="../assets/capgemini-logo.jpg" alt="capgemini">
+                <div class="beschrijving" v-show="showMoreCapgemini">
+                    <p>Capgemini is een Frans consultancybedrijf, dat zijn werkgebied in de ICT en consultancy heeft. Wereldwijd bood de multinational in 2017 aan meer dan 195.000 mensen werk. Het hoofdkantoor van de Capgemini Group is gevestigd in Parijs.</p>
+                </div>
+            </div>
             <div class="personen">
                 <div class="persoon">
                     <div class="personen-foto"><img src="../assets/bedrijven/capgemini/bert.jpeg" alt=""></div>
@@ -14,7 +19,6 @@
                     <div class="personen-functie">Banaan in oor</div>
                 </div> 
             </div>
-            <div class="beschrijving" v-show="showMoreCapgemini"><p>Capgemini is een Frans consultancybedrijf, dat zijn werkgebied in de ICT en consultancy heeft. Wereldwijd bood de multinational in 2017 aan meer dan 195.000 mensen werk. Het hoofdkantoor van de Capgemini Group is gevestigd in Parijs.</p></div>
             <div class="gegevens"  v-show="showMoreCapgemini">
                 <div class="address">
                     <h3>address:</h3>

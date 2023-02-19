@@ -34,6 +34,7 @@
             </div>
             <div>
                 <button @click="updateDocent">Opslaan</button>
+                <button @click="back">Annuleer</button>
             </div>
         </div>
         <div class="acties" v-show="!edit">
@@ -81,7 +82,8 @@ export default{
                 });
         },
         deleteDocent() {
-            DocentDataService.delete(this.currentDocent.id)
+           if (confirm("Ben je zeker?")){
+                DocentDataService.delete(this.currentDocent.id)
                 .then(response => {
                     console.log(response.data);
                     this.$router.push({ name: "login" });
@@ -89,18 +91,22 @@ export default{
                 .catch(e => {
                     console.log(e);
                 });
+            }
+        },
+        back(){
+            this.edit = false
         }
     },
     mounted() {
-    this.getDocent(this.$route.params.id);
-  }
+        this.getDocent(this.$route.params.id);
+    }
 }
 </script>
 
 <style>
 .profile-gegevens, .profile-update{
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
 }
 .profile-gegevens div:not(.boolean){

@@ -52,6 +52,15 @@
             </select>
         </div>
         <div>
+            <label for="difficulty">difficulty</label>
+            <select name="difficulty" id="difficulty" v-model="difficulty">
+                <option value="all" selected>All</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+        <div>
             <button @click="filteredData()">Filter</button>
             <button @click="resetData()">Reset</button>
         </div>
@@ -69,6 +78,7 @@ export default{
             topic: "all",
             vak: "all",
             fase: "all",
+            difficulty: "all",
             data:[]
         }
     },
@@ -85,7 +95,7 @@ export default{
         },
         filteredData:  function (){
             this.data = []
-            this.data.push({'docent': this.chosenDocent, 'topic': this.topic, 'vak': this.vak, 'fase': this.fase})
+            this.data.push({'docent': this.chosenDocent, 'topic': this.topic, 'vak': this.vak, 'fase': this.fase, 'difficulty': this.difficulty})
             this.$emit('clicked-show-detail', this.data)
         },
         resetData: function (){

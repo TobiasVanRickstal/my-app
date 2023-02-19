@@ -1,4 +1,5 @@
 <template>
+<div v-show="periodeSelected">
     <div class="select periodes">
         <label for="peroides">peroides</label>
         <select name="periodes" id="periodes" v-model="periodes.type">
@@ -13,17 +14,17 @@
     <div class="select semester" v-if="periodes.type == 'semester'">
         <label for="semester">semester</label>
         <select name="semester" id="semester" v-model="periodes.semester">
-            <option value="semester 1">semester 1</option>
-            <option value="semester 2">semester 2</option>
+            <option value="1">semester 1</option>
+            <option value="2">semester 2</option>
         </select>
     </div>
     <div class="select periode" v-if="periodes.type == 'periode'">
         <label for="periode">periode</label>
         <select name="periode" id="periode" v-model="periodes.periode">
-            <option value="periode 1">periode 1</option>
-            <option value="periode 2">periode 2</option>
-            <option value="periode 3">periode 3</option>
-            <option value="periode 4">periode 4</option>
+            <option value="1">periode 1</option>
+            <option value="2">periode 2</option>
+            <option value="3">periode 3</option>
+            <option value="4">periode 4</option>
         </select>
     </div>
     <div class="date exact"  v-if="periodes.type == 'exacte datum'">
@@ -41,7 +42,13 @@
         <label for="eindDatum">eind datum</label>
         <input type="date" name="eindDatum" id="eindDatum" v-model="periodes.eindDatum">
     </div>
-    <button @click="showDetailModal()">Ok</button>
+</div>
+<div>
+    <button v-show="periodeSelected" @click="showDetailModal()">Ok</button>
+    <p v-show="!periodeSelected">geselecteerd: {{message}}</p>
+    <button v-show="!periodeSelected" @click="periodeSelected = !periodeSelected">Verander</button>
+</div>
+    
 </template>
 
 <script>
@@ -50,18 +57,53 @@ export default{
         return{
             periodes:{
                 type: null,
-                semseter: null,
+                semester: null,
                 periode: null,
                 exacteDatum: null,
                 bepaaldeWeek: null,
                 beginDatum: null,
                 eindDatum: null
-            }
+            },
+            periodeSelected: true,
+            message: ""
         }
     },
     methods:{
         showDetailModal: function () {
-            this.$emit('clicked-show-detail', this.periodes);
+            var data = []
+            if(this.periodes.type){
+                data.push(this.periodes.type)
+            }
+            if(this.periodes.semester){
+                data.push(this.periodes.semester)
+                this.periodes.semester = null
+            }
+            if(this.periodes.periode){
+                data.push(this.periodes.periode)
+                this.periodes.periode = null
+            }
+            if(this.periodes.exacteDatum){
+                data.push(this.periodes.exacteDatum)
+                this.periodes.exacteDatum = null
+            }
+            if(this.periodes.bepaaldeWeek){
+                data.push(this.periodes.bepaaldeWeek)
+                this.periodes.bepaaldeWeek = null
+            }
+            if(this.periodes.beginDatum){
+                data.push(this.periodes.beginDatum)
+                this.periodes.beginDatum = null
+            }
+            if(this.periodes.eindDatum){
+                data.push(this.periodes.eindDatum)
+                this.periodes.eindDatum = null
+            }
+            if(data.length > 1){
+                this.$emit('clicked-show-detail', data);
+                this.message  = data.toString()
+                this.periodeSelected = false
+            }
+            
         }
     }
 }

@@ -14,6 +14,7 @@ body{
     font-family: museo-sans,sans-serif;
     font-weight: 500;
     font-style: normal;
+    background-color:  lavender;
 
     h1{
         text-align: center;
@@ -78,7 +79,6 @@ nav{
 }
 //END
 .form div:not(.insideDiv){
-    width: 70%;
     margin: 20px auto;
     display: flex;
     flex-direction: column;
@@ -92,6 +92,10 @@ nav{
     padding: 5px;
 }
 //OurOfferView
+.form h2{
+    text-align: center;
+    margin: auto;
+}
 .filter-segment{
     margin: 50px auto 20px;
     width: 500px;
@@ -110,12 +114,13 @@ nav{
 }
 .add-icon{
     padding: 4px 8px;
-    background-color: grey;
+    background-color: greenyellow;
+    border: #0600FF 1px solid;
     cursor: pointer;
 }
 .typeSelect, .filterSelect, .form{
     margin: auto;
-    width: 500px;
+    width: 90%;
 }
 .item{
     width: 500px;
@@ -185,8 +190,8 @@ nav{
     justify-content: space-around;
     align-items: center;
 }
-.logo{
-    width: 30%;
+.logo img{
+    width: 100px;
 }
 .personen{
     display: flex;
@@ -222,3 +227,20 @@ nav{
     margin: auto;
 }
 //END
+// OFFER
+.aanbod-preview{
+    width: 80%;
+    margin:100px auto 0px;
+
+    div{
+        padding: 5px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &:nth-child(even){
+            background-color: aliceblue;
+        }
+    }
+
+}

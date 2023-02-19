@@ -1,5 +1,5 @@
 <template>
-    <form action="" class="form">
+    <div class="aanbod-create">
 
         <!-- Goedkeuring -->
         <!-- <div>
@@ -14,11 +14,11 @@
         
         <!-- search bar - docenten database -->
         <div class="input docent">
-            <label for="docent">docent</label>
-            <input type="text" name="docent" id="docent" v-model="docent">
+            <label for="docent">Docent:</label>
+            <p>{{currentDocent.naam}}</p>
         </div>
 
-        <div class="select type" v-if="docent">
+        <div class="select type">
             <label for="type">type</label>
             <select name="type" id="type" v-model="type">
                 <option value="gastlessen">gastlessen</option>
@@ -31,17 +31,28 @@
             </select>
         </div>
 
-        <div class="input titel" v-if="docent && type">
-            <label for="titel">titel</label>
-            <input type="text" name="titel" id="titel" v-model="titel">
+        <div class="input naam">
+            <label for="naam">naam</label>
+            <input type="text" name="naam" id="naam" v-model="naam">
         </div>
 
-        <div class="input beschrijving" v-if="docent && type">
+        <div class="input prijs">
+            <label for="prijs">prijs</label>
+            <input type="number" name="prijs" id="prijs" v-model="prijs">
+        </div>
+
+        <div class="input difficulty">
+            <label for="difficulty">difficulty</label>
+            <p>(makkelijkst) 1 - 2 - 3 (moeilijkst)</p>
+            <input type="range" name="difficulty" id="difficulty" v-model="difficulty" min="1" max="3">
+        </div>
+
+        <div class="input beschrijving">
             <label for="beschrijving">beschrijving</label>
             <textarea name="beschrijving" id="beschrijving" v-model="beschrijving" cols="30" rows="10"></textarea>
         </div>
         
-        <div class="select topic" v-if="type !== 'goodies' && type && titel && docent">
+        <div class="select topic">
             <label for="topic">topic</label>
             <select name="topic" id="topic" v-model="topic">
                 <option value="development">development</option>
@@ -50,7 +61,7 @@
             </select>
         </div>
 
-        <div class="select vak" v-if="type !== 'goodies' && type && titel && docent && topic">
+        <div class="select vak" v-if="type !== 'goodies'">
             <label for="vak">vak</label>
             <select name="vak" id="vak" v-model="vak">
                 <option value="creatie 1">creatie 1</option>
@@ -75,12 +86,12 @@
             </select>
         </div>
         
-        <div class="select fase" v-if="(type && titel && docent && topic && vak) || type == 'goodies' && titel && docent">
+        <div class="select fase">
             <label for="fase">fase</label>
             <select name="fase" id="fase" v-model="fase">
                 <option value="1">fase 1</option>
-                <option value="1">fase 2</option>
-                <option value="1">fase 3</option>
+                <option value="2">fase 2</option>
+                <option value="3">fase 3</option>
             </select>
         </div>
 
@@ -88,27 +99,33 @@
             <periodeForm @clicked-show-detail="clickedShowDetailModal"/>
         </div>
 
-        <div class="button" v-if="(type && titel && docent && topic && vak && fase  && periodes) || type == 'goodies' && titel && docent && fase">
-            <input type="submit" value="verzenden">
+        <div class="button">
+            <button @click="saveAanbod()">Opslagen</button>
             
         </div>
-    </form>
+    </div>
 </template>
 
 <script>
 import periodeForm from './subComponents/periodeForm.vue';
+import DocentDataService from '@/services/DocentDataService';
+import AanbodDataService from '@/services/AanbodDataService';
 
 export default{
     data(){
         return{
-        type: "",
-        titel: "",
-        beschrijving: "",
-        docent: "",
-        topic: "",
-        vak: "",
-        fase: null,
-        periodes: {}
+            naam: "",
+            docent: "",
+            type: "",
+            topic: "",
+            vak: "",
+            beschrijving: "",
+            fase: 0,
+            periodes: "",
+            prijs:  "",
+            serie: false,
+            difficulty: "",
+            currentDocent:{}
         }
     },
     components: {
@@ -116,11 +133,55 @@ export default{
     },
     methods:{
         clickedShowDetailModal: function (value) {
-            console.log(value);
-            this.periodes = value;
+            this.periodes = value.toString();
             console.log(this.periodes)
-        }
+        },
+        getDocent(id) {
+            DocentDataService.get(id)
+                .then(response => {
+                    this.currentDocent = response.data;
+                    console.log(response.data);
+                    console.log(response.data.admin);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        },
+        saveAanbod() {
+        
+            var data = {
+                naam: this.naam,
+                docent: this.currentDocent.id,
+                type: this.type,
+                topic: this.topic,
+                vak: this.vak,
+                informatie: this.beschrijving,
+                status: "pending",
+                fase: this.fase,
+                views: 0,
+                solicitanten: 0,
+                periodes: this.periodes,
+                prijs: this.prijs,
+                serie: this.serie,
+                difficulty: this.difficulty,
+            };
+            console.log(data)
+
+            AanbodDataService.create(data)
+                .then(response => {
+                    // this.aanbod.id = response.data.id;
+                    console.log(response.data);
+                    // this.submitted = true;
+                    this.$router.go()
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+            },
         // https://codepen.io/Kradek/pen/rmBBPo?editors=1010
+    },
+    mounted() {
+        this.getDocent(1);
     }
 }
 </script>

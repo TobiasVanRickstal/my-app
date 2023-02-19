@@ -5,7 +5,7 @@
 
     <div class="filter-segment">
         <div class="add">
-            <div class="add-icon" @click="addItem = !addItem"><span v-show="!addItem">+</span><span v-show="addItem">x</span></div>
+            <div class="add-icon" @click="addItem = !addItem"><span v-show="!addItem">+ voeg toe</span><span v-show="addItem">x sluiten</span></div>
         </div>
         <div class="filter" v-show="!addItem">
             <button @click="typeBox = !typeBox; filterBox = false">type</button>
@@ -27,14 +27,12 @@
     <div class="items" v-show="!addItem" v-for="aanbod in aanbods">
         <div class="item" v-if="(type ==  aanbod.type || type == 'all') && getFilteredAanbods(aanbod)">
             <!-- can be added -->
-            <!-- <div class="difficulty diff3">
-                <span class="circle"></span>
-                <span class="circle"></span>
-                <span class="circle"></span>
-            </div> -->
+            <div class="difficulty" :class="'diff' + aanbod.difficulty">
+                <span class="circle" v-for="n in 1"></span>
+            </div>
 
             <div class="titel">
-                <router-link to="/offer"><h2>{{aanbod.naam}}</h2></router-link>
+                <router-link :to="{path: '/aanbods/'  + aanbod.id}"><h2>{{aanbod.naam}}</h2></router-link>
             </div>
 
             <div class="beschrijving">
@@ -96,52 +94,65 @@ export default{
             this.filters = data[0]
         },
         getFilteredAanbods:  function(aanbod){
-            if(this.filters){
-                let filtered = true
-                if(this.filters.docent){
-                    if(this.filters.docent == "all"){
-                        filtered = true
-                    }
-                    else{
-                        filtered = aanbod.docent == this.filters.docent
-                    }
-                }
-                if(filtered){
-                    if(this.filters.topic){
-                        if(this.filters.topic == "all"){
+            if(aanbod.status != "done"){ // ENKEL ALS JE GEEN DOCENT BENT
+                if(this.filters){
+                    let filtered = true
+                    if(this.filters.docent){
+                        if(this.filters.docent == "all"){
                             filtered = true
                         }
                         else{
-                            filtered = aanbod.topic == this.filters.topic
+                            filtered = aanbod.docent == this.filters.docent
                         }
                     }
-                }
-                if(filtered){
-                    if(this.filters.vak){
-                        if(this.filters.vak == "all"){
-                            filtered = true
-                        }
-                        else{
-                            filtered = aanbod.vak == this.filters.vak
-                        }
-                    }
-                }
-                if(filtered){
-                    if(this.filters.fase){
-                        if(this.filters.fase == "all"){
-                            filtered = true
-                        }
-                        else{
-                            filtered = aanbod.fase == this.filters.fase
+                    if(filtered){
+                        if(this.filters.topic){
+                            if(this.filters.topic == "all"){
+                                filtered = true
+                            }
+                            else{
+                                filtered = aanbod.topic == this.filters.topic
+                            }
                         }
                     }
+                    if(filtered){
+                        if(this.filters.difficulty){
+                            if(this.filters.difficulty == "all"){
+                                filtered = true
+                            }
+                            else{
+                                filtered = aanbod.difficulty == this.filters.difficulty
+                            }
+                        }
+                    }
+                    if(filtered){
+                        if(this.filters.vak){
+                            if(this.filters.vak == "all"){
+                                filtered = true
+                            }
+                            else{
+                                filtered = aanbod.vak == this.filters.vak
+                            }
+                        }
+                    }
+                    if(filtered){
+                        if(this.filters.fase){
+                            if(this.filters.fase == "all"){
+                                filtered = true
+                            }
+                            else{
+                                filtered = aanbod.fase == this.filters.fase
+                            }
+                        }
+                    }
+                    return filtered
+                    // https://stackoverflow.com/questions/49521851/how-to-filter-list-from-multiple-select-options-dropdowns-using-vuejs
                 }
-                return filtered
-                // https://stackoverflow.com/questions/49521851/how-to-filter-list-from-multiple-select-options-dropdowns-using-vuejs
+                else{
+                    return true
+                }
             }
-            else{
-                return true
-            }
+            return false           
         }
     },
     mounted() {
