@@ -1,9 +1,10 @@
 <template>
   <nav>
     <NavView :status='isLoggedIn'/>
-    <router-link to="/docents/1" v-if="isLoggedIn"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
-    <button @click="handleSignOut" v-if="isLoggedIn">Sign out</button>
+    <router-link to="/docents/2" v-if="isLoggedIn"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
+    <button @click="handleSignOut" v-if="isLoggedIn">Sign out</button><h1>HEllo</h1>
   </nav>
+  
   <router-view/>
 </template>
 
@@ -37,7 +38,6 @@ const handleSignOut = () => {
 </script>
 <script>
 import NavView from '@/components/NavView.vue'
-import axios from 'axios';
 
 export default {
   data(){
