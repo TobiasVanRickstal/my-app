@@ -2,7 +2,7 @@
   <nav>
     <NavView :status='isLoggedIn'/>
     <router-link to="/docents/2" v-if="isLoggedIn"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
-    <button @click="handleSignOut" v-if="isLoggedIn">Sign out</button><h1>HEllo</h1>
+    <button @click="handleSignOut" v-if="isLoggedIn">Sign out</button>
   </nav>
   
   <router-view/>
