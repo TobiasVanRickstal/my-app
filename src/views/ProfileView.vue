@@ -95,6 +95,7 @@ export default{
         },
         back(){
             this.edit = false
+            // TODO -> when annuleer -> don't take the changes
         }
     },
     mounted() {
@@ -104,54 +105,5 @@ export default{
 </script>
 
 <style>
-.profile-gegevens, .profile-update{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-.profile-gegevens div:not(.boolean){
-    margin: 15px auto;
-    padding: 15px 5px;
-    text-align: center;
-    border: 1px solid black;
-}
-.profile-update div{
-    margin: 15px auto;
-    text-align: center;
-}
-.profile-update div p{
-    margin-bottom: 5px;
-}
-.boolean{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px auto;
-}
-.boolean h3{
-    padding: 10px;
-}
-.class_if_is_true{
-    background-color: green;
-    color: white;
-}
-.else_class{
-    background-color: red;
-}
-.acties{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.acties button{
-    width: fit-content;
-    margin: 10px;
-    padding: 15px 5px;
-    border-radius: 10px;
-    border: none;
-}
-.delete{
-    background-color: red;
-    color: white;
-}
+
 </style>

@@ -1,9 +1,11 @@
 <template>
   <div class="register">
     <h1>Register</h1>
+    <form @keyup.enter="register">
     <p><input type="text" placeholder="Email" v-model="email"></p>
     <p><input type="password" placeholder="Password" v-model="password"></p>
-    <button @click="register">Register</button>
+    <button @click="register" class="button">Register</button>
+    </form>
   </div>
 </template>
 

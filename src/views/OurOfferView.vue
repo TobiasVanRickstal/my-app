@@ -1,19 +1,19 @@
 <template>
     <div class="our-offer">
-        <h1>Ons aanbod</h1>
+        <h1 v-show="!addItem">Ons aanbod</h1>
+        <h1 v-show="addItem">Nieuw aanbod</h1>
     </div>
 
     <div class="filter-segment">
         <div class="add">
-            <div class="add-icon" @click="addItem = !addItem"><span v-show="!addItem">+ voeg toe</span><span v-show="addItem">x sluiten</span></div>
+            <div class="add button" @click="addItem = !addItem"><span v-show="!addItem">+ voeg toe</span><span v-show="addItem">x sluiten</span></div>
         </div>
         <div class="filter" v-show="!addItem">
-            <button @click="typeBox = !typeBox; filterBox = false">type</button>
-            <button @click="filterBox = !filterBox; typeBox = false">filter</button>
+            <button class="button" @click="typeBox = !typeBox; filterBox = false">type</button>
+            <button class="button" @click="filterBox = !filterBox; typeBox = false">filter</button>
         </div>
     </div>
     <div class="form" v-show="addItem">
-        <h2>Nieuw aanbod</h2>
         <Form/>
         <!-- TODO When submitted refresh page -->
     </div>

@@ -3,6 +3,13 @@
     src: local("Blaak-bold"),
     url(../fonts/BlaakBold_PERSONAL.ttf) format("truetype");
 }
+$S-space: 5px;
+$M-space: 20px;
+$L-space: 50px;
+$XL-space: 100px;
+
+$green: #BFFD00;
+$pink: #FCD7F7;
 *{
     margin: 0;
     padding: 0;
@@ -22,11 +29,18 @@ body{
     img{
         width: 100%;
     }
+    .button{
+        padding: 5px 20px;
+        cursor: pointer;
+    }
+    input{
+        padding: $S-space;
+    }
 }
 // NAVIGATIE
 nav{
     font-family: "Blaak-bold";
-    margin: 2% auto;
+    margin: $M-space auto;
     width: 95%;
     display: flex;
     align-items: flex-end;
@@ -49,7 +63,7 @@ nav{
             display: block;
             width: 25px;
             height: auto;
-            margin:-10px auto 5px;
+            margin:-$M-space auto $S-space;
         }
 
         &:hover{
@@ -68,28 +82,42 @@ nav{
             display: block;
             width: 25px;
             height: auto;
-            margin:-10px auto 5px;
+            margin:-$M-space auto $S-space;
         }
     }
 }
-// END
+// LOGIN
+.register, .login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    form{
+        margin-top: $L-space;
+        text-align: center;
+
+        input{
+            margin: $S-space;
+        }
+        button{
+            margin-top: $M-space;
+        }
+    }
+}
 // ERROR
 .error-message{
-    color: red;
+    color: $pink;
 }
 //END
 .form div:not(.insideDiv){
-    margin: 20px auto;
+    margin: $M-space auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 .form div label{
-    margin-bottom: 15px;
+    margin-bottom: $M-space;
     text-align: left;
-}
-.form div select,.form div input{
-    padding: 5px;
 }
 //OurOfferView
 .form h2{
@@ -97,27 +125,25 @@ nav{
     margin: auto;
 }
 .filter-segment{
-    margin: 50px auto 20px;
+    margin: $L-space auto $M-space;
     width: 500px;
     display: flex;
     justify-content: space-between;
-}
-.filter{
-    width: 33%;
-    display: flex;
-    justify-content: space-between;
 
-    button{
-        padding: 5px 15px;
+
+    .add{
+        padding: 4px 8px;
+        background-color: $green;
         cursor: pointer;
     }
+
+    .filter{
+        width: 33%;
+        display: flex;
+        justify-content: space-between;
+    }
 }
-.add-icon{
-    padding: 4px 8px;
-    background-color: greenyellow;
-    border: #0600FF 1px solid;
-    cursor: pointer;
-}
+
 .typeSelect, .filterSelect, .form{
     margin: auto;
     width: 90%;
@@ -125,7 +151,7 @@ nav{
 .item{
     width: 500px;
     height: auto;
-    margin: 20px auto;
+    margin: $M-space auto;
     padding: 7px;
     background-color: grey;
     border: 1px solid black;
@@ -134,7 +160,7 @@ nav{
     flex-direction: column;
 
     div{
-        margin: 5px 0px;
+        margin: $S-space 0px;
     }
     .titel{
         a{
@@ -149,11 +175,11 @@ nav{
 .circle{
     width: 10px;
     height: 10px;
-    margin: auto 3px;
+    margin: auto $S-space;
     border-radius: 100%;
 }
 .diff3{
-    background-color: red;
+    background-color: $pink;
 }
 
 .diff2{
@@ -161,7 +187,7 @@ nav{
 }
 
 .diff1{
-    background-color: green;
+    background-color: $green;
 }
 .infographics{
     width: 33%;
@@ -182,7 +208,7 @@ nav{
     margin: auto;
 
     div{
-        margin: 5px 0;
+        margin: $S-space 0;
     }
 }
 .introductie{
@@ -218,7 +244,7 @@ nav{
     justify-content: space-evenly;
 
     div{
-        margin: 3px auto;
+        margin: $S-space auto;
         text-align: center;
     }
 }
@@ -230,7 +256,7 @@ nav{
 // OFFER
 .aanbod-preview{
     width: 80%;
-    margin:100px auto 0px;
+    margin:$XL-space auto 0px;
 
     div{
         padding: 5px 10px;
@@ -243,4 +269,62 @@ nav{
         }
     }
 
+}
+// Profile
+.profile-gegevens, .profile-update{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.profile-gegevens div:not(.boolean){
+    margin: 15px auto;
+    padding: 15px 5px;
+    text-align: center;
+    border: 1px solid black;
+}
+.profile-update{
+
+    div{
+        margin: 15px auto;
+        text-align: center;
+
+        p{
+            margin-bottom: 5px;
+        }
+    }
+}
+.boolean{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+
+    h3{
+        padding: 10px;
+    }
+}
+.class_if_is_true{
+    background-color: $green;
+    color: white;
+}
+.else_class{
+    background-color: $pink;
+}
+.acties{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    button{
+        width: fit-content;
+        margin: 10px;
+        padding: 15px 5px;
+        border-radius: 10px;
+        border: none;
+    }
+
+    .delete{
+        background-color: red;
+        color: white;
+    }
 }

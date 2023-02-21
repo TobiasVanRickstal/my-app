@@ -1,11 +1,11 @@
 <template>
-  <div class="register">
+  <div class="login">
     <h1>Login</h1>
     <form @keyup.enter="login">
     <p><input type="text" placeholder="Email" v-model="email"></p>
     <p><input type="password" placeholder="Password" v-model="password"></p>
     <p class="error-message" v-if="errMsg">{{ errMsg }}</p>
-    <button @click="register">Login</button>
+    <button @click="login" class="button">Login</button>
   </form>
   </div>
 </template>
@@ -20,7 +20,7 @@ const password = ref("");
 const errMsg = ref();
 const router = useRouter();
 
-const register = () => {
+const login = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((data) => {
       console.log("Succesfully signed in!")
