@@ -15,6 +15,13 @@ const router = createRouter({
       }
     },
     { 
+      path: "/register-next",
+      component: () => import("../views/RegisterNextView.vue"),
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    { 
       path: "/aanbods/:id",
       component: () => import("../views/OfferView.vue"),
       meta: {

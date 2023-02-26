@@ -104,6 +104,26 @@ nav{
         }
     }
 }
+// Register-next
+.register-next{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .radio-buttons{
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        text-align: left;
+    
+        div{
+            margin: $S-space;
+        }
+    }
+    .checkbox{
+        margin: $M-space auto;
+    }
+}
 // ERROR
 .error-message{
     color: $pink;
@@ -179,7 +199,7 @@ nav{
     border-radius: 100%;
 }
 .diff3{
-    background-color: $pink;
+    background-color: red;
 }
 
 .diff2{
@@ -187,7 +207,7 @@ nav{
 }
 
 .diff1{
-    background-color: $green;
+    background-color: green;
 }
 .infographics{
     width: 33%;

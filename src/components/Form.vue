@@ -18,7 +18,7 @@
             <p>{{currentDocent.naam}}</p>
         </div>
 
-        <div class="select type">
+        <div class="select type-select">
             <label for="type">type</label>
             <select name="type" id="type" v-model="type">
                 <option value="gastlessen">gastlessen</option>
