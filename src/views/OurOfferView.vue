@@ -6,11 +6,11 @@
 
     <div class="filter-segment">
         <div class="add">
-            <div class="add button" @click="addItem = !addItem"><span v-show="!addItem">+ voeg toe</span><span v-show="addItem">x sluiten</span></div>
+            <div class="button" @click="addItem = !addItem" :class="{activeButton: addItem}"><span v-show="!addItem">+ voeg toe</span><span v-show="addItem">x sluiten</span></div>
         </div>
         <div class="filter" v-show="!addItem">
-            <button class="button" @click="typeBox = !typeBox; filterBox = false">type</button>
-            <button class="button" @click="filterBox = !filterBox; typeBox = false">filter</button>
+            <button class="button" @click="typeBox = !typeBox; filterBox = false" :class="{activeButton: typeBox}">type</button>
+            <button class="button" @click="filterBox = !filterBox; typeBox = false" :class="{activeButton: filterBox}">filter</button>
         </div>
     </div>
     <div class="form" v-show="addItem">
@@ -27,9 +27,16 @@
     <div class="items" v-show="!addItem" v-for="aanbod in aanbods">
         <div class="item" v-if="(type ==  aanbod.type || type == 'all') && getFilteredAanbods(aanbod)">
             <!-- can be added -->
-            <div class="difficulty" :class="'diff' + aanbod.difficulty">
-                <span class="circle" v-for="n in 1"></span>
+            <div class="top-bar">
+                <div class="difficulty" :class="'diff' + aanbod.difficulty">
+                    <div class="circle" :class="{color: (aanbod.difficulty >= i)}" v-for="i in 3" :key="i"></div>
+                </div>
+                <div class="docent-naam">
+                    <!-- TODO --- GetDocentById -->
+                    <p>{{ getDocentName(1) }}</p>
+                </div>
             </div>
+            
 
             <div class="titel">
                 <router-link :to="{path: '/aanbods/'  + aanbod.id}"><h2>{{aanbod.naam}}</h2></router-link>
@@ -59,6 +66,7 @@ import Form from '@/components/Form.vue';
 import TypeFilter from '@/components/subComponents/TypeFilter.vue';
 import Filter from '@/components/subComponents/Filter.vue';
 import AanbodDataService from '@/services/AanbodDataService';
+import DocentDataService from '@/services/DocentDataService';
 
 export default{
     data(){
@@ -68,7 +76,8 @@ export default{
             typeBox: false,
             filterBox: false,
             aanbods:[],
-            filters:null
+            filters:null,
+            docentNaam: ""
         }
     },
     components: {
@@ -153,7 +162,17 @@ export default{
                 }
             }
             return false           
-        }
+        },
+        getDocentName(id) {
+            DocentDataService.get(id)
+                .then(response => {
+                    this.docentNaam = response.data.naam;
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+                return this.docentNaam
+        },
     },
     mounted() {
         this.retrieveAanbods();

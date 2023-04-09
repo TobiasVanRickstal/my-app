@@ -10,6 +10,9 @@ $XL-space: 100px;
 
 $green: #BFFD00;
 $pink: #FCD7F7;
+$blue: #0600FF;
+$black: #171717;
+$grey: grey;
 *{
     margin: 0;
     padding: 0;
@@ -31,7 +34,14 @@ body{
     }
     .button{
         padding: 5px 20px;
+        background-color: $green;
+        color: $black;
+        border: none;
         cursor: pointer;
+    }
+    .activeButton{
+        background-color: $blue !important;
+        color: $green !important;
     }
     input{
         padding: $S-space;
@@ -47,7 +57,7 @@ nav{
     justify-content: space-evenly;
 
     a{
-        color: #171717;
+        color: $black;
         font-size: 16px;
         text-decoration: none;
         display: flex;
@@ -67,7 +77,7 @@ nav{
         }
 
         &:hover{
-            color: #0600FF;
+            color: $blue;
         }
 
         img{
@@ -76,7 +86,7 @@ nav{
         }
     }
     a.router-link-active{
-        color: #0600FF;
+        color: $blue;
 
         .hover-state{
             display: block;
@@ -150,13 +160,6 @@ nav{
     display: flex;
     justify-content: space-between;
 
-
-    .add{
-        padding: 4px 8px;
-        background-color: $green;
-        cursor: pointer;
-    }
-
     .filter{
         width: 33%;
         display: flex;
@@ -173,7 +176,7 @@ nav{
     height: auto;
     margin: $M-space auto;
     padding: 7px;
-    background-color: grey;
+    background-color: #5c5a5a;
     border: 1px solid black;
     border-radius: 10px;
     display: flex;
@@ -191,23 +194,33 @@ nav{
 }
 .difficulty{
     display: flex;
+    
+    .circle{
+        width: 10px;
+        height: 10px;
+        margin: auto $S-space;
+        border-radius: 100%;
+        background-color: $grey;
+    }
+
 }
-.circle{
-    width: 10px;
-    height: 10px;
-    margin: auto $S-space;
-    border-radius: 100%;
-}
+
 .diff3{
-    background-color: red;
+    .color{
+        background-color: red;
+    }
 }
 
 .diff2{
-    background-color: orange;
+    .color{
+        background-color: orange;
+    }
 }
 
 .diff1{
-    background-color: green;
+    .color{
+        background-color: green;
+    }
 }
 .infographics{
     width: 33%;
@@ -221,56 +234,63 @@ nav{
 }
 //END
 // COMPANIESVIEW
-.bedrijf{
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    margin: auto;
-
-    div{
-        margin: $S-space 0;
+.bedrijven{
+    .bedrijf{
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        margin: auto;
+    
+        div{
+            margin: $S-space 0;
+        }
+        .beschrijving{
+            width: 80%;
+            margin: auto;
+            text-align: justify;
+        }
     }
-}
-.introductie{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-.logo img{
-    width: 100px;
-}
-.personen{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-}
-.persoon{
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.personen-foto{
-    width: 100px;
-
-    img{
-        border-radius: 100%;
+    .introductie{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
     }
-}
-.gegevens{
-    background-color: darkslategray;
-    color: white;
-    display: flex;
-    justify-content: space-evenly;
-
-    div{
-        margin: $S-space auto;
-        text-align: center;
+    .logo img{
+        width: 100px;
     }
-}
-.showMore{
-    width: fit-content;
-    margin: auto;
+    .personen{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+    .persoon{
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .personen-foto{
+        width: 100px;
+    
+        img{
+            border-radius: 100%;
+        }
+    }
+    .gegevens{
+        background-color: darkslategray;
+        color: white;
+        display: flex;
+        justify-content: space-evenly;
+    
+        div{
+            margin: $S-space auto;
+            text-align: center;
+        }
+    }
+    .showMore{
+        width: fit-content;
+        margin: auto;
+    }
 }
 //END
 // OFFER

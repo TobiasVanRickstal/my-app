@@ -8,16 +8,11 @@
                 </div>
             </div>
             <div class="personen">
-                <div class="persoon">
-                    <div class="personen-foto"><img src="../assets/bedrijven/capgemini/bert.jpeg" alt=""></div>
-                    <div class="personen-naam">Bert Van Ernie</div>
-                    <div class="personen-functie">Banaan in oor</div>
+                <div class="persoon" v-for="i in 6" :key="i">
+                    <div class="personen-foto"><img src="../assets/bedrijven/profile.jpg" alt=""></div>
+                    <div class="personen-naam">werknemer {{i}}</div>
+                    <div class="personen-functie" v-show="showMoreCapgemini">functie</div>
                 </div>
-                <div class="persoon">
-                    <div class="personen-foto"><img src="../assets/bedrijven/capgemini/bert.jpeg" alt=""></div>
-                    <div class="personen-naam">Bert Van Ernie</div>
-                    <div class="personen-functie">Banaan in oor</div>
-                </div> 
             </div>
             <div class="gegevens"  v-show="showMoreCapgemini">
                 <div class="address">
@@ -36,7 +31,7 @@
                     <div class="gegevens-mail">teste@gidjsgsj.erkg</div>
                 </div>
             </div>
-            <button class="showMore" @click="showMoreCapgemini =  !showMoreCapgemini"><span v-show="!showMoreCapgemini">meer zien</span><span v-show="showMoreCapgemini">minder zien</span></button>
+            <button class="showMore button" :class="{activeButton: showMoreCapgemini}"  @click="showMoreCapgemini =  !showMoreCapgemini"><span v-show="!showMoreCapgemini">meer zien</span><span v-show="showMoreCapgemini">minder zien</span></button>
         </div>
    </div> 
 </template>

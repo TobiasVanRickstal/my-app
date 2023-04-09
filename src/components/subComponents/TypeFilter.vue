@@ -16,6 +16,7 @@ export default{
     data() {
         return { 
             activeItem: this.selectedType,
+            filterBoxActive: false
         }
     },
     props:{
