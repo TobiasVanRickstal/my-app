@@ -55,13 +55,18 @@
             <p>Periodes:</p>
             <p>{{data.periodes}}</p>
         </div>
+        
+        <div class="views">
+            <p>Solicitanten /  views:</p>
+            <p>{{data.solicitanten}} / {{data.views}}</p>
+        </div>
 
         <div class="status" v-show="adminWatching">
             <p>Admin prrivillege:</p>
             <p>Change Status: "{{data.status}}"</p>
-            <button @click="changeStatus('pending')">Pending</button>
-            <button @click="changeStatus('active')">Active</button>
-            <button @click="changeStatus('done')">Done</button>
+            <button v-show="data.status  != 'pending'" @click="changeStatus('pending')">Pending</button>
+            <button v-show="data.status  != 'active'" @click="changeStatus('active')">Active</button>
+            <button v-show="data.status  != 'done'" @click="changeStatus('done')">Done</button>
         </div>
     </div>
 </template>
@@ -84,7 +89,21 @@ export default{
                 .then(response => {
                     this.data = response.data;
                     console.log(response.data);
+                    console.log(response.data.views);
                     this.getDocent(response.data.docent);
+                    
+
+                    // // Niet doen als een docent  of het school deze  bekijkt ------
+                    // this.data.views +=  1;
+                    // AanbodDataService.update(this.data.id, this.data)
+                    //     .then(response => {
+                    //     this.data.status = to;
+                    //     console.log(response.data);
+                    // })
+                    // .catch(e => {
+                    //     console.log(e);
+                    // });
+                    // // ----------
                 })
                 .catch(e => {
                     console.log(e);
