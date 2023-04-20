@@ -35,26 +35,3 @@ export default{
 </script>
 <!-- active class -->
 <!-- https://forum.vuejs.org/t/how-to-make-a-component-with-menu-item-changing-css-to-active-when-clicked/3235/2 -->
-<style>
-    .typeBox{
-        background-color: grey;
-        height: fit-content;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 10px;
-    }
-    .type{
-        width: fit-content;
-        flex: 2 3 15%;
-        margin: 5px;
-        padding: 5px;
-        text-align: center;
-        border: 1px solid black;
-        cursor: pointer;
-    }
-    .active{
-        background-color: lightgray;
-        border: 2px solid yellowgreen;
-    }
-</style>

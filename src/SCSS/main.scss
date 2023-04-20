@@ -171,6 +171,29 @@ nav{
     margin: auto;
     width: 90%;
 }
+.typeSelect{
+    .typeBox{
+        background-color: grey;
+        height: fit-content;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 10px;
+    }
+    .type{
+        width: fit-content;
+        flex: 2 3 15%;
+        margin: 5px;
+        padding: 5px;
+        text-align: center;
+        border: 1px solid black;
+        cursor: pointer;
+    }
+    .active{
+        background-color: lightgray;
+        border: 2px solid yellowgreen;
+    }
+}
 .item{
     width: 500px;
     height: auto;
@@ -183,7 +206,7 @@ nav{
     flex-direction: column;
 
     div{
-        margin: $S-space 0px;
+        margin: $S-space;
     }
     .titel{
         a{
@@ -222,16 +245,27 @@ nav{
         background-color: green;
     }
 }
-.infographics{
-    width: 33%;
+.bottom-info{
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
 
-    div span{
-        padding: 4px 8px;
-        background-color: darkslategrey;
+    .infographics{
+        width: 33%;
+        display: flex;
+        justify-content: space-between;
+
+        div span{
+            padding: 4px 8px;
+            background-color: darkslategrey;
+        }
+    }
+    .details{
+        display: flex;
+        font-size: smaller;
     }
 }
+
 //END
 // COMPANIESVIEW
 .bedrijven{

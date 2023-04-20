@@ -5,37 +5,36 @@
   <div class="body">
     <div class="left-side">
       <div class="blok">
-        Aanbod dat je te zien krijgt
+        <Bedrijven/>
       </div>
     </div>
     <div class="right-side">
-      <div class="blok">
-        Bedrijven dat je te zien krijgt
-      </div>
+      <Aanbods />
     </div>
   </div>
   
 </template>
 
 <script>
+import Aanbods from '@/components/Aanbods.vue';
+import Bedrijven from '@/components/Bedrijven.vue';
 
 export default({
-  setup() {
-    
-  },
   data(){
     return{
       type: ""
     }
-  }
+  },
+  components: {
+    Aanbods,
+    Bedrijven
+  },
 })
 </script>
 <style>
-.body{  
+.body{
+  width: fit-content;
   display: flex;
-}
-.blok{
-  background-color: beige;
-  margin: 10px;
+  justify-content: space-evenly;
 }
 </style>

@@ -24,16 +24,13 @@
     <div class="filterSelect" v-if="filterBox && !typeBox && !addItem">
         <Filter @clicked-show-detail="SendDataBack"/>
     </div>
+    
     <div class="items" v-show="!addItem" v-for="aanbod in aanbods">
         <div class="item" v-if="(type ==  aanbod.type || type == 'all') && getFilteredAanbods(aanbod)">
             <!-- can be added -->
             <div class="top-bar">
                 <div class="difficulty" :class="'diff' + aanbod.difficulty">
                     <div class="circle" :class="{color: (aanbod.difficulty >= i)}" v-for="i in 3" :key="i"></div>
-                </div>
-                <div class="docent-naam">
-                    <!-- TODO --- GetDocentById -->
-                    <p>{{ getDocentName(1) }}</p>
                 </div>
             </div>
             
@@ -45,18 +42,39 @@
             <div class="beschrijving">
                 <p>{{aanbod.informatie}}</p>
             </div>
+            <div class="bottom-info">
+                <div class="infographics">
+                    <div class="bekeken">
+                        <span>{{aanbod.views}}</span>
+                    </div>
+                    <div class="solicitanten">
+                        <span>{{aanbod.solicitanten}}</span>
+                    </div>
+                    <div class="kostprijs">
+                        <span>€ {{aanbod.prijs}}</span>
+                    </div>
+                </div>
 
-            <div class="infographics">
-                <div class="bekeken">
-                    <span>{{aanbod.views}}</span>
+                <div class="details">
+                    <!-- <div class="periode">
+                        {{ aanbod.periodes }}
+                    </div> -->
+                    <div class="docent">
+                        <p>{{ getDocentName(1) }}</p>
+                    </div>
+                    <div class="vak">
+                        {{ aanbod.vak }}
+                    </div>
+                    <div class="topic">
+                        {{ aanbod.topic }}
+                    </div>
+                    <div class="type">
+                        {{ aanbod.type }}
+                    </div>
                 </div>
-                <div class="solicitanten">
-                    <span>{{aanbod.solicitanten}}</span>
-                </div>
-                <div class="kostprijs">
-                    <span>€ {{aanbod.prijs}}</span>
-                </div>
+
             </div>
+            
         </div>
     </div>
 </template>
