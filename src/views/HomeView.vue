@@ -9,14 +9,14 @@
       </div>
     </div>
     <div class="right-side">
-      <Aanbods />
+      <Vragen />
     </div>
   </div>
   
 </template>
 
 <script>
-import Aanbods from '@/components/Aanbods.vue';
+import Vragen from '@/components/Vragen.vue';
 import Bedrijven from '@/components/Bedrijven.vue';
 
 export default({
@@ -26,7 +26,7 @@ export default({
     }
   },
   components: {
-    Aanbods,
+    Vragen,
     Bedrijven
   },
 })

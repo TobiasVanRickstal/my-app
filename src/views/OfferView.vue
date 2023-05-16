@@ -1,8 +1,8 @@
 <template>
     <div>
-        <router-link to="/ons-aanbod">Terug naar overzicht</router-link>
+        <router-link to="/ons-vraag">Terug naar overzicht</router-link>
     </div>
-    <div class="aanbod-preview">
+    <div class="vraag-preview">
 
         <!-- Goedkeuring -->
         <!-- <div>
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import AanbodDataService from '@/services/AanbodDataService';
+import VraagDataService from '@/services/VraagDataService';
 import DocentDataService from '@/services/DocentDataService';
 
 export default{
@@ -84,8 +84,8 @@ export default{
         }
     },
     methods:{
-        getAanbod(id){
-            AanbodDataService.get(id)
+        getVraag(id){
+            VraagDataService.get(id)
                 .then(response => {
                     this.data = response.data;
                     console.log(response.data);
@@ -95,7 +95,7 @@ export default{
 
                     // // Niet doen als een docent  of het school deze  bekijkt ------
                     // this.data.views +=  1;
-                    // AanbodDataService.update(this.data.id, this.data)
+                    // VraagDataService.update(this.data.id, this.data)
                     //     .then(response => {
                     //     this.data.status = to;
                     //     console.log(response.data);
@@ -127,7 +127,7 @@ export default{
                 status: to
             };
 
-            AanbodDataService.update(this.data.id, updateData)
+            VraagDataService.update(this.data.id, updateData)
                 .then(response => {
                     this.data.status = to;
                     console.log(response.data);
@@ -139,7 +139,7 @@ export default{
 
     },
     mounted(){
-        this.getAanbod(this.$route.params.id);
+        this.getVraag(this.$route.params.id);
     }
     
 }

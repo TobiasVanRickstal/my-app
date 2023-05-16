@@ -22,19 +22,18 @@ const router = createRouter({
       }
     },
     { 
-      path: "/aanbods/:id",
+      path: "/vragen/:id",
       component: () => import("../views/OfferView.vue"),
       meta: {
         requiresAuth: true,
       }
     },
     { 
-      path: "/ons-aanbod",
+      path: "/ons-vraag",
       component: () => import("../views/OurOfferView.vue"),
       meta: {
         requiresAuth: true,
       },
-      props:{}
     },
     { 
       path: "/bedrijven-bekijken",
@@ -64,7 +63,7 @@ const router = createRouter({
       }
     },
     // {
-    //   path: "/aanbod-docent/:id",
+    //   path: "/vraag-docent/:id",
     //   name: "docent-details",
     //   component: () => import("../views/ProfileView.vue"),
     //   meta: {

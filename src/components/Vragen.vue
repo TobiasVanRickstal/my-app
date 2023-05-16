@@ -1,16 +1,17 @@
 <template>
-    <div class="aanbods">
-        <h2>Ons aanbod</h2>
-        <div class="aanbod" v-for="aanbod in aanbods">
-            <div class="difficulty" :class="fetchColor(aanbod.difficulty)">
+    <div class="vragen">
+        <h2>Ons vraag</h2>
+        <div class="vraag" v-for="vraag in vragen">
+            <div class="difficulty" :class="fetchColor(vraag.difficulty)">
                 
             </div>
             <div class="info">
                 <div class="head">
-                    <p>{{ getDocentName(aanbod.docent) }} - {{aanbod.topic }}</p>
+                    <p v-if="vraag.docentName">{{ vraag.docentName }} - {{vraag.topic }}</p>
+                    <p v-else>loading...</p>
                 </div>
                 <div class="title">
-                    <h3>{{aanbod.naam}}</h3>
+                    <h3>{{vraag.naam}}</h3>
                 </div>
             </div>
         </div>
@@ -18,36 +19,39 @@
 </template>
 
 <script>
-import AanbodDataService from '@/services/AanbodDataService';
+import VraagDataService from '@/services/VraagDataService';
 import DocentDataService from '@/services/DocentDataService';
 
 export default{
     data(){
         return{
-            aanbods:[],
+            vragen:[],
             docentNaam: ""
         }
     },
     methods: {
-        retrieveAanbods() {
-            AanbodDataService.getAll()
-                .then((response) => {
-                    this.aanbods = response.data;
-                    console.log(response.data);
-                })
-                .catch((e) => {
-                    console.log(e);
-            });
+        async retrieveVragen() {
+            try {
+                const response = await VraagDataService.getAll();
+                this.vragen = response.data;
+                await this.updateDocentNames();
+            } catch (error) {
+                console.log(error);
+            }
         },
-        getDocentName(id) {
-            DocentDataService.get(id)
-                .then(response => {
-                    this.docentNaam = response.data.naam;
-                })
-                .catch(e => {
-                    console.log(e);
-                });
-                return this.docentNaam
+        async updateDocentNames() {
+            for (const vraag of this.vragen) {
+                vraag.docentName = await this.getDocentName(vraag.docent);
+            }
+        },
+        async getDocentName(id) {
+            try {
+                const response = await DocentDataService.get(id);
+                return response.data.naam;
+            } catch (error) {
+                console.log(error);
+                return "";
+            }
         },
         fetchColor(int){
             if(int == 1){
@@ -62,20 +66,20 @@ export default{
         }
     },
     mounted() {
-        this.retrieveAanbods();
+        this.retrieveVragen();
     }
 }
 </script>
 
 <style>
-.aanbods{
+.vragen{
     margin: 5px;
     display: flex;
     flex-direction: column;
     background-color: dimgrey;
     padding: 25px 5px;
 }
-.aanbod{
+.vraag{
     display: flex;
     align-items: center;
     justify-content: space-between;

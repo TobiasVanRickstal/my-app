@@ -1,7 +1,7 @@
 <template>
     <div class="our-offer">
-        <h1 v-show="!addItem">Ons aanbod</h1>
-        <h1 v-show="addItem">Nieuw aanbod</h1>
+        <h1 v-show="!addItem">Ons vraag</h1>
+        <h1 v-show="addItem">Nieuw vraag</h1>
     </div>
 
     <div class="filter-segment">
@@ -25,51 +25,51 @@
         <Filter @clicked-show-detail="SendDataBack"/>
     </div>
     
-    <div class="items" v-show="!addItem" v-for="aanbod in aanbods">
-        <div class="item" v-if="(type ==  aanbod.type || type == 'all') && getFilteredAanbods(aanbod)">
+    <div class="items" v-show="!addItem" v-for="vraag in vragen">
+        <div class="item" v-if="(type ==  vraag.type || type == 'all') && getFilteredVragen(vraag)">
             <!-- can be added -->
             <div class="top-bar">
-                <div class="difficulty" :class="'diff' + aanbod.difficulty">
-                    <div class="circle" :class="{color: (aanbod.difficulty >= i)}" v-for="i in 3" :key="i"></div>
+                <div class="difficulty" :class="'diff' + vraag.difficulty">
+                    <div class="circle" :class="{color: (vraag.difficulty >= i)}" v-for="i in 3" :key="i"></div>
                 </div>
             </div>
             
 
             <div class="titel">
-                <router-link :to="{path: '/aanbods/'  + aanbod.id}"><h2>{{aanbod.naam}}</h2></router-link>
+                <router-link :to="{path: '/vragen/'  + vraag.id}"><h2>{{vraag.naam}}</h2></router-link>
             </div>
 
             <div class="beschrijving">
-                <p>{{aanbod.informatie}}</p>
+                <p>{{vraag.informatie}}</p>
             </div>
             <div class="bottom-info">
                 <div class="infographics">
                     <div class="bekeken">
-                        <span>{{aanbod.views}}</span>
+                        <span>{{vraag.views}}</span>
                     </div>
                     <div class="solicitanten">
-                        <span>{{aanbod.solicitanten}}</span>
+                        <span>{{vraag.solicitanten}}</span>
                     </div>
                     <div class="kostprijs">
-                        <span>€ {{aanbod.prijs}}</span>
+                        <span>€ {{vraag.prijs}}</span>
                     </div>
                 </div>
 
                 <div class="details">
                     <!-- <div class="periode">
-                        {{ aanbod.periodes }}
+                        {{ vraag.periodes }}
                     </div> -->
                     <div class="docent">
-                        <p>{{ getDocentName(1) }}</p>
+                        <p>{{ vraag.docent }}</p>
                     </div>
                     <div class="vak">
-                        {{ aanbod.vak }}
+                        {{ vraag.vak }}
                     </div>
                     <div class="topic">
-                        {{ aanbod.topic }}
+                        {{ vraag.topic }}
                     </div>
                     <div class="type">
-                        {{ aanbod.type }}
+                        {{ vraag.type }}
                     </div>
                 </div>
 
@@ -83,7 +83,7 @@
 import Form from '@/components/Form.vue';
 import TypeFilter from '@/components/subComponents/TypeFilter.vue';
 import Filter from '@/components/subComponents/Filter.vue';
-import AanbodDataService from '@/services/AanbodDataService';
+import VraagDataService from '@/services/VraagDataService';
 import DocentDataService from '@/services/DocentDataService';
 
 export default{
@@ -93,9 +93,8 @@ export default{
             type: 'all',
             typeBox: false,
             filterBox: false,
-            aanbods:[],
+            vragen:[],
             filters:null,
-            docentNaam: ""
         }
     },
     props:{
@@ -110,15 +109,47 @@ export default{
         Filter
     },
     methods: {
-        retrieveAanbods() {
-            AanbodDataService.getAll()
-                .then((response) => {
-                    this.aanbods = response.data;
-                    // console.log(response.data);
-                })
-                .catch((e) => {
-                    console.log(e);
-            });
+        // retrieveVragen() {
+        //     VraagDataService.getAll()
+        //         .then((response) => {
+        //             const vragen = response.data;
+        //             const updatedVragen = [];
+
+        //             vragen.forEach((vraag) => {
+        //                 const updatedVraag = { ...vraag };
+        //                 updatedVraag.docent = this.getDocentName(vraag.docent);
+        //                 updatedVragen.push(updatedVraag);
+        //             });
+
+        //             this.vragen = updatedVragen;
+        //         })
+        //         .catch((e) => {
+        //             console.log(e);
+        //         });
+        // },
+
+        async retrieveVragen() {
+            try {
+                const response = await VraagDataService.getAll();
+                const vragen = response.data;
+                const updatedVragen = await Promise.all(vragen.map(async (vraag) => {
+                    const docentName = await this.getDocentName(vraag.docent);
+                    return { ...vraag, docent: docentName };
+                }));
+                this.vragen = updatedVragen;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async getDocentName(id) {
+            try {
+                const response = await DocentDataService.get(id);
+                return response.data.naam;
+            } catch (error) {
+                console.log(error);
+                return "";
+            }
         },
         activeType: function (value) {
             this.type = value;
@@ -126,8 +157,8 @@ export default{
         SendDataBack: function (data){
             this.filters = data[0]
         },
-        getFilteredAanbods:  function(aanbod){
-            if(aanbod.status != "done"){ // ENKEL ALS JE GEEN DOCENT BENT
+        getFilteredVragen:  function(vraag){
+            if(vraag.status != "done"){ // ENKEL ALS JE GEEN DOCENT BENT
                 if(this.filters){
                     let filtered = true
                     if(this.filters.docent){
@@ -135,7 +166,7 @@ export default{
                             filtered = true
                         }
                         else{
-                            filtered = aanbod.docent == this.filters.docent
+                            filtered = vraag.docent == this.filters.docent
                         }
                     }
                     if(filtered){
@@ -144,7 +175,7 @@ export default{
                                 filtered = true
                             }
                             else{
-                                filtered = aanbod.topic == this.filters.topic
+                                filtered = vraag.topic == this.filters.topic
                             }
                         }
                     }
@@ -154,7 +185,7 @@ export default{
                                 filtered = true
                             }
                             else{
-                                filtered = aanbod.difficulty == this.filters.difficulty
+                                filtered = vraag.difficulty == this.filters.difficulty
                             }
                         }
                     }
@@ -164,7 +195,7 @@ export default{
                                 filtered = true
                             }
                             else{
-                                filtered = aanbod.vak == this.filters.vak
+                                filtered = vraag.vak == this.filters.vak
                             }
                         }
                     }
@@ -174,7 +205,7 @@ export default{
                                 filtered = true
                             }
                             else{
-                                filtered = aanbod.fase == this.filters.fase
+                                filtered = vraag.fase == this.filters.fase
                             }
                         }
                     }
@@ -187,19 +218,37 @@ export default{
             }
             return false           
         },
-        getDocentName(id) {
-            DocentDataService.get(id)
-                .then(response => {
-                    this.docentNaam = response.data.naam;
-                })
-                .catch(e => {
-                    console.log(e);
-                });
-                return this.docentNaam
+        
+        mounted() {
+            this.retrieveVragen();
+            // console.log(this.userId)
         },
     },
+    computed:{
+        // getDocentName(id) {
+        //     DocentDataService.get(id)
+        //         .then(response => {
+        //             return response.data.naam;
+        //         })
+        //         .catch(e => {
+        //             console.log(e);
+        //         });
+        // }
+
+    //     async getDocentName(id) {
+    //   return async (id) => {
+    //     try {
+    //       const response = await DocentDataService.get(id);
+    //       return response.data.naam;
+    //     } catch (e) {
+    //       console.log(e);
+    //       return "";
+    //     }
+    //   };
+    // },
+    },
     mounted() {
-        this.retrieveAanbods();
+        this.retrieveVragen();
         // console.log(this.userId)
     },
 }

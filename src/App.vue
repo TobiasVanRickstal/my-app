@@ -28,8 +28,6 @@ onMounted(() => {
       const email = user.email
       DocentDataService.findByEmail(email)
         .then(response => {
-            console.log("catch by email:");
-            console.log(response.data);
             var docent = response.data
             id.value = docent[0].id        
         })

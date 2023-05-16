@@ -1,5 +1,5 @@
 <template>
-    <div class="aanbod-create">
+    <div class="vraag-create">
 
         <!-- Goedkeuring -->
         <!-- <div>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="input naam">
-            <label for="naam">naam</label>
+            <label for="naam">titel</label>
             <input type="text" name="naam" id="naam" v-model="naam">
         </div>
 
@@ -100,7 +100,7 @@
         </div>
 
         <div class="button">
-            <button @click="saveAanbod()">Opslagen</button>
+            <button @click="saveVraag()">Opslagen</button>
             
         </div>
     </div>
@@ -109,7 +109,7 @@
 <script>
 import periodeForm from './subComponents/periodeForm.vue';
 import DocentDataService from '@/services/DocentDataService';
-import AanbodDataService from '@/services/AanbodDataService';
+import VraagDataService from '@/services/VraagDataService';
 
 export default{
     data(){
@@ -124,7 +124,7 @@ export default{
             periodes: "",
             prijs:  "",
             serie: false,
-            difficulty: "",
+            difficulty: 2,
             currentDocent:{}
         }
     },
@@ -153,7 +153,7 @@ export default{
                     console.log(e);
                 });
         },
-        saveAanbod() {
+        saveVraag() {
         
             var data = {
                 naam: this.naam,
@@ -173,12 +173,10 @@ export default{
             };
             console.log(data)
 
-            AanbodDataService.create(data)
+            VraagDataService.create(data)
                 .then(response => {
-                    // this.aanbod.id = response.data.id;
                     console.log(response.data);
-                    // this.submitted = true;
-                    // this.$router.go()
+                    router.push('/ons-vraag');
                 })
                 .catch(e => {
                     console.log(e);
