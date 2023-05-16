@@ -1,20 +1,23 @@
 <template>
   <nav>
     <NavView :status='isLoggedIn'/>
-    <router-link to="/docents/2" v-if="isLoggedIn"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
+    <router-link :to="`/profile/${id}`" v-if="isLoggedIn"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
     <button @click="handleSignOut" v-if="isLoggedIn">Sign out</button>
   </nav>
   
-  <router-view/>
+  <router-view :user-id="userId"/>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
 import { useRouter } from 'vue-router';
+import DocentDataService from './services/DocentDataService';
 
 const router = useRouter();
 const isLoggedIn = ref(false);
+const id = ref(null);
+const userId = ref(null);
 
 let auth;
 onMounted(() => {
@@ -22,6 +25,17 @@ onMounted(() => {
   onAuthStateChanged(auth, (user) => {
     if(user) {
       isLoggedIn.value = true;
+      const email = user.email
+      DocentDataService.findByEmail(email)
+        .then(response => {
+            console.log("catch by email:");
+            console.log(response.data);
+            var docent = response.data
+            id.value = docent[0].id        
+        })
+        .catch(e => {
+            console.log(e);
+        });
     }
     else{
       isLoggedIn.value = false;
@@ -29,25 +43,37 @@ onMounted(() => {
   });
 });
 
+
 const handleSignOut = () => {
   signOut(auth).then(() => {
     router.push("/login");
   })
-}
+};
+
+watch(id, (newValue) => {
+  userId.value = newValue;
+});
+
+onMounted(() => {
+  console.log('This is the universal id:');
+  console.log(userId.value);
+});
 
 </script>
+
 <script>
 import NavView from '@/components/NavView.vue'
 
 export default {
   data(){
     return{
-      items:[],
+      userId: null
     }
   },
   components: {
     NavView,
-  },
+  }
+
   
 //   data() {
 //    return {

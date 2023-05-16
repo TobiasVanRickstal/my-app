@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="form" v-show="addItem">
-        <Form/>
+        <Form :user-id="userId"/>
         <!-- TODO When submitted refresh page -->
     </div>
     <div class="typeSelect" v-if="typeBox && !addItem && !filterBox">
@@ -98,6 +98,12 @@ export default{
             docentNaam: ""
         }
     },
+    props:{
+        userId: {
+            type: String, // Specify the prop type
+            required: true // Set it as required if necessary
+        }
+    },
     components: {
         Form,
         TypeFilter,
@@ -108,7 +114,7 @@ export default{
             AanbodDataService.getAll()
                 .then((response) => {
                     this.aanbods = response.data;
-                    console.log(response.data);
+                    // console.log(response.data);
                 })
                 .catch((e) => {
                     console.log(e);
@@ -194,6 +200,7 @@ export default{
     },
     mounted() {
         this.retrieveAanbods();
+        // console.log(this.userId)
     },
 }
 </script>

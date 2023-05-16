@@ -28,6 +28,10 @@ class DocentDataService {
   findByTitle(naam) {
     return http.get(`/docents?naam=${naam}`);
   }
+// TODO Find docent by email
+  findByEmail(email) {
+    return http.get(`/docents?email=${email}`);
+  }
 }
 
 export default new DocentDataService();

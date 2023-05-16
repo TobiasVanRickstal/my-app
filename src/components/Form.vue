@@ -128,6 +128,12 @@ export default{
             currentDocent:{}
         }
     },
+    props:{
+        userId: {
+            type: String, // Specify the prop type
+            required: true // Set it as required if necessary
+        }
+    },
     components: {
         periodeForm,
     },
@@ -172,7 +178,7 @@ export default{
                     // this.aanbod.id = response.data.id;
                     console.log(response.data);
                     // this.submitted = true;
-                    this.$router.go()
+                    // this.$router.go()
                 })
                 .catch(e => {
                     console.log(e);
@@ -181,7 +187,7 @@ export default{
         // https://codepen.io/Kradek/pen/rmBBPo?editors=1010
     },
     mounted() {
-        this.getDocent(1);
+        this.getDocent(this.userId);
     }
 }
 </script>

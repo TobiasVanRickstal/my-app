@@ -46,6 +46,14 @@ body{
     input{
         padding: $S-space;
     }
+    .messageBlock{
+        background-color: $pink;
+        width: 60%;
+        margin: auto;
+        text-align: center;
+        border: 1px solid $black;
+        padding: $M-space $S-space;
+    }
 }
 // NAVIGATIE
 nav{
@@ -136,7 +144,9 @@ nav{
 }
 // ERROR
 .error-message{
-    color: $pink;
+    color: $blue;
+    background-color: $pink;
+    padding: $S-space $M-space;
 }
 //END
 .form div:not(.insideDiv){

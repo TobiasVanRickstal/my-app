@@ -9,8 +9,8 @@
                 <h2>{{currentDocent.naam}}</h2>
             </div>
             <div>
-                <h3>mail:</h3>
-                <h2>{{currentDocent.mail}}</h2>
+                <h3>email:</h3>
+                <h2>{{currentDocent.email}}</h2>
             </div>
             <div class="boolean">
                 <h3 :class="(currentDocent.admin)?'class_if_is_true':'else_class'">admin</h3>
@@ -26,7 +26,7 @@
             </div>
             <div>
                 <p>Mail</p>
-                <input type="text" v-model="currentDocent.mail">
+                <input type="text" v-model="currentDocent.email">
             </div>
             <div>
                 <p>Extern</p>
@@ -44,7 +44,8 @@
             </router-link>
             <button class="delete" @click="deleteDocent">Delete Account</button>
         </div>
-        <p>{{message}}</p>
+        
+        <p v-show="messageHide" :class="{ messageBlock: messageHide }">{{message}}</p>
     </div>
 </template>
 
@@ -55,7 +56,8 @@ export default{
     data(){
         return{
             currentDocent: {},
-            edit: false
+            edit: false,
+            messageHide: false,
         }
     },
     methods: {
@@ -74,8 +76,10 @@ export default{
             DocentDataService.update(this.currentDocent.id, this.currentDocent)
                 .then(response => {
                     console.log(response.data);
+                    this.messageHide = true
                     this.message = 'The Docent was updated successfully!';
                     this.edit = false;
+                    setTimeout(() => this.messageHide = false, 2000)
                 })
                 .catch(e => {
                     console.log(e);

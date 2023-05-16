@@ -33,7 +33,8 @@ const router = createRouter({
       component: () => import("../views/OurOfferView.vue"),
       meta: {
         requiresAuth: true,
-      }
+      },
+      props:{}
     },
     { 
       path: "/bedrijven-bekijken",
@@ -55,8 +56,8 @@ const router = createRouter({
       component: () => import("../views/PageNotFound.vue"),
     },
     {
-      path: "/docents/:id",
-      name: "docent-details",
+      path: "/profile/:id",
+      name: "profile-details",
       component: () => import("../views/ProfileView.vue"),
       meta: {
         requiresAuth: true,

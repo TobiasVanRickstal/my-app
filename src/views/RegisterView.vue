@@ -23,14 +23,7 @@ const register = () => {
     .then((data) => {
       console.log("Succesfully registered!")
 
-      signInWithEmailAndPassword(getAuth(), email.value, password.value)
-      .then((data) => {
-        console.log("Succesfully signed in!")
-        router.push("/register-next")
-      })
-      .catch((error) => {
-        console.log("something went wrong!")
-      })
+      login()
     })
     .catch((error) => {
       console.log(error.code);

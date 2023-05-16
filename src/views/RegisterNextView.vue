@@ -4,7 +4,7 @@
 
         <form @keyup.enter="registerNext" class="register-next">
             <input type="text" placeholder="Naam" v-model="NewDocent.naam">
-            <input type="text" placeholder="Email" v-model="NewDocent.mail">
+            <input type="text" placeholder="Email" v-model="NewDocent.email">
             <div class="radio-buttons">
                 <div>
                     <input type="radio" v-model="NewDocent.extern" value="false">
@@ -28,13 +28,18 @@
 <script>
     import router from "@/router";
     import DocentDataService from "@/services/DocentDataService";
+    import { getAuth } from "firebase/auth";
+
+    const auth = getAuth();
+    const user = auth.currentUser;
 
     export default{
         data(){
             return{
                 NewDocent:{
                     naam: "",
-                    mail: "",
+                    email: user.email,
+                    // Get eamil from logged in user!
                     extern: false
                 },
                 AdminAanvraag: false
@@ -42,6 +47,9 @@
         },
         methods:{
             registerNext() {
+                if(this.AdminAanvraag){
+                    alert("Je aanvraag om als admin verder te gaan is verzonden")
+                }
                 DocentDataService.create(this.NewDocent)
                     .then(response => {
                         console.log(response.data);
@@ -51,6 +59,7 @@
                         console.log(e);
                     });
             }
+            // TODO Adminlabel aanvragen => mail naar Geert.
         }
     }
 </script>
