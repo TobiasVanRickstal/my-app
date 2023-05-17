@@ -1,6 +1,6 @@
 <template>
     <div class="vragen">
-        <h2>Ons vraag</h2>
+        <h2>Vraag</h2>
         <div class="vraag" v-for="vraag in vragen">
             <div class="difficulty" :class="fetchColor(vraag.difficulty)">
                 

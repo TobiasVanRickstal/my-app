@@ -7,11 +7,11 @@
             <input type="text" placeholder="Email" v-model="NewDocent.email">
             <div class="radio-buttons">
                 <div>
-                    <input type="radio" v-model="NewDocent.extern" value="false">
+                    <input type="radio" v-model="extern" value="false">
                     <label>Ik ben een docent</label>
                 </div>
                 <div>
-                    <input type="radio" v-model="NewDocent.extern" value="true">
+                    <input type="radio" v-model="extern" value="true">
                     <label>Ik ben een werknemer van een extern bedrijf</label>
                 </div>
             </div>
@@ -28,6 +28,8 @@
 <script>
     import router from "@/router";
     import DocentDataService from "@/services/DocentDataService";
+    import WerknemerDataService from "@/services/WerknemerDataService"
+    
     import { getAuth } from "firebase/auth";
 
     const auth = getAuth();
@@ -40,9 +42,14 @@
                     naam: "",
                     email: user.email,
                     // Get eamil from logged in user!
-                    extern: false
                 },
-                AdminAanvraag: false
+                extern: false,
+                AdminAanvraag: false,
+                NewExtern:{
+                    naam:  "",
+                    email: user.email,
+                    // TODO verder info aanvullen
+                }
             }
         },
         methods:{
@@ -50,14 +57,26 @@
                 if(this.AdminAanvraag){
                     alert("Je aanvraag om als admin verder te gaan is verzonden")
                 }
-                DocentDataService.create(this.NewDocent)
-                    .then(response => {
-                        console.log(response.data);
-                        router.push("/")
-                    })
-                    .catch(e => {
-                        console.log(e);
-                    });
+                if(this.NewDocent.extern){
+                    DocentDataService.create(this.NewDocent)
+                        .then(response => {
+                            console.log(response.data);
+                            router.push("/")
+                        })
+                        .catch(e => {
+                            console.log(e);
+                        });
+                }
+                else{
+                    WerknemerDataService.create(this.NewDocent)
+                        .then(response => {
+                            console.log(response.data);
+                            router.push("/")
+                        })
+                        .catch(e => {
+                            console.log(e);
+                        });
+                }
             }
             // TODO Adminlabel aanvragen => mail naar Geert.
         }
