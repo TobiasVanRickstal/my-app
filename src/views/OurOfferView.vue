@@ -25,8 +25,8 @@
         <Filter @clicked-show-detail="SendDataBack"/>
     </div>
     
-    <div class="items" v-show="!addItem" v-for="vraag in vragen">
-        <div class="item" v-if="(type ==  vraag.type || type == 'all') && getFilteredVragen(vraag)">
+    <div class="items" v-show="!addItem" v-for="vraag in vraags">
+        <div class="item" v-if="(type ==  vraag.type || type == 'all') && getFilteredVraags(vraag)">
             <!-- can be added -->
             <div class="top-bar">
                 <div class="difficulty" :class="'diff' + vraag.difficulty">
@@ -36,7 +36,7 @@
             
 
             <div class="titel">
-                <router-link :to="{path: '/vragen/'  + vraag.id}"><h2>{{vraag.naam}}</h2></router-link>
+                <router-link :to="{path: '/vraags/'  + vraag.id}"><h2>{{vraag.naam}}</h2></router-link>
             </div>
 
             <div class="beschrijving">
@@ -93,7 +93,7 @@ export default{
             type: 'all',
             typeBox: false,
             filterBox: false,
-            vragen:[],
+            vraags:[],
             filters:null,
         }
     },
@@ -109,34 +109,34 @@ export default{
         Filter
     },
     methods: {
-        // retrieveVragen() {
+        // retrieveVraags() {
         //     VraagDataService.getAll()
         //         .then((response) => {
-        //             const vragen = response.data;
-        //             const updatedVragen = [];
+        //             const vraags = response.data;
+        //             const updatedVraags = [];
 
-        //             vragen.forEach((vraag) => {
+        //             vraags.forEach((vraag) => {
         //                 const updatedVraag = { ...vraag };
         //                 updatedVraag.docent = this.getDocentName(vraag.docent);
-        //                 updatedVragen.push(updatedVraag);
+        //                 updatedVraags.push(updatedVraag);
         //             });
 
-        //             this.vragen = updatedVragen;
+        //             this.vraags = updatedVraags;
         //         })
         //         .catch((e) => {
         //             console.log(e);
         //         });
         // },
 
-        async retrieveVragen() {
+        async retrieveVraags() {
             try {
                 const response = await VraagDataService.getAll();
-                const vragen = response.data;
-                const updatedVragen = await Promise.all(vragen.map(async (vraag) => {
+                const vraags = response.data;
+                const updatedVraags = await Promise.all(vraags.map(async (vraag) => {
                     const docentName = await this.getDocentName(vraag.docent);
                     return { ...vraag, docent: docentName };
                 }));
-                this.vragen = updatedVragen;
+                this.vraags = updatedVraags;
             } catch (error) {
                 console.log(error);
             }
@@ -157,7 +157,7 @@ export default{
         SendDataBack: function (data){
             this.filters = data[0]
         },
-        getFilteredVragen:  function(vraag){
+        getFilteredVraags:  function(vraag){
             if(vraag.status != "done"){ // ENKEL ALS JE GEEN DOCENT BENT
                 if(this.filters){
                     let filtered = true
@@ -220,7 +220,7 @@ export default{
         },
         
         mounted() {
-            this.retrieveVragen();
+            this.retrieveVraags();
             // console.log(this.userId)
         },
     },
@@ -248,7 +248,7 @@ export default{
     // },
     },
     mounted() {
-        this.retrieveVragen();
+        this.retrieveVraags();
         // console.log(this.userId)
     },
 }

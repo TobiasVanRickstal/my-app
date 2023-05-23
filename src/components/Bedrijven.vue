@@ -1,8 +1,8 @@
 <template>
     <!-- TODO -- change to bedrijven! -->
-    <div class="vragen">
+    <div class="vraags">
         <h2>Aanbod</h2>
-        <div class="vraag" v-for="vraag in vragen">
+        <div class="vraag" v-for="vraag in vraags">
             <div class="difficulty" :class="fetchColor(vraag.difficulty)">
                 
             </div>
@@ -26,21 +26,21 @@ import DocentDataService from '@/services/DocentDataService';
 export default{
     data(){
         return{
-            vragen:[],
+            vraags:[],
         }
     },
     methods: {
-        async retrieveVragen() {
+        async retrieveVraags() {
             try {
                 const response = await VraagDataService.getAll();
-                this.vragen = response.data;
+                this.vraags = response.data;
                 await this.updateDocentNames();
             } catch (error) {
                 console.log(error);
             }
         },
         async updateDocentNames() {
-            for (const vraag of this.vragen) {
+            for (const vraag of this.vraags) {
                 vraag.docentName = await this.getDocentName(vraag.docent);
             }
         },
@@ -66,13 +66,13 @@ export default{
         }
     },
     mounted() {
-        this.retrieveVragen();
+        this.retrieveVraags();
     }
 }
 </script>
 
 <style>
-.vragen{
+.vraags{
     margin: 5px;
     display: flex;
     flex-direction: column;

@@ -2,27 +2,27 @@ import http from "../../http-common";
 
 class VraagDataService {
   getAll() {
-    return http.get("/vragen");
+    return http.get("/vraags");
   }
 
   get(id) {
-    return http.get(`/vragen/${id}`);
+    return http.get(`/vraags/${id}`);
   }
 
   create(data) {
-    return http.post("/vragen", data);
+    return http.post("/vraags", data);
   }
 
   update(id, data) {
-    return http.put(`/vragen/${id}`, data);
+    return http.put(`/vraags/${id}`, data);
   }
 
   delete(id) {
-    return http.delete(`/vragen/${id}`);
+    return http.delete(`/vraags/${id}`);
   }
 
   deleteAll() {
-    return http.delete(`/vragen`);
+    return http.delete(`/vraags`);
   }
 
 //   findAllByDocentId(docentId) {

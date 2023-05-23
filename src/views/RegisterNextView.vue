@@ -3,8 +3,8 @@
         <h1>Register Aanvulling</h1>
 
         <form @keyup.enter="registerNext" class="register-next">
-            <input type="text" placeholder="Naam" v-model="NewDocent.naam">
-            <input type="text" placeholder="Email" v-model="NewDocent.email">
+            <input type="text" placeholder="Naam" v-model="NewAccount.naam">
+            <input type="text" placeholder="Email" v-model="NewAccount.email">
             <div class="radio-buttons">
                 <div>
                     <input type="radio" v-model="extern" value="false">
@@ -13,6 +13,19 @@
                 <div>
                     <input type="radio" v-model="extern" value="true">
                     <label>Ik ben een werknemer van een extern bedrijf</label>
+                </div>
+            </div>
+            <div class="extern" v-show="extern">
+                <div>
+                    <p>Medewerker  van dit bedrijf:</p>
+                    <select name="bedrijf" id="bedrijf" v-model="bedrijf">
+                        <option value="bedrijf1">Bedrijf 1</option>
+                        <option value="bedrijf2">Bedrijf 2</option>
+                    </select>
+                </div>
+                <div>
+                    <p>Dit is mijn  specialisatie:</p>
+                    <input type="text" v-model="specialisatie">
                 </div>
             </div>
             <div class="checkbox">
@@ -38,27 +51,25 @@
     export default{
         data(){
             return{
-                NewDocent:{
+                NewAccount:{
                     naam: "",
                     email: user.email,
+                    specialisatie: "",
+                    bedrijf: ""
                     // Get eamil from logged in user!
                 },
                 extern: false,
                 AdminAanvraag: false,
-                NewExtern:{
-                    naam:  "",
-                    email: user.email,
-                    // TODO verder info aanvullen
-                }
             }
         },
         methods:{
             registerNext() {
+                console.log(this.extern)
                 if(this.AdminAanvraag){
                     alert("Je aanvraag om als admin verder te gaan is verzonden")
                 }
-                if(this.NewDocent.extern){
-                    DocentDataService.create(this.NewDocent)
+                if(!this.extern){
+                    DocentDataService.create(this.NewAccount)
                         .then(response => {
                             console.log(response.data);
                             router.push("/")
@@ -68,7 +79,8 @@
                         });
                 }
                 else{
-                    WerknemerDataService.create(this.NewDocent)
+                    console.log(this.NewAccount)
+                    WerknemerDataService.create(this.NewAccount)
                         .then(response => {
                             console.log(response.data);
                             router.push("/")
