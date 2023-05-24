@@ -53,7 +53,6 @@ watch(id, (newValue) => {
 });
 
 onMounted(() => {
-  console.log('This is the universal id:');
   console.log(userId.value);
 });
 
@@ -71,15 +70,6 @@ export default {
   components: {
     NavView,
   }
-
-  
-//   data() {
-//    return {
-//      status: {
-//        nav: 'not-logged-in'
-//      }
-//    }
-//  }
 }
 </script>
 

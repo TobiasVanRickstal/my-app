@@ -25,8 +25,8 @@
         <Filter @clicked-show-detail="SendDataBack"/>
     </div>
     
-    <div class="items" v-show="!addItem" v-for="vraag in vraags">
-        <div class="item" v-if="(type ==  vraag.type || type == 'all') && getFilteredVraags(vraag)">
+    <div class="items" v-show="!addItem" v-for="vraag in vragen">
+        <div class="item" v-if="(type ==  vraag.type.id || type == 'all') && getFilteredVraags(vraag)">
             <!-- can be added -->
             <div class="top-bar">
                 <div class="difficulty" :class="'diff' + vraag.difficulty">
@@ -36,7 +36,7 @@
             
 
             <div class="titel">
-                <router-link :to="{path: '/vraags/'  + vraag.id}"><h2>{{vraag.naam}}</h2></router-link>
+                <router-link :to="{path: '/vragen/'  + vraag.id}"><h2>{{vraag.naam}}</h2></router-link>
             </div>
 
             <div class="beschrijving">
@@ -60,16 +60,16 @@
                         {{ vraag.periodes }}
                     </div> -->
                     <div class="docent">
-                        <p>{{ vraag.docent }}</p>
+                        <p>{{ vraag.docent.naam }}</p>
                     </div>
                     <div class="vak">
-                        {{ vraag.vak }}
+                        {{ vraag.vak.naam }}
                     </div>
                     <div class="topic">
-                        {{ vraag.topic }}
+                        {{ vraag.topic.naam }}
                     </div>
                     <div class="type">
-                        {{ vraag.type }}
+                        {{ vraag.type.naam }}
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@ export default{
             type: 'all',
             typeBox: false,
             filterBox: false,
-            vraags:[],
+            vragen:[],
             filters:null,
         }
     },
@@ -109,34 +109,11 @@ export default{
         Filter
     },
     methods: {
-        // retrieveVraags() {
-        //     VraagDataService.getAll()
-        //         .then((response) => {
-        //             const vraags = response.data;
-        //             const updatedVraags = [];
-
-        //             vraags.forEach((vraag) => {
-        //                 const updatedVraag = { ...vraag };
-        //                 updatedVraag.docent = this.getDocentName(vraag.docent);
-        //                 updatedVraags.push(updatedVraag);
-        //             });
-
-        //             this.vraags = updatedVraags;
-        //         })
-        //         .catch((e) => {
-        //             console.log(e);
-        //         });
-        // },
-
         async retrieveVraags() {
             try {
                 const response = await VraagDataService.getAll();
-                const vraags = response.data;
-                const updatedVraags = await Promise.all(vraags.map(async (vraag) => {
-                    const docentName = await this.getDocentName(vraag.docent);
-                    return { ...vraag, docent: docentName };
-                }));
-                this.vraags = updatedVraags;
+                this.vragen = response.data;
+                // console.log(response.data)
             } catch (error) {
                 console.log(error);
             }
@@ -166,7 +143,7 @@ export default{
                             filtered = true
                         }
                         else{
-                            filtered = vraag.docent == this.filters.docent
+                            filtered = vraag.docent.id == this.filters.docent
                         }
                     }
                     if(filtered){
@@ -175,7 +152,7 @@ export default{
                                 filtered = true
                             }
                             else{
-                                filtered = vraag.topic == this.filters.topic
+                                filtered = vraag.topic.id == this.filters.topic
                             }
                         }
                     }
@@ -195,7 +172,7 @@ export default{
                                 filtered = true
                             }
                             else{
-                                filtered = vraag.vak == this.filters.vak
+                                filtered = vraag.vak.id == this.filters.vak
                             }
                         }
                     }
@@ -221,35 +198,10 @@ export default{
         
         mounted() {
             this.retrieveVraags();
-            // console.log(this.userId)
         },
-    },
-    computed:{
-        // getDocentName(id) {
-        //     DocentDataService.get(id)
-        //         .then(response => {
-        //             return response.data.naam;
-        //         })
-        //         .catch(e => {
-        //             console.log(e);
-        //         });
-        // }
-
-    //     async getDocentName(id) {
-    //   return async (id) => {
-    //     try {
-    //       const response = await DocentDataService.get(id);
-    //       return response.data.naam;
-    //     } catch (e) {
-    //       console.log(e);
-    //       return "";
-    //     }
-    //   };
-    // },
     },
     mounted() {
         this.retrieveVraags();
-        // console.log(this.userId)
     },
 }
 </script>

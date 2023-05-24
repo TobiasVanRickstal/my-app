@@ -11,9 +11,7 @@
             <label for="topic">topic</label>
             <select name="topic" id="topic" v-model="topic">
                 <option value="all" selected>All</option>
-                <option value="development">development</option>
-                <option value="design">design</option>
-                <option value="business">business</option>
+                <option v-for="topic in topics" :value="topic.id">{{topic.naam}}</option>
             </select>
         </div>
 
@@ -21,25 +19,7 @@
             <label for="vak">vak</label>
             <select name="vak" id="vak" v-model="vak">
                 <option value="all" selected>All</option>
-                <option value="creatie 1">creatie 1</option>
-                <option value="creatie 2">creatie 2</option>
-                <option value="creatie 3">creatie 3</option>
-                <option value="ontwerpen 1">ontwerpen 1</option>
-                <option value="ontwerpen 2">ontwerpen 2</option>
-                <option value="development 1">development 1</option>
-                <option value="development 2">development 2</option>
-                <option value="development 3">development 3</option>
-                <option value="development 4">development 4</option>
-                <option value="ondernemerschap 1">ondernemerschap 1</option>
-                <option value="ondernemerschap 2">ondernemerschap 2</option>
-                <option value="ondernemerschap 3">ondernemerschap 3</option>
-                <option value="lab 1">lab 1</option>
-                <option value="lab 2">lab 2</option>
-                <option value="lab 3">lab 3</option>
-                <option value="integratie advanced">integratie advanced: front-end development</option>
-                <option value="capita selecta 1">capita selecta 1</option>
-                <option value="capita selecta 2">capita selecta 2</option>
-                <option value="capita selecta 3">capita selecta 3</option>
+                <option v-for="vak in vaks" :value="vak.id">{{vak.naam}}</option>
             </select>
         </div>
         <div>
@@ -69,6 +49,8 @@
 
 <script>
 import DocentDataService from '@/services/DocentDataService';
+import VakDataService from '@/services/VakDataService';
+import TopicDataService from '@/services/TopicDataService';
 
 export default{
     data(){
@@ -79,7 +61,9 @@ export default{
             vak: "all",
             fase: "all",
             difficulty: "all",
-            data:[]
+            data:[],
+            vaks:{},
+            topics:{},
         }
     },
     methods:{
@@ -87,7 +71,6 @@ export default{
             DocentDataService.getAll()
                 .then((response) => {
                     this.docents = response.data;
-                    console.log(response.data);
                 })
                 .catch((e) => {
                     console.log(e);
@@ -104,10 +87,33 @@ export default{
             this.vak = "all"
             this.fase = "all"
             this.filteredData();
+        },
+        getTopics(){
+            TopicDataService.getAll()
+                .then(response => {
+                    this.topics = response.data;
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        },
+        getVaks(){
+            VakDataService.getAll()
+                .then(response => {
+                    this.vaks = response.data;
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        },
+        getData(){
+            this.getTopics();
+            this.getVaks();
         }
     },
     created(){
         this.retrieveDocents();
+        this.getData();
     }
 }
 </script>

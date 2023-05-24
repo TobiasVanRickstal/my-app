@@ -22,7 +22,7 @@ const router = createRouter({
       }
     },
     { 
-      path: "/vraags/:id",
+      path: "/vragen/:id",
       component: () => import("../views/OfferView.vue"),
       meta: {
         requiresAuth: true,

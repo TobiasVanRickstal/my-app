@@ -1,22 +1,18 @@
 <template>
     <div class="typeBox">
         <div class="type button" v-on:click="setActive('all')" :class="{ active: isActive('all') }">all</div>
-        <div class="type button" v-on:click="setActive('gastlessen')" :class="{ active: isActive('gastlessen') }">gastlessen</div>
-        <div class="type button" v-on:click="setActive('reeks')" :class="{ active: isActive('reeks') }">reeks</div>
-        <div class="type button" v-on:click="setActive('goodies')" :class="{ active: isActive('goodies') }">goodies</div>
-        <div class="type button" v-on:click="setActive('(les)materiaal')" :class="{ active: isActive('(les)materiaal') }">(les)materiaal</div>
-        <div class="type button" v-on:click="setActive('opdrachten')" :class="{ active: isActive('opdrachten') }">opdrachten</div>
-        <div class="type button" v-on:click="setActive('lezing')" :class="{ active: isActive('lezing') }">lezing</div>
-        <div class="type button" v-on:click="setActive('evenement')" :class="{ active: isActive('evenement') }">evenement</div>
+        <div class="type button" v-for="type  in types" v-on:click="setActive(type.id)" :class="{ active: isActive(type.id) }">{{type.naam}}</div>
     </div>
 </template>
 <script>
+import TypeDataService from '@/services/TypeDataService'
 
 export default{
     data() {
         return { 
             activeItem: this.selectedType,
-            filterBoxActive: false
+            filterBoxActive: false,
+            types: {}
         }
     },
     props:{
@@ -29,8 +25,20 @@ export default{
         setActive: function (menuItem) {
             this.activeItem = menuItem // no need for Vue.set()
             this.$emit("clicked-show-detail", menuItem)
-        }
+        },
+        getTypes(){
+            TypeDataService.getAll()
+                .then(response => {
+                    this.types = response.data;
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        },
     },
+    mounted(){
+        this.getTypes();
+    }
 }
 </script>
 <!-- active class -->

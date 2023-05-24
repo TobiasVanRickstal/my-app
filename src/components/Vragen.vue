@@ -1,7 +1,7 @@
 <template>
-    <div class="vraags">
+    <div class="vragen">
         <h2>Vraag</h2>
-        <div class="vraag" v-for="vraag in vraags">
+        <div class="vraag" v-for="vraag in vragen">
             <div class="difficulty" :class="fetchColor(vraag.difficulty)">
                 
             </div>
@@ -25,7 +25,7 @@ import DocentDataService from '@/services/DocentDataService';
 export default{
     data(){
         return{
-            vraags:[],
+            vragen:[],
             docentNaam: ""
         }
     },
@@ -33,14 +33,14 @@ export default{
         async retrieveVraags() {
             try {
                 const response = await VraagDataService.getAll();
-                this.vraags = response.data;
+                this.vragen = response.data;
                 await this.updateDocentNames();
             } catch (error) {
                 console.log(error);
             }
         },
         async updateDocentNames() {
-            for (const vraag of this.vraags) {
+            for (const vraag of this.vragen) {
                 vraag.docentName = await this.getDocentName(vraag.docent);
             }
         },
@@ -72,7 +72,7 @@ export default{
 </script>
 
 <style>
-.vraags{
+.vragen{
     margin: 5px;
     display: flex;
     flex-direction: column;
