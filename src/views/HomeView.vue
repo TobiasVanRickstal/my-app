@@ -12,7 +12,6 @@
       <Vragen />
     </div>
   </div>
-  
 </template>
 
 <script>

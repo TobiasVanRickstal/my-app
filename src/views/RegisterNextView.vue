@@ -18,14 +18,13 @@
             <div class="extern" v-show="extern">
                 <div>
                     <p>Medewerker  van dit bedrijf:</p>
-                    <select name="bedrijf" id="bedrijf" v-model="bedrijf">
-                        <option value="bedrijf1">Bedrijf 1</option>
-                        <option value="bedrijf2">Bedrijf 2</option>
+                    <select name="bedrijf" id="bedrijf" v-model="NewAccount.bedrijf">
+                        <option v-for="bedrijf in bedrijven" :value="bedrijf.id">{{bedrijf.naam}}</option>
                     </select>
                 </div>
                 <div>
                     <p>Dit is mijn  specialisatie:</p>
-                    <input type="text" v-model="specialisatie">
+                    <input type="text" v-model="NewAccount.specialisatie">
                 </div>
             </div>
             <div class="checkbox">
@@ -42,6 +41,7 @@
     import router from "@/router";
     import DocentDataService from "@/services/DocentDataService";
     import WerknemerDataService from "@/services/WerknemerDataService"
+    import BedrijfDataService from "@/services/BedrijfDataService";
     
     import { getAuth } from "firebase/auth";
 
@@ -60,6 +60,7 @@
                 },
                 extern: false,
                 AdminAanvraag: false,
+                bedrijven: {}
             }
         },
         methods:{
@@ -72,7 +73,7 @@
                     DocentDataService.create(this.NewAccount)
                         .then(response => {
                             console.log(response.data);
-                            router.push("/")
+                            // router.push("/")
                         })
                         .catch(e => {
                             console.log(e);
@@ -89,8 +90,21 @@
                             console.log(e);
                         });
                 }
+            },
+            getBedrijven(){
+                BedrijfDataService.getAll()
+                    .then(response => {
+                        this.bedrijven = response.data
+                    })
+                    .catch(e => {
+                        console.log(e)
+                    })
+
             }
             // TODO Adminlabel aanvragen => mail naar Geert.
+        },
+        mounted(){
+            this.getBedrijven();
         }
     }
 </script>

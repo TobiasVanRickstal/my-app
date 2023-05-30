@@ -25,11 +25,10 @@ class WerknemerDataService {
     return http.delete(`/werknemers`);
   }
 
-  findByTitle(naam) {
-    return http.get(`/werknemers?naam=${naam}`);
+  findAllByBedrijfId(id) {
+    return http.get(`/werknemers/bedrijven/${id}/werknemers`);
   }
-// TODO Find docent by email
-  findByEmail(email) {
+  findByEmail(email){
     return http.get(`/werknemers?email=${email}`);
   }
 }

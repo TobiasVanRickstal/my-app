@@ -45,13 +45,13 @@
             <div class="bottom-info">
                 <div class="infographics">
                     <div class="bekeken">
-                        <span>{{vraag.views}}</span>
+                        <span><img src="../assets/icons/home.png" alt="">{{vraag.views}}</span>
                     </div>
                     <div class="solicitanten">
-                        <span>{{vraag.solicitanten}}</span>
+                        <span><img src="../assets/icons/hover-state.png" alt="">{{vraag.solicitanten}}</span>
                     </div>
                     <div class="kostprijs">
-                        <span>€ {{vraag.prijs}}</span>
+                        <span>€{{vraag.prijs}}</span>
                     </div>
                 </div>
 

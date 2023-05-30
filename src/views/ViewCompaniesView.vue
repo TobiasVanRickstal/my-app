@@ -1,20 +1,24 @@
 <template>
    <div class="bedrijven">
-        <div class="bedrijf" id="capgemini">
+        <div class="bedrijf" :id="bedrijf.naam" v-for="(bedrijf, index) in bedrijven" :key="index">
             <div class="logo">
-                <img src="../assets/capgemini-logo.jpg" alt="capgemini">
-                <div class="beschrijving" v-show="showMoreCapgemini">
-                    <p>Capgemini is een Frans consultancybedrijf, dat zijn werkgebied in de ICT en consultancy heeft. Wereldwijd bood de multinational in 2017 aan meer dan 195.000 mensen werk. Het hoofdkantoor van de Capgemini Group is gevestigd in Parijs.</p>
+                <img :src="getBedrijfImage(bedrijf.naam)" :alt="bedrijf.naam">
+                <h2>{{bedrijf.naam}}</h2>
+                <div class="beschrijving" v-show="showMore[index]">
+                    <p>{{bedrijf.beschrijving}}</p>
                 </div>
             </div>
             <div class="personen">
-                <div class="persoon" v-for="i in 6" :key="i">
-                    <div class="personen-foto"><img src="../assets/bedrijven/profile.jpg" alt=""></div>
-                    <div class="personen-naam">werknemer {{i}}</div>
-                    <div class="personen-functie" v-show="showMoreCapgemini">functie</div>
+                <!-- TODO werknemers tonen van dit bedrijf, BUGGINGGS -->
+                <div class="persoon" v-for="werknemer in getCorrectWerknemers(bedrijf.id)" :key="werknemer.id">
+                    <div>
+                        <div class="personen-foto"><img src="../assets/bedrijven/profile.jpg" alt=""></div>
+                        <div class="personen-naam">{{werknemer.naam}}</div>
+                        <div class="personen-functie">{{werknemer.specialisatie}}</div>
+                    </div>
                 </div>
             </div>
-            <div class="gegevens"  v-show="showMoreCapgemini">
+            <div class="gegevens"  v-show="showMore[index]">
                 <div class="address">
                     <h3>address:</h3>
                     <div class="gegevens-straat">destraat 25</div>
@@ -22,31 +26,79 @@
                 </div>
                 <div class="economisch">
                     <h3>BTW:</h3>
-                    <div class="gegevens-BTW">2561 48452 7875 4545</div>
+                    <div class="gegevens-BTW">{{bedrijf.BTW}}</div>
                 </div>
                 
                 <div class="contact">
                     <h3>contact gegevens:</h3>
                     <div class="gegevens-tel">+32/478 5500650</div>
-                    <div class="gegevens-mail">teste@gidjsgsj.erkg</div>
+                    <div class="gegevens-mail">{{bedrijf.email}}</div>
                 </div>
             </div>
-            <button class="showMore button" :class="{activeButton: showMoreCapgemini}"  @click="showMoreCapgemini =  !showMoreCapgemini"><span v-show="!showMoreCapgemini">meer zien</span><span v-show="showMoreCapgemini">minder zien</span></button>
+            <button class="showMore[index] button" :class="{activeButton: showMore[index]}"  @click="showMore[index] =  !showMore[index]"><span v-show="!showMore[index]">meer zien</span><span v-show="showMore[index]">minder zien</span></button>
         </div>
    </div> 
 </template>
 
 <script>
+import BedrijfDataService from '@/services/BedrijfDataService';
+import WerknemerDataService from '@/services/WerknemerDataService';
+
+
 export default{
     data(){
         return{
-            showMoreCapgemini: false
+            werknemers: {},
+            bedrijven: {},
+            showMore:  [],
+            // werknemers: 0
         }
     },
     methods:{
-        // showMore: function(thisID){
-            
-        // }
+        async getWerknemers(){
+            try {
+                const response = await WerknemerDataService.getAll();
+                this.werknemers = response.data
+                console.log(response.data)
+                // return response.data.length
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async getBedrijven(){
+            try {
+                const response = await BedrijfDataService.getAll();
+                this.bedrijven = response.data;
+                // console.log(response.data)
+                // TODO for each (this.getWerknemers(bedrijf.id))
+                // TODO this.werknemers map bedrijf.id + werknemer
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        check(bedrijfId, id){
+            if(bedrijfId === id){
+                return true
+            }
+            else{
+                return false
+            }
+        },
+        getBedrijfImage(naam){
+            return require(`../assets/bedrijven/${naam}/bedrijf.jpg`);
+        }
+    },
+    computed: {
+        getCorrectWerknemers() {
+            return (bedrijfId) => {
+                return this.werknemers.filter((werknemer) => werknemer.bedrijfId === bedrijfId);
+            };
+        }
+    },
+    mounted(){
+        this.getBedrijven();
+        this.getWerknemers();
+        this.showMore = Array(this.bedrijven.length).fill(false);
     }
 }
 </script>

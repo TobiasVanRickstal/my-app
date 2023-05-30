@@ -18,104 +18,112 @@
         <!-- search bar - docenten database -->
         <div class="docent">
             <p>Docent:</p>
-            <p>{{currentDocent.naam}}</p>
+            <p>{{docent}}</p>
         </div>
 
         <div class="naam">
             <p>Naam:</p>
-            <p>{{data.naam}}</p>
+            <p>{{currentVraag.naam}}</p>
         </div>
 
         <div class="beschrijving">
             <p>Beschrijving:</p>
-            <p>{{data.informatie}}</p>
+            <p>{{currentVraag.informatie}}</p>
         </div>
 
         <div class="typeData">
             <p>Type:</p>
-            <p>{{data.type}}</p>
+            <p>{{type}}</p>
         </div>
         
         <div class="topic">
             <p>Topic:</p>
-            <p>{{data.topic}}</p>
+            <p>{{topic}}</p>
         </div>
 
         <div class="vak">
             <p>Vak:</p>
-            <p>{{data.vak}}</p>
+            <p>{{vak}}</p>
         </div>
         
         <div class="fase">
             <p>Fase:</p>
-            <p>{{data.fase}}</p>
+            <p>{{currentVraag.fase}}</p>
         </div>
 
         <div class="periode">
             <p>Periodes:</p>
-            <p>{{data.periodes}}</p>
+            <p>{{currentVraag.periodes}}</p>
         </div>
         
         <div class="views">
             <p>Solicitanten /  views:</p>
-            <p>{{data.solicitanten}} / {{data.views}}</p>
+            <p>{{currentVraag.solicitanten}} / {{currentVraag.views}}</p>
         </div>
 
         <div class="status" v-show="adminWatching">
             <p>Admin prrivillege:</p>
-            <p>Change Status: "{{data.status}}"</p>
-            <button v-show="data.status  != 'pending'" @click="changeStatus('pending')">Pending</button>
-            <button v-show="data.status  != 'active'" @click="changeStatus('active')">Active</button>
-            <button v-show="data.status  != 'done'" @click="changeStatus('done')">Done</button>
+            <p>Change Status: "{{currentVraag.status}}"</p>
+            <button v-show="currentVraag.status  != 'pending'" @click="changeStatus('pending')">Pending</button>
+            <button v-show="currentVraag.status  != 'active'" @click="changeStatus('active')">Active</button>
+            <button v-show="currentVraag.status  != 'done'" @click="changeStatus('done')">Done</button>
         </div>
     </div>
 </template>
 
 <script>
-import VraagDataService from '@/services/VraagDataService';
 import DocentDataService from '@/services/DocentDataService';
+import VraagDataService from '@/services/VraagDataService';
+import {getAuth} from 'firebase/auth';
 
 export default{
     data(){
         return{
-            data: [],
-            currentDocent:[],
-            adminWatching: false
+            currentVraag: {},
+            adminWatching: false,
+            docent: "",
+            type: "",
+            topic: "",
+            vak: ""
         }
     },
     methods:{
-        getVraag(id){
-            VraagDataService.get(id)
+        async getCurrentDocent(){
+            const auth = getAuth();
+            const user = auth.currentUser;
+            await DocentDataService.findByEmail(user.email)
                 .then(response => {
-                    this.data = response.data;
-                    console.log(response.data);
-                    console.log(response.data.views);
-                    this.getDocent(response.data.docent);
-                    
-
-                    // // Niet doen als een docent  of het school deze  bekijkt ------
-                    // this.data.views +=  1;
-                    // VraagDataService.update(this.data.id, this.data)
-                    //     .then(response => {
-                    //     this.data.status = to;
-                    //     console.log(response.data);
-                    // })
-                    // .catch(e => {
-                    //     console.log(e);
-                    // });
-                    // // ----------
+                    // console.log(response.data)
+                    return true
                 })
                 .catch(e => {
                     console.log(e);
+                    return false
                 });
         },
-        getDocent(id) {
-            DocentDataService.get(id)
+        getVraag(id){
+            VraagDataService.get(id)
                 .then(response => {
-                    this.currentDocent = response.data;
-                    if(response.data.admin){
-                        this.adminWatching = true
+                    this.currentVraag = response.data;
+                    this.docent =  response.data.docent.naam
+                    this.type =  response.data.type.naam
+                    this.topic =  response.data.topic.naam
+                    this.vak =  response.data.vak.naam
+
+                    if(!this.getCurrentDocent()){
+                        console.log(this.getCurrentDocent())
+                         // Niet doen als een docent  of het school deze  bekijkt ------
+                        this.currentVraag.views +=  1;
+                        VraagDataService.update(this.currentVraag.id, this.currentVraag)
+                            .then(response => {
+                            this.data.status = to;
+                        })
+                        .catch(e => {
+                            console.log(e);
+                        });
+                        // ----------
                     }
+                   
                 })
                 .catch(e => {
                     console.log(e);
@@ -123,25 +131,23 @@ export default{
         },
         changeStatus(to){
             var updateData = {
-                id: this.data.id,
+                id: this.currentVraag.id,
                 status: to
             };
 
-            VraagDataService.update(this.data.id, updateData)
+            VraagDataService.update(this.currentVraag.id, updateData)
                 .then(response => {
-                    this.data.status = to;
+                    this.currentVraag.status = to;
                     console.log(response.data);
                 })
                 .catch(e => {
                     console.log(e);
                 });
         }
-
     },
     mounted(){
-        this.getVraag(this.$route.params.id);
+        this.getVraag(this.$route.params.id)
     }
-    
 }
 </script>
 <!-- https://stackoverflow.com/questions/61585411/pass-data-through-router-to-other-component-in-vue -->

@@ -13,6 +13,7 @@ import { onMounted, ref, watch } from 'vue';
 import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
 import { useRouter } from 'vue-router';
 import DocentDataService from './services/DocentDataService';
+// import WerknemerDataService from './services/WerknemerDataService';
 
 const router = useRouter();
 const isLoggedIn = ref(false);
@@ -34,6 +35,14 @@ onMounted(() => {
         .catch(e => {
             console.log(e);
         });
+        // WerknemerDataService.findByEmail(email)
+        //   .then(response => {
+        //       var werknemer = response.data
+        //       id.value = werknemer[0].id        
+        //   })
+        //   .catch(e => {
+        //       console.log(e);
+        //   });
     }
     else{
       isLoggedIn.value = false;
@@ -60,6 +69,7 @@ onMounted(() => {
 
 <script>
 import NavView from '@/components/NavView.vue'
+import WerknemerDataService from './services/WerknemerDataService';
 
 export default {
   data(){

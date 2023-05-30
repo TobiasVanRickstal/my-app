@@ -122,14 +122,14 @@ export default{
     methods:{
         clickedShowDetailModal: function (value) {
             this.periodes = value.toString();
-            console.log(this.periodes)
+            // console.log(this.periodes)
         },
         getDocent(id) {
             DocentDataService.get(id)
                 .then(response => {
                     this.currentDocent = response.data;
-                    console.log(response.data);
-                    console.log(response.data.admin);
+                    // console.log(response.data);
+                    // console.log(response.data.admin);
                 })
                 .catch(e => {
                     console.log(e);
@@ -139,7 +139,7 @@ export default{
             TypeDataService.getAll()
                 .then(response => {
                     this.types = response.data;
-                    console.log(response.data);
+                    // console.log(response.data);
                 })
                 .catch(e => {
                     console.log(e);
@@ -149,7 +149,7 @@ export default{
             TopicDataService.getAll()
                 .then(response => {
                     this.topics = response.data;
-                    console.log(response.data);
+                    // console.log(response.data);
                 })
                 .catch(e => {
                     console.log(e);
@@ -159,7 +159,7 @@ export default{
             VakDataService.getAll()
                 .then(response => {
                     this.vaks = response.data;
-                    console.log(response.data);
+                    // console.log(response.data);
                 })
                 .catch(e => {
                     console.log(e);

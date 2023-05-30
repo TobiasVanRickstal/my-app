@@ -86,6 +86,7 @@ export default{
             this.topic = "all"
             this.vak = "all"
             this.fase = "all"
+            this.difficulty = "all"
             this.filteredData();
         },
         getTopics(){
