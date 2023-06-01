@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-link to="/ons-vraag">Terug naar overzicht</router-link>
+        <router-link to="/onze-vragen">Terug naar overzicht</router-link>
     </div>
     <div class="vraag-preview">
 
@@ -94,6 +94,7 @@ export default{
             await DocentDataService.findByEmail(user.email)
                 .then(response => {
                     // console.log(response.data)
+                    this.adminWatching = true
                     return true
                 })
                 .catch(e => {
@@ -110,7 +111,7 @@ export default{
                     this.topic =  response.data.topic.naam
                     this.vak =  response.data.vak.naam
 
-                    if(!this.getCurrentDocent()){
+                    if(this.getCurrentDocent()){
                         console.log(this.getCurrentDocent())
                          // Niet doen als een docent  of het school deze  bekijkt ------
                         this.currentVraag.views +=  1;

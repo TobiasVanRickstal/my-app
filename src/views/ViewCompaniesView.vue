@@ -8,7 +8,7 @@
                     <p>{{bedrijf.beschrijving}}</p>
                 </div>
             </div>
-            <div class="personen">
+            <div class="personen" v-show="showMore[index]">
                 <!-- TODO werknemers tonen van dit bedrijf, BUGGINGGS -->
                 <div class="persoon" v-for="werknemer in getCorrectWerknemers(bedrijf.id)" :key="werknemer.id">
                     <div>

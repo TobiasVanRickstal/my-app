@@ -7,7 +7,7 @@
             </div>
             <div class="info">
                 <div class="head">
-                    <p v-if="vraag.docentName">{{ vraag.docentName }} - {{vraag.topic }}</p>
+                    <p v-if="vraag.docent">{{ vraag.docent.naam }} - {{vraag.topic }}</p>
                     <p v-else>loading...</p>
                 </div>
                 <div class="title">
@@ -34,14 +34,8 @@ export default{
             try {
                 const response = await VraagDataService.getAll();
                 this.vragen = response.data;
-                await this.updateDocentNames();
             } catch (error) {
                 console.log(error);
-            }
-        },
-        async updateDocentNames() {
-            for (const vraag of this.vragen) {
-                vraag.docentName = await this.getDocentName(vraag.docent);
             }
         },
         async getDocentName(id) {
