@@ -23,32 +23,53 @@ const router = createRouter({
     },
     { 
       path: "/vragen/:id",
-      component: () => import("../views/OfferView.vue"),
+      component: () => import("../views/DetailOfferView.vue"),
       meta: {
         requiresAuth: true,
       }
     },
     { 
-      path: "/onze-vragen",
-      component: () => import("../views/OurOfferView.vue"),
+      path: "/vragen",
+      component: () => import("../views/OfferView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    { 
+      path: "/aanbod",
+      component: () => import("../views/AanbodView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    { 
+      path: "/aanbod/:id",
+      component: () => import("../views/DetailAanbodView.vue"),
       meta: {
         requiresAuth: true,
       },
     },
     { 
       path: "/bedrijven-bekijken",
-      component: () => import("../views/ViewCompaniesView.vue"),
+      component: () => import("../views/CompaniesView.vue"),
       meta: {
         requiresAuth: true,
       }
     },
-    // { 
-    //   path: "/historiek",
-    //   component: () => import("../views/history"),
-    //   meta: {
-    //     requiresAuth: true,
-    //   }
-    // },
+    { 
+      path: "/ons-bedrijf/:id",
+      component: () => import("../views/OurCompanyView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    { 
+      path: "/historiek",
+      component: () => import("../views/HistoriekView.vue"),
+      meta: {
+        requiresAuth: true,
+      }
+    },
     { 
       path: "/:pathMatch(.*)*",
       name: "PageNotFound",

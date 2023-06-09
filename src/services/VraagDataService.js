@@ -25,9 +25,17 @@ class VraagDataService {
     return http.delete(`/vragen`);
   }
 
-//   findAllByDocentId(docentId) {
-//     return http.get(`/vraag-docent/${docentId}`);
-//   }
+  findAllByDocentId(id) {
+    return http.get(`/vragen/docenten/${id}/vragen`);
+  }
+
+  findAllByWerknemerId(id) {
+    return http.get(`/vragen/werknemers/${id}/vragen`);
+  }
+
+  findAllByBedrijfId(id) {
+    return http.get(`/vragen/bedrijven/${id}/vragen`);
+  }
 }
 
 export default new VraagDataService();

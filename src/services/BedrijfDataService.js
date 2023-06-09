@@ -25,9 +25,9 @@ class BedrijfDataService {
     return http.delete(`/bedrijven`);
   }
 
-  findByTitle(naam) {
-    return http.get(`/bedrijven?naam=${naam}`);
-  }
+  // findByTitle(naam) {
+  //   return http.get(`/bedrijven?naam=${naam}`);
+  // }
 
 }
 

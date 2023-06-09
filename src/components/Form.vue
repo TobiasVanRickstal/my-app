@@ -75,7 +75,6 @@
 
         <div class="button">
             <button @click="saveVraag()">Opslagen</button>
-            
         </div>
     </div>
 </template>
@@ -121,8 +120,8 @@ export default{
     },
     methods:{
         clickedShowDetailModal: function (value) {
-            this.periodes = value.toString();
-            // console.log(this.periodes)
+            this.vraag.periodes = value.toString();
+            console.log(this.periodes)
         },
         getDocent(id) {
             DocentDataService.get(id)

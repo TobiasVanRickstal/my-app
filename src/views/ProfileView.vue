@@ -1,36 +1,32 @@
 <template>
     <div>
         <div class="welcome">
-            <h1>Welcome {{currentDocent.naam}}</h1>
+            <h1>Welcome {{currentUser.naam}}</h1>
         </div>
         <div class="profile-gegevens" v-show="!edit">
             <div>
                 <h3>Naam:</h3>
-                <h2>{{currentDocent.naam}}</h2>
+                <h2>{{currentUser.naam}}</h2>
             </div>
             <div>
                 <h3>email:</h3>
-                <h2>{{currentDocent.email}}</h2>
+                <h2>{{currentUser.email}}</h2>
             </div>
             <div class="boolean">
-                <h3 :class="(currentDocent.admin)?'class_if_is_true':'else_class'">admin</h3>
+                <h3 :class="(currentUser.admin)?'class_if_is_true':'else_class'">admin</h3>
             </div>
-            <div class="boolean">
-                <h3 :class="(currentDocent.extern)?'class_if_is_true':'else_class'">extern</h3>
+            <div class="boolean" v-if="!docentAsUser">
+                <h3 :class="(currentUser.bedrijf)?'class_if_is_true':'else_class'">{{bedrijf.naam}}</h3>
             </div>
         </div>
         <div class="profile-update" v-show="edit">
             <div>
                 <p>Naam</p>
-                <input type="text" v-model="currentDocent.naam">
+                <input type="text" v-model="currentUser.naam">
             </div>
             <div>
                 <p>Mail</p>
-                <input type="text" v-model="currentDocent.email">
-            </div>
-            <div>
-                <p>Extern</p>
-                <input type="checkbox" v-model="currentDocent.extern">
+                <input type="text" v-model="currentUser.email">
             </div>
             <div>
                 <button @click="updateDocent">Opslaan</button>
@@ -51,29 +47,49 @@
 
 <script>
 import DocentDataService from '@/services/DocentDataService';
+import WerknemerDataService from '@/services/WerknemerDataService';
 
 export default{
     data(){
         return{
-            currentDocent: {},
+            currentUser: {},
+            bedrijf: {},
             edit: false,
             messageHide: false,
         }
     },
+    props: {
+        docentAsUser: Boolean
+    },
     methods: {
-        getDocent(id) {
-            DocentDataService.get(id)
+        getUser(id) {
+            if(this.docentAsUser){
+                DocentDataService.get(id)
                 .then(response => {
-                    this.currentDocent = response.data;
-                    console.log(response.data);
-                    console.log(response.data.admin);
+                    this.currentUser = response.data;
+                    // console.log(response.data);
+                    console.log('DOCENT')
                 })
                 .catch(e => {
                     console.log(e);
                 });
+            }
+            else{
+                WerknemerDataService.get(id)
+                .then(response => {
+                    this.currentUser = response.data;
+                    this.bedrijf = response.data.bedrijf
+                    // console.log(response.data);
+                    console.log('WERKNEMER')
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+            }
         },
         updateDocent() {
-            DocentDataService.update(this.currentDocent.id, this.currentDocent)
+            if(this.docentAsUser){
+                DocentDataService.update(this.currentUser.id, this.currentUser)
                 .then(response => {
                     console.log(response.data);
                     this.messageHide = true
@@ -84,17 +100,46 @@ export default{
                 .catch(e => {
                     console.log(e);
                 });
-        },
-        deleteDocent() {
-           if (confirm("Ben je zeker?")){
-                DocentDataService.delete(this.currentDocent.id)
+            }
+            else{
+                WerknemerDataService.update(this.currentUser.id, this.currentUser)
                 .then(response => {
                     console.log(response.data);
-                    this.$router.push({ name: "login" });
+                    this.messageHide = true
+                    this.message = 'The Werknemer was updated successfully!';
+                    this.edit = false;
+                    setTimeout(() => this.messageHide = false, 2000)
                 })
                 .catch(e => {
                     console.log(e);
                 });
+            }
+            
+        },
+        deleteDocent() {
+            if(this.docentAsUser){
+                if (confirm("Ben je zeker?")){
+                    DocentDataService.delete(this.currentUser.id)
+                    .then(response => {
+                        console.log(response.data);
+                        this.$router.push({ name: "login" });
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+                }
+            }
+            else{
+                if (confirm("Ben je zeker?")){
+                    WerknemerDataService.delete(this.currentUser.id)
+                    .then(response => {
+                        console.log(response.data);
+                        this.$router.push({ name: "login" });
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+                }
             }
         },
         back(){
@@ -103,7 +148,7 @@ export default{
         }
     },
     mounted() {
-        this.getDocent(this.$route.params.id);
+        this.getUser(this.$route.params.id);
     }
 }
 </script>

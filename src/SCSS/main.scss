@@ -1,8 +1,3 @@
-@font-face {
-    font-family: "Blaak-bold";
-    src: local("Blaak-bold"),
-    url(../fonts/BlaakBold_PERSONAL.ttf) format("truetype");
-}
 $S-space: 5px;
 $M-space: 20px;
 $L-space: 50px;
@@ -21,7 +16,7 @@ body{
     width: 66%;
     margin: auto;
     background: #ffffff;
-    font-family: museo-sans,sans-serif;
+    font-family: Source Sans Pro,Arial,Helvetica Neue,Helvetica,sans-serif;
     font-weight: 500;
     font-style: normal;
     background-color:  lavender;
@@ -57,7 +52,6 @@ body{
 }
 // NAVIGATIE
 nav{
-    font-family: "Blaak-bold";
     margin: $M-space auto;
     width: 95%;
     display: flex;
@@ -73,6 +67,7 @@ nav{
         align-items: center;
         flex-direction: column;
 
+        
         .hover-state{
             display: none;
         }
@@ -91,6 +86,9 @@ nav{
         img{
             width: 50px;
             height: auto;
+        }
+        &.home img{
+            width: 120px;
         }
     }
     a.router-link-active{
@@ -439,5 +437,50 @@ nav{
     .delete{
         background-color: red;
         color: white;
+    }
+}
+.aanbods{
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    background-color: dimgrey;
+    padding: 25px 5px;
+
+    .aanbod{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 80%;
+        
+        margin: 10px auto;
+        padding: 10px 15px;
+        border: 1px solid black;
+        &:nth-of-type(even){
+            background-color: grey;
+        }
+        .difficulty{
+            width: 20px;
+            height: 20px;
+            border: 1px solid black;
+            border-radius: 100%;
+
+            &.orange{
+                background-color: orange;
+            }
+            &.green{
+                background-color: green;
+            }
+            &.red{
+                background-color: red;
+            }
+        }
+        .info{
+            text-align: left;
+            width: 80%;
+
+            div{
+                margin: $S-space;
+            }
+        }
     }
 }

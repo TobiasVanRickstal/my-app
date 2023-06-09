@@ -5,7 +5,7 @@
   <div class="body">
     <div class="left-side">
       <div class="blok">
-        <Bedrijven/>
+        <Aanbods/>
       </div>
     </div>
     <div class="right-side">
@@ -16,7 +16,7 @@
 
 <script>
 import Vragen from '@/components/Vragen.vue';
-import Bedrijven from '@/components/Bedrijven.vue';
+import Aanbods from '@/components/Aanbods.vue';
 
 export default({
   data(){
@@ -26,7 +26,7 @@ export default({
   },
   components: {
     Vragen,
-    Bedrijven
+    Aanbods
   },
 })
 </script>
