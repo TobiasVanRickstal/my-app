@@ -12,7 +12,7 @@
             <router-link to="/historiek">Historiek</router-link>
         </div>
         <div class="nav-options-user">
-            <router-link :to="`/profile/${user}`" class="no-active"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
+            <router-link :to="`/profile/${user}`" class="no-active"><img src="@/assets/icons/user.png" class="hide" alt="mainLogo"><img src="@/assets/icons/user-orange.png" class="show" alt="mainLogo"></router-link>
             <!-- <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a> -->
         </div>
     </div>

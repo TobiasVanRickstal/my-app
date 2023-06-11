@@ -40,9 +40,9 @@
                 <option value="3">3</option>
             </select>
         </div>
-        <div>
-            <button @click="filteredData()">Filter</button>
-            <button @click="resetData()">Reset</button>
+        <div class="buttons">
+            <button class="button" @click="filteredData()">Filter</button>
+            <button class="button" @click="resetData()">Reset</button>
         </div>
     </div>
 </template>
@@ -118,20 +118,3 @@ export default{
     }
 }
 </script>
-
-<style scoped>
-.filterBox{
-    background-color: grey;
-    display: flex;
-    flex-wrap: wrap;
-}
-.filterBox div{
-    width: fit-content;
-    flex: 1 0 20%;
-    margin: 5px;
-    padding: 5px;
-    border: 1px solid black;
-    display: flex;
-    flex-direction: column;
-}
-</style>

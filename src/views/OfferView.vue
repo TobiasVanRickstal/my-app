@@ -5,8 +5,8 @@
     </div>
 
     <div class="filter-segment">
-        <div class="add">
-            <div class="button" v-if="docentAsUser" @click="addItem = !addItem" :class="{activeButton: addItem}"><span v-show="!addItem">+ voeg toe</span><span v-show="addItem">x sluiten</span></div>
+        <div class="add" v-if="docentAsUser">
+            <div class="button" @click="addItem = !addItem" :class="{activeButton: addItem}"><span v-show="!addItem">+ voeg toe</span><span v-show="addItem">x sluiten</span></div>
         </div>
         <div class="filter" v-show="!addItem">
             <button class="button" @click="typeBox = !typeBox; filterBox = false" :class="{activeButton: typeBox}"><span v-if="type === 'all'">type</span><span v-else>{{typeNaam}}</span></button>

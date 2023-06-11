@@ -5,6 +5,8 @@ $XL-space: 100px;
 
 $orange: #fa6432;
 $darkOrange: #bf3c1d;
+$red: #E33622;
+$redder: #FD2645;
 $pink: #FCD7F7;
 $white: #fff;
 $black: #00283c;
@@ -43,6 +45,7 @@ body{
         background-color: $orange;
         color: $white;
         border: none;
+        border-radius: 3px;
         cursor: pointer;
         font-weight: 600;
         font-size: 17px;
@@ -58,11 +61,11 @@ body{
         padding: $S-space;
     }
     .messageBlock{
-        background-color: $pink;
+        background-color: rgba($orange, $alpha: 0.1);
         width: 60%;
         margin: auto;
         text-align: center;
-        border: 1px solid $black;
+        border-radius: 3px;
         padding: $M-space $S-space;
     }
 }
@@ -140,6 +143,20 @@ nav{
             img{
                 width: 33px;
             }
+            .show{
+                display: none;
+            }
+            .hide{
+                display: block;
+            }
+            .router-link-active{
+                .show{
+                    display: block;
+                }
+                .hide{
+                    display: none;
+                }
+            }
         }
             
         
@@ -213,24 +230,64 @@ nav{
 }
 .filter-segment{
     margin: $L-space auto $M-space;
-    width: 500px;
+    width: 80%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
     .filter{
-        width: 33%;
         display: flex;
         justify-content: space-between;
+
+        button{
+            margin: auto $S-space;
+        }
     }
 }
+.filterBox{
+    display: flex;
+    flex-wrap: wrap;
 
+    div{
+        width: fit-content;
+        flex: 1 0 15%;
+        margin: $S-space;
+        padding: $S-space;
+        display: flex;
+        flex-direction: column;
+
+        label{
+            font-weight: 600;
+            font-size: 17px;
+            text-align: center;
+            margin-bottom: $S-space;
+            text-transform: capitalize;
+        }
+        select{
+            background-color: $orange;
+            color: $white;
+            font-size: 16px;
+            padding: $S-space;
+            border: none;
+            border-radius: 3px;
+        }
+    }
+    .buttons{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        button{
+            width: fit-content;
+            margin: $S-space;
+        }
+    }
+}
 .typeSelect, .filterSelect, .form{
     margin: auto;
     width: 90%;
 }
 .typeSelect{
     .typeBox{
-        background-color: grey;
         height: fit-content;
         display: flex;
         flex-wrap: wrap;
@@ -239,25 +296,22 @@ nav{
     }
     .type{
         width: fit-content;
-        flex: 2 3 15%;
-        margin: 5px;
-        padding: 5px;
+        flex: 2 3 20%;
+        margin: $S-space;
+        padding: $M-space;
         text-align: center;
-        border: 1px solid black;
         cursor: pointer;
     }
     .active{
-        background-color: lightgray;
-        border: 2px solid yellowgreen;
+        background-color: $darkOrange;
     }
 }
 .item{
-    width: 500px;
+    width: 80%;
     height: auto;
     margin: $M-space auto;
-    padding: 7px;
-    background-color: #5c5a5a;
-    border: 1px solid black;
+    padding: $S-space;
+    border: 3px solid $orange;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -268,7 +322,7 @@ nav{
     .titel{
         a{
             text-decoration: none;
-            color: white;
+            color: $black;
         }
     }
 }
@@ -328,9 +382,11 @@ nav{
         justify-content: space-between;
 
         div span{
-            padding: 4px 8px;
-            background-color: darkslategrey;
+            padding: $S-space $M-space;
+            background-color: $orange;
+            color: $white;
             display: flex;
+            border-radius: 3px;
             img{
                 width: 20px;
             }
@@ -340,6 +396,8 @@ nav{
         width: 77%;
         display: flex;
         font-size: smaller;
+        justify-content: flex-end;
+        align-items: baseline;
     }
 }
 
@@ -432,85 +490,95 @@ nav{
 }
 // Profile
 .profile-gegevens, .profile-update{
+    width: 90%;
+    margin: $L-space  auto;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
+
+    div{
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
 }
-.profile-gegevens div:not(.boolean){
-    margin: 15px auto;
-    padding: 15px 5px;
-    text-align: center;
-    border: 1px solid black;
+.profile-gegevens div{
+    width: fit-content;
+    
+    h2{
+        margin: $M-space;
+        padding: $M-space;
+        text-align: center;
+        border: 2px solid $black;    
+    }
 }
 .profile-update{
-
+    display: flex;
+    
     div{
         margin: 15px auto;
         text-align: center;
 
         p{
-            margin-bottom: 5px;
+            margin-bottom: $S-space;
         }
     }
-}
-.boolean{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px auto;
-
-    h3{
-        padding: 10px;
-    }
-}
-.class_if_is_true{
-    background-color: $orange;
-    color: white;
-}
-.else_class{
-    background-color: $pink;
 }
 .acties{
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    button{
-        width: fit-content;
-        margin: 10px;
-        padding: 15px 5px;
-        border-radius: 10px;
-        border: none;
+    .button{
+        margin: $S-space;
     }
-
     .delete{
-        background-color: red;
-        color: white;
+        background-color: $red;
+
+        &:hover{
+            background-color: $redder;
+        }
+    }
+    .logOut{
+        background-color: $darkOrange;
+
+        &:hover{
+            background-color: $red;
+        }
     }
 }
+//AANBOD
 .aanbods{
     margin: 5px;
     display: flex;
     flex-direction: column;
-    background-color: dimgrey;
-    padding: 25px 5px;
 
     .aanbod{
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 80%;
-        
-        margin: 10px auto;
-        padding: 10px 15px;
-        border: 1px solid black;
+        margin: $S-space auto;
+        padding: $M-space;
+        border: 3px solid $orange;
+        border-radius: 3px;
+
+        a{
+            text-decoration: none;
+            color: $black;
+        }
         &:nth-of-type(even){
-            background-color: grey;
+            background-color: $orange;
+            a{
+              color: $white;  
+            }
         }
         .difficulty{
             width: 20px;
             height: 20px;
-            border: 1px solid black;
+            border: 2px solid $black;
             border-radius: 100%;
 
             &.orange{

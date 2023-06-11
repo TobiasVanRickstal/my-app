@@ -5,41 +5,43 @@
         </div>
         <div class="profile-gegevens" v-show="!edit">
             <div>
-                <h3>Naam:</h3>
                 <h2>{{currentUser.naam}}</h2>
             </div>
             <div>
-                <h3>email:</h3>
                 <h2>{{currentUser.email}}</h2>
             </div>
             <div class="boolean">
-                <h3 :class="(currentUser.admin)?'class_if_is_true':'else_class'">admin</h3>
+                <h2 v-show="currentUser.admin">admin</h2>
             </div>
             <div class="boolean" v-if="!docentAsUser">
                 <h3 :class="(currentUser.bedrijf)?'class_if_is_true':'else_class'">{{bedrijf.naam}}</h3>
             </div>
+            <div>
+                <button class="button" @click="edit = true">Bewerk gegevens</button>
+            </div>
         </div>
         <div class="profile-update" v-show="edit">
-            <div>
-                <p>Naam</p>
-                <input type="text" v-model="currentUser.naam">
+            <div class="inputFields">
+                <div>
+                    <p>Naam</p>
+                    <input type="text" v-model="currentUser.naam">
+                </div>
+                <div>
+                    <p>Mail</p>
+                    <input type="text" v-model="currentUser.email">
+                </div>
             </div>
-            <div>
-                <p>Mail</p>
-                <input type="text" v-model="currentUser.email">
-            </div>
-            <div>
-                <button @click="updateDocent">Opslaan</button>
-                <button @click="back">Annuleer</button>
+            <div class="acties">
+                <button class="button" @click="updateDocent">Opslaan</button>
+                <button class="button"  @click="back">Annuleer</button>
             </div>
         </div>
         <div class="acties" v-show="!edit">
-            <button @click="edit = true">Bewerk gegevens</button>
             <router-link to="/">
-                <button>bekijk mijn vacatures</button>
+                <button class="button">Mijn vacatures</button>
             </router-link>
-            <button class="delete" @click="deleteDocent">Delete Account</button>
-            <button class="delete" @click="handleSignOut">Uitloggen</button>
+            <button class="delete button" @click="deleteDocent">Delete Account</button>
+            <button class="logOut button" @click="handleSignOut">Uitloggen</button>
         </div>
         
         <p v-show="messageHide" :class="{ messageBlock: messageHide }">{{message}}</p>
