@@ -1,8 +1,8 @@
 <template>
   <nav>
-    <NavSchool class="nav" v-if="status && userType === 'docent'" />
-    <NavCompany :v-if="bedrijfId" class="nav" :bedrijf="bedrijfId" v-if="status && userType === 'werknemer'" />
-    <NavNotLoggedIn class="nav" v-if="!status"/>
+    <NavSchool :user="idUser" v-if="status && userType === 'docent' && idUser" />
+    <NavCompany :v-if="bedrijfId && idUser" :user="idUser" :bedrijf="bedrijfId" v-if="status && userType === 'werknemer'" />
+    <NavNotLoggedIn v-if="!status"/>
   </nav>
 </template>
 
@@ -15,7 +15,7 @@ import WerknemerDataService from '@/services/WerknemerDataService'
 
 export default {
   created(){
-    // console.log(this.status)
+    console.log(this.status)
     this.getTypeNav()
   },
   components: {

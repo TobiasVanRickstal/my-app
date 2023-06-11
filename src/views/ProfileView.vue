@@ -39,6 +39,7 @@
                 <button>bekijk mijn vacatures</button>
             </router-link>
             <button class="delete" @click="deleteDocent">Delete Account</button>
+            <button class="delete" @click="handleSignOut">Uitloggen</button>
         </div>
         
         <p v-show="messageHide" :class="{ messageBlock: messageHide }">{{message}}</p>
@@ -48,6 +49,8 @@
 <script>
 import DocentDataService from '@/services/DocentDataService';
 import WerknemerDataService from '@/services/WerknemerDataService';
+import { signOut, getAuth } from 'firebase/auth';
+import router from '@/router';
 
 export default{
     data(){
@@ -145,6 +148,19 @@ export default{
         back(){
             this.edit = false
             // TODO -> when annuleer -> don't take the changes
+        },
+        handleSignOut(){
+            let auth = getAuth();
+            console.log('handle sign out')
+            signOut(auth)
+            .then(() => {
+                console.log('Auth sign out')
+                router.push("/login")
+                // window.location.reload();
+            })
+            .catch(e =>{
+                console.log(e)
+            })
         }
     },
     mounted() {
@@ -152,7 +168,3 @@ export default{
     }
 }
 </script>
-
-<style>
-
-</style>

@@ -3,40 +3,56 @@ $M-space: 20px;
 $L-space: 50px;
 $XL-space: 100px;
 
-$green: #BFFD00;
+$orange: #fa6432;
+$darkOrange: #bf3c1d;
 $pink: #FCD7F7;
-$blue: #0600FF;
-$black: #171717;
-$grey: grey;
+$white: #fff;
+$black: #00283c;
+$grey: #ddd;
 *{
     margin: 0;
     padding: 0;
 }
 body{
-    width: 66%;
+    max-width: 1200px;
+    min-width: auto;
     margin: auto;
     background: #ffffff;
     font-family: Source Sans Pro,Arial,Helvetica Neue,Helvetica,sans-serif;
     font-weight: 500;
     font-style: normal;
-    background-color:  lavender;
 
     h1{
         text-align: center;
+        color: $orange;
+        font-size: 42px;
+        font-weight: 400;
+    }
+    p{
+        font-size: 20px;
+        line-height: 1.5;
     }
     img{
         width: 100%;
     }
     .button{
-        padding: 5px 20px;
-        background-color: $green;
-        color: $black;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        padding: $M-space $L-space;
+        background-color: $orange;
+        color: $white;
         border: none;
         cursor: pointer;
+        font-weight: 600;
+        font-size: 17px;
+        &:hover{
+            background-color: $darkOrange;
+        }
     }
     .activeButton{
-        background-color: $blue !important;
-        color: $green !important;
+        background-color: $white !important;
+        color: $orange !important;
     }
     input{
         padding: $S-space;
@@ -60,47 +76,75 @@ nav{
 
     a{
         color: $black;
-        font-size: 16px;
+        font-size: 18px;
+        font-weight: 400;
         text-decoration: none;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-
         
-        .hover-state{
-            display: none;
-        }
-
-        &:hover .hover-state{
-            display: block;
-            width: 25px;
-            height: auto;
-            margin:-$M-space auto $S-space;
-        }
-
         &:hover{
-            color: $blue;
-        }
 
-        img{
-            width: 50px;
-            height: auto;
+            &.router-link-active.button{
+                border: 3px  solid $darkOrange !important;
+            }
+
+            &.button{
+                background-color: $darkOrange !important;
+                color: $white !important;
+            }
         }
-        &.home img{
-            width: 120px;
+        &.router-link-active:not(.no-active){
+            border-bottom: 3px solid $orange;
+
+            &.button{
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                color: $orange;
+                border: 3px  solid $orange;
+                background-color: $white;
+            }
         }
     }
-    a.router-link-active{
-        color: $blue;
+    
+    .not-logged-in-nav, .logged-in-nav{
+        width: 95%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
 
-        .hover-state{
-            display: block;
-            width: 25px;
-            height: auto;
-            margin:-$M-space auto $S-space;
+        .nav-logo{
+            margin-top: -$M-space;
+            img{
+                width: 200px;
+            }
         }
+        .nav-options{
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        .nav-options-right{
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+
+            a{
+                margin: $S-space;
+            }
+        }
+        .nav-options-user{
+            img{
+                width: 33px;
+            }
+        }
+            
+        
     }
+    
 }
 // LOGIN
 .register, .login{
@@ -111,9 +155,14 @@ nav{
     form{
         margin-top: $L-space;
         text-align: center;
+        display: flex;
+        flex-direction: column;
 
         input{
             margin: $S-space;
+            padding: $M-space;
+            border: 1px solid  $grey;
+            border-radius: 3px;
         }
         button{
             margin-top: $M-space;
@@ -142,7 +191,7 @@ nav{
 }
 // ERROR
 .error-message{
-    color: $blue;
+    color: $white;
     background-color: $pink;
     padding: $S-space $M-space;
 }
@@ -415,7 +464,7 @@ nav{
     }
 }
 .class_if_is_true{
-    background-color: $green;
+    background-color: $orange;
     color: white;
 }
 .else_class{

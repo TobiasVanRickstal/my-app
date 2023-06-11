@@ -1,10 +1,8 @@
 <template>
   <nav>
-    <template v-if="userIsDocent !== null">
+    <template v-if="(userIsDocent !== null || !isLoggedIn)">
       <NavView :status="isLoggedIn" :navSelect="userIsDocent" :idUser="userId"/>
     </template>
-    <router-link :to="`/profile/${id}`" v-if="isLoggedIn"><img src="@/assets/icons/user.png" alt="mainLogo"></router-link>
-    <button @click="handleSignOut" v-if="isLoggedIn">Sign out</button>
   </nav>
   <template v-if="(userIsDocent !== null || !isLoggedIn)">
     <router-view :user-id="userId" :docentAsUser="userIsDocent"/>
@@ -99,48 +97,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  @font-face {
-    font-family: "Blaak-bold";
-    src: local("Blaak-bold"),
-    url(../src/fonts/BlaakBold_PERSONAL.ttf) format("truetype");
-  }
-  *{
-    margin: 0;
-    padding: 0;
-  }
-  body{
-    max-width: 70%;
-    margin: auto;
-    background: #ffffff;
-    font-family: museo-sans,sans-serif;
-    font-weight: 500;
-    font-style: normal;
-  }
-  nav{
-    font-family: "Blaak-bold";
-  }
-  .body{
-    width: 50%;
-    margin: auto;
-    text-align: center;
-  }
-  .form div:not(.insideDiv){
-    width: 70%;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .form div label{
-    margin-bottom: 15px;
-    text-align: left;
-  }
-  .form div select,.form div input{
-    padding: 5px;
-  }
-  img{
-    width: 100%;
-  }
-</style>

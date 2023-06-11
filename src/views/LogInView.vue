@@ -1,11 +1,11 @@
 <template>
   <div class="login">
-    <h1>Login</h1>
+    <h1>Aanmelden</h1>
     <form @keyup.enter="login">
-    <p><input type="text" placeholder="Email" v-model="email"></p>
-    <p><input type="password" placeholder="Password" v-model="password"></p>
+    <input type="text" placeholder="Email" v-model="email">
+    <input type="password" placeholder="Wachtwoord" v-model="password">
     <p class="error-message" v-if="errMsg">{{ errMsg }}</p>
-    <button @click="login" class="button">Login</button>
+    <button @click="login" class="button">Aanmelden</button>
   </form>
   </div>
 </template>
