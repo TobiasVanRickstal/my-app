@@ -1,5 +1,5 @@
 <template>
-  <div class="home" :class="{ reverse : !companiesView}">
+  <div class="home" :class="{ reverse : companiesView}">
     <div class="left-side">
       <div class="blok">
         <Aanbods/>
