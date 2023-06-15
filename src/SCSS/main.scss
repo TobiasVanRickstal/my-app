@@ -29,10 +29,21 @@ body{
         color: $orange;
         font-size: 42px;
         font-weight: 400;
+        display: none;
     }
     p{
         font-size: 20px;
         line-height: 1.5;
+    }
+    .back-arrow{
+        a{
+           
+            img{
+                width: 45px;
+                margin: $L-space auto auto $L-space;
+            } 
+        }
+        
     }
     img{
         width: 100%;
@@ -87,41 +98,22 @@ nav{
         align-items: center;
         flex-direction: column;
         
-        &:hover{
-
-            &.router-link-active.button{
-                border: 3px  solid $darkOrange !important;
-            }
-
-            &.button{
-                background-color: $darkOrange !important;
-                color: $white !important;
-            }
-        }
         &.router-link-active:not(.no-active){
-            border-bottom: 3px solid $orange;
-
-            &.button{
-                box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                -webkit-box-sizing: border-box;
-                color: $orange;
-                border: 3px  solid $orange;
-                background-color: $white;
-            }
+            // border-bottom: 3px solid $orange;
+            font-weight: 700;
         }
     }
     
     .not-logged-in-nav, .logged-in-nav{
-        width: 95%;
+        width: 99%;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-between;
         align-items: center;
 
         .nav-logo{
             margin-top: -$M-space;
             img{
-                width: 200px;
+                width: 150px;
             }
         }
         .nav-options{
@@ -129,39 +121,71 @@ nav{
             display: flex;
             align-items: center;
             justify-content: space-evenly;
-        }
-        .nav-options-right{
-            display: flex;
-            flex-direction: column;
-            align-self: center;
-
+            
             a{
-                margin: $S-space;
+                display: inline-block;
+                &:after{
+                    display: block;
+                    content: "";
+                    border-bottom:solid 3px  $orange;
+                    transform: scaleX(0);
+                    transition: transform 150ms ease;
+                    transform-origin: 0% 100%;
+                }
+                &:hover:after{
+                    transform: scaleX(1);
+                    transform-origin:  0% 50%;
+                }
+                &.router-link-active{
+                    text-decoration: underline;
+                    text-decoration-color: $orange;
+                    text-decoration-thickness: 3px;
+                    text-underline-offset: 4px;
+                }
             }
         }
-        .nav-options-user{
-            img{
-                width: 33px;
-            }
+        img{
+            width: 35px;
+        }
+        .show{
+            display: none;
+        }
+        .hide{
+            display: block;
+        }
+        .router-link-active{
             .show{
-                display: none;
-            }
-            .hide{
                 display: block;
             }
-            .router-link-active{
-                .show{
-                    display: block;
-                }
-                .hide{
-                    display: none;
-                }
+            .hide{
+                display: none;
             }
         }
-            
-        
     }
     
+}
+// BREADCRUMP
+.breadcrumb{
+    width: 100%;
+    height: 30px;
+    background-color: $black;
+    position: absolute;
+    left: 0;
+    top: 75px;
+    display: block;
+
+    ul{
+        list-style: none;
+        padding: $S-space;
+        display: block;
+        width: fit-content;
+        padding: $S-space;
+        margin-left: 17%;
+        
+        li a{
+            color: $white;
+        }
+    }
 }
 // LOGIN
 .register, .login{
@@ -208,23 +232,88 @@ nav{
 }
 // ERROR
 .error-message{
-    color: $white;
-    background-color: $pink;
+    color: $black;
+    background-color: rgba($redder, $alpha: 0.2);
     padding: $S-space $M-space;
+    margin: $M-space;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 3px;
 }
 //END
-.form div:not(.insideDiv){
-    margin: $M-space auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.form div label{
-    margin-bottom: $M-space;
-    text-align: left;
+.vraag-create, .aanbod-create{
+    
+    .error-message{
+        width: fit-content;
+        margin: auto auto $M-space;
+        font-weight: 700;
+    }
+    & div:not(.insideDiv){
+        width: 30%;
+        margin: $M-space auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .input  input{
+        padding: $S-space;
+        font-size: 16px;
+    }
+    .difficulty .ernst{
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+    }
+    input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+        background: $orange;
+        border-radius: 3px;
+        height: $S-space;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none; 
+        appearance: none;
+        margin-top: -2%;
+        background-color: $darkOrange;
+        border-radius: 100%;
+        height: $M-space;
+        width: $M-space;    
+    }
+    .select select{
+        padding: $S-space;
+    }
+
+    & div label{
+        margin-bottom: $M-space;
+        text-align: left;
+        text-transform: capitalize;
+    }
+    .row{
+        flex-direction: row !important;
+        justify-content: space-evenly !important;
+        align-items: center;
+    }
+    .insideDiv{
+        label:not(.periodes label){
+            display: none;
+        }
+        .periodes{
+            width: 100%;
+        }
+        div:not(.periodes){
+            input{
+                margin: $S-space;
+            }
+        }
+    }
 }
 //OurOfferView
-.form h2{
+.vraag-create h2{
     text-align: center;
     margin: auto;
 }
@@ -233,7 +322,12 @@ nav{
     width: 80%;
     display: flex;
     justify-content: space-evenly;
-
+    
+    .close{
+        border: 1px solid $orange;
+        border-radius: 3px;
+        padding: $S-space $M-space;
+    }
     .filter{
         display: flex;
         justify-content: space-between;
@@ -307,116 +401,133 @@ nav{
     }
 }
 .item{
-    width: 80%;
+    width: 70%;
     height: auto;
     margin: $M-space auto;
-    padding: $S-space;
+    padding: $S-space $M-space;
     border: 3px solid $orange;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
 
-    div{
-        margin: $S-space;
-    }
     .titel{
+        display: flex;
+        justify-content: space-between;
+        margin-top: $M-space;
         a{
             text-decoration: none;
             color: $black;
         }
+        .bold{
+            font-weight: 700;
+            font-size: 20px;
+        }
     }
-}
-.difficulty{
-    display: flex;
-    
-    .circle{
-        width: 10px;
-        height: 10px;
-        margin: auto $S-space;
-        border-radius: 100%;
-        background-color: $grey;
-    }
-
-}
-
-.diff3{
-    .color{
-        background-color: red;
-    }
-}
-
-.diff2{
-    .color{
-        background-color: orange;
-    }
-}
-
-.diff1{
-    .color{
-        background-color: green;
-    }
-}
-.bottom-info{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    overflow:auto;
-    &::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-    }
-    
-    &::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-        border-radius: 10px;
-    }
-    
-    &::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
-    }
-    .infographics{
-        width: 33%;
+    // .top-bar{
+    //     display: none;
+    //     justify-content: space-between;
+        
+    //     .difficulty{
+    //         display: flex;
+            
+    //         .circle{
+    //             width: 10px;
+    //             height: 10px;
+    //             margin: auto $S-space;
+    //             border-radius: 100%;
+    //             background-color: $grey;
+    //         }
+    //     }
+    //     .diff3{
+    //         .color{
+    //             background-color: red;
+    //         }
+    //     }
+        
+    //     .diff2{
+    //         .color{
+    //             background-color: orange;
+    //         }
+    //     }
+        
+    //     .diff1{
+    //         .color{
+    //             background-color: green;
+    //         }
+    //     }
+    // }
+    .bottom-info{
         display: flex;
+        flex-direction: row;
         justify-content: space-between;
-
-        div span{
-            padding: $S-space $M-space;
-            background-color: $orange;
-            color: $white;
+        align-items: center;
+        overflow:auto;
+        margin-top: $S-space;
+        &::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        &::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+        }
+        .infographics{
+            width: 33%;
             display: flex;
-            border-radius: 3px;
-            img{
-                width: 20px;
+            justify-content: space-between;
+            align-items: center;
+            .bekeken, .solicitanten{
+                width: 70px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+    
+                img{
+                    width: 33px;
+                    margin-top: $S-space;
+                }
+            }
+            .kostprijs{
+                background-color: $orange;
+                color: $white;
+                padding: $S-space $M-space;
+                border-radius: 3px;
+            }
+        }
+        .details{
+            width: fit-content;
+            display: flex;
+            font-size: smaller;
+            justify-content: flex-end;
+            align-items: baseline;
+
+            div{
+                margin: $S-space;
             }
         }
     }
-    .details{
-        width: 77%;
-        display: flex;
-        font-size: smaller;
-        justify-content: flex-end;
-        align-items: baseline;
-    }
 }
-
 //END
 // COMPANIESVIEW
 .bedrijven{
+    margin-top: $L-space;
     .bedrijf{
         display: flex;
         flex-direction: column;
         width: 80%;
         margin: auto;
-    
+        text-align: center;
+        align-items: center;
         div{
             margin: $S-space 0;
         }
         .beschrijving{
-            width: 80%;
-            margin: auto;
-            text-align: justify;
+            text-align: center;
         }
     }
     .introductie{
@@ -424,33 +535,46 @@ nav{
         justify-content: space-around;
         align-items: center;
     }
-    .logo img{
-        width: 100px;
+    .logo{
+        
+        img{
+            border: 1px solid $black;
+            border-radius: 3px;
+            padding: $M-space;
+            margin: $S-space;
+            width: 200px;
+            cursor: pointer;
+        }
     }
     .personen{
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
-        justify-content: space-evenly;
-    }
-    .persoon{
-        width: fit-content;
-        flex: 1 0 15%;
-        flex-direction: column;
-        align-items: center;
-    }
-    .personen-foto{
-        width: 100px;
-    
-        img{
-            border-radius: 100%;
+
+        .persoon{
+            width: fit-content;
+            flex: 2 2 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: $M-space;
+            text-align: center;
+
+            .personen-foto{
+                width: 100px;
+            
+                img{
+                    border-radius: 100%;
+                }
+            }
         }
     }
     .gegevens{
-        background-color: darkslategray;
+        background-color: $orange;
         color: white;
         display: flex;
         justify-content: space-evenly;
+        width: 80%;
     
         div{
             margin: $S-space auto;
@@ -461,17 +585,22 @@ nav{
         width: fit-content;
         margin: auto;
     }
+    .button{
+        width: fit-content;
+        margin: $M-space auto;
+        background-color: $black;
+    }
 }
 //END
 // OFFER
 .vraag-preview{
     width: 80%;
-    margin:$XL-space auto 0px;
+    margin:$L-space auto 0px;
 
     div{
         padding: 5px 10px;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
 
         &:nth-child(even){
@@ -491,7 +620,7 @@ nav{
 // Profile
 .profile-gegevens, .profile-update{
     width: 90%;
-    margin: $L-space  auto;
+    margin: $L-space  auto $M-space;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -513,10 +642,13 @@ nav{
         text-align: center;
         border: 2px solid $black;    
     }
+    .pointer{
+        cursor: pointer;
+    }
 }
 .profile-update{
     display: flex;
-    
+    flex-direction: column;
     div{
         margin: 15px auto;
         text-align: center;
@@ -525,79 +657,276 @@ nav{
             margin-bottom: $S-space;
         }
     }
+    .inputFields{
+        display: flex;
+        flex-direction: row;
+        div{
+            width: 80%;
+        }
+    }
+}
+.line{
+    height: $S-space;
+    width: 80%;
+    margin: $M-space auto;
+    background-color: $black;
 }
 .acties{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
 
     .button{
         margin: $S-space;
     }
-    .delete{
+    .delete, .logOut{
         background-color: $red;
 
         &:hover{
             background-color: $redder;
         }
     }
-    .logOut{
-        background-color: $darkOrange;
+}
+.mijnBijdrages{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-        &:hover{
-            background-color: $red;
-        }
+    .button{
+        width: fit-content;
+        margin: auto;
     }
 }
 //AANBOD
-.aanbods{
-    margin: 5px;
+.aanbods-pagina{
+    .aanbod{
+        display: flex;
+        flex-direction: column;
+        p{
+            margin: $S-space auto $S-space;
+        }
+        .small{
+            font-size: 14px;
+        }
+    }
+    .aanbods{
+        margin: $S-space;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        padding: $S-space !important;
+        .aanbod{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 80%;
+            margin: $S-space auto;
+            padding: $M-space;
+            border: 3px solid $orange;
+            border-radius: 3px;
+
+            a{
+                text-decoration: none;
+                color: $black;
+            }
+            &:nth-of-type(even){
+                background-color: $orange;
+                a{
+                color: $white;  
+                }
+            }
+            .difficulty{
+                width: 20px;
+                height: 20px;
+                border: 2px solid $black;
+                border-radius: 100%;
+
+                &.orange{
+                    background-color: orange;
+                }
+                &.green{
+                    background-color: green;
+                }
+                &.red{
+                    background-color: red;
+                }
+            }
+            .info{
+                text-align: left;
+                width: 80%;
+
+                div{
+                    margin: $S-space;
+                }
+            }
+        }
+    }
+}
+
+// AANBOD-DETAIL
+.aanbod-detail, .vraag-detail{
+    width: 80%;
+    margin: $M-space auto;
+    border: 1px solid $black;
+
+    div{
+        margin: $M-space;
+    }
+    .aanbod-bottom,  .vraag-bottom{
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+
+        .periode{
+            text-transform: capitalize;
+        }
+    }
+}
+// VRAGEN
+.vragen, .aanbods{
+    margin: $S-space auto;
+    width: 90%;
     display: flex;
     flex-direction: column;
-
-    .aanbod{
+    padding: $M-space $S-space;
+    
+    &:not(h2){
+        height: 225px;
+        overflow: auto;
+    }
+    .vraag,.aanbod{
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 80%;
+        width: 90%;
+        background-color: $orange;
+        color: $white;
         margin: $S-space auto;
-        padding: $M-space;
-        border: 3px solid $orange;
-        border-radius: 3px;
+        padding: 10px 15px;
 
+        &:nth-of-type(odd){
+            background-color: $white;
+            color: $black;
+            border: 0.5px solid $black;
+            a{
+                text-decoration: none;
+                color: $black;
+            }
+        }
         a{
             text-decoration: none;
-            color: $black;
-        }
-        &:nth-of-type(even){
-            background-color: $orange;
-            a{
-              color: $white;  
-            }
-        }
-        .difficulty{
-            width: 20px;
-            height: 20px;
-            border: 2px solid $black;
-            border-radius: 100%;
-
-            &.orange{
-                background-color: orange;
-            }
-            &.green{
-                background-color: green;
-            }
-            &.red{
-                background-color: red;
-            }
+            color: $white;
         }
         .info{
             text-align: left;
-            width: 80%;
-
-            div{
-                margin: $S-space;
+            width: 100%;
+            
+            .title{
+                h3{
+                   font-size: 24px; 
+                }
+            }
+            .head{
+                display: flex;
+                justify-content: space-between;
+                p{
+                    font-size: 16px;
+                }
             }
         }
+    }
+}
+// ONS BEDRIJF
+.our-company{
+    margin: $L-space auto $M-space;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    .top{
+        text-align: center;
+        margin: $M-space;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img{
+            width: 250px;
+            margin-bottom: $M-space;
+        }
+    }
+    h2{
+        margin: $M-space;
+    }
+    .personen{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        
+        .persoon{
+            width: fit-content;
+            flex: 2 2 15%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: $M-space;
+            text-align: center;
+
+            .admin{
+                border: 3px solid $orange;
+                background-color: $orange;
+                border-radius: 60%;
+            }
+            .personen-foto{
+                width: 120px;
+            
+                img{
+                    border-radius: 100%;
+                }
+            }
+        }
+    }
+    .bottom{
+        background-color: $orange;
+        color: $white;
+        display: flex;
+        justify-content: space-around;
+        padding: $M-space;
+
+        h3{
+            margin-bottom: $M-space;
+        }
+    }
+    .bewerk{
+        margin-top: $L-space;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .button{
+            margin: $M-space;
+        }
+    }
+    .input{
+        width: 60%;
+        height: 70px;
+    }
+}
+// HOME
+.home{
+    display: flex;
+    flex-direction: column;
+    h2{
+        text-align: center;
+        margin: $M-space auto;
+        font-size: 24px;
+    }
+    &.reverse{
+        flex-direction: column-reverse !important;
+    }
+    .line{
+        margin: $L-space auto;
     }
 }

@@ -4,7 +4,13 @@ import {getAuth, onAuthStateChanged} from 'firebase/auth';
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    { path: "/", component: () => import("../views/HomeView.vue")},
+    { 
+      path: "/",
+      component: () => import("../views/HomeView.vue"),
+      meta:{
+        breadcrumb: "Home"
+      }
+    },
     { path: "/register", component: () => import("../views/RegisterView.vue")},
     { path: "/login", component: () => import("../views/LogInView.vue")},
     { 
@@ -12,6 +18,7 @@ const router = createRouter({
       component: () => import("../views/OurCompanyView.vue"),
       meta: {
         requiresAuth: true,
+        breadcrumb: "Ons bedrijf"
       }
     },
     { 
@@ -19,6 +26,7 @@ const router = createRouter({
       component: () => import("../views/RegisterNextView.vue"),
       meta: {
         requiresAuth: true,
+        breadcrumb: "Registreren"
       }
     },
     { 
@@ -26,6 +34,7 @@ const router = createRouter({
       component: () => import("../views/DetailOfferView.vue"),
       meta: {
         requiresAuth: true,
+        breadcrumb: "Vraag detail"
       }
     },
     { 
@@ -33,6 +42,7 @@ const router = createRouter({
       component: () => import("../views/OfferView.vue"),
       meta: {
         requiresAuth: true,
+        breadcrumb: "Vragen"
       },
     },
     { 
@@ -40,6 +50,7 @@ const router = createRouter({
       component: () => import("../views/AanbodView.vue"),
       meta: {
         requiresAuth: true,
+        breadcrumb: "Aanboden"
       },
     },
     { 
@@ -47,6 +58,7 @@ const router = createRouter({
       component: () => import("../views/DetailAanbodView.vue"),
       meta: {
         requiresAuth: true,
+        breadcrumb: "Aanbod detail"
       },
     },
     { 
@@ -54,6 +66,7 @@ const router = createRouter({
       component: () => import("../views/CompaniesView.vue"),
       meta: {
         requiresAuth: true,
+        breadcrumb: "Bekijk bedrijven"
       }
     },
     { 
@@ -61,6 +74,7 @@ const router = createRouter({
       component: () => import("../views/OurCompanyView.vue"),
       meta: {
         requiresAuth: true,
+        breadcrumb: "Ons bedrijf"
       },
     },
     { 
@@ -68,6 +82,7 @@ const router = createRouter({
       component: () => import("../views/HistoriekView.vue"),
       meta: {
         requiresAuth: true,
+        breadcrumb: "Historiek"
       }
     },
     { 
@@ -81,6 +96,7 @@ const router = createRouter({
       component: () => import("../views/ProfileView.vue"),
       meta: {
         requiresAuth: true,
+        breadcrumb: "Profiel"
       }
     },
     // {
@@ -119,5 +135,6 @@ router.beforeEach(async (to, from, next) => {
     next();
   }
 });
+
 
 export default router

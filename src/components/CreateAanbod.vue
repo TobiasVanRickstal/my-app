@@ -1,9 +1,10 @@
 <template>
-    <div class="container">
+    <div class="container aanbod-create">
         <h1>Maak een aanbod aan!</h1>
 
 
-        <p>Aanmaken als: {{currentUser.naam}}</p>
+        
+        <div><h4>Aanmaken als: {{currentUser.naam}}</h4></div>
         <div class="input naam">
             <label for="naam">Titel</label>
             <input type="text" v-model="aanbod.naam">
@@ -18,14 +19,13 @@
             <label for="prijs">prijs</label>
             <input type="number" name="prijs" id="prijs" v-model="aanbod.prijs">
         </div>
-
+        <div  class="row"><span>Voeg datum toe</span><input type="checkbox" v-model="selectDatum" value="true"></div>
         <div class="insideDiv">
-            <span>Voeg datum toe -> </span><input type="checkbox" v-model="selectDatum" value="true">
             <periodeForm @clicked-show-detail="clickedShowDetailModal" v-if="selectDatum"/>
         </div>
 
-        <div class="button">
-            <button @click="saveAanbod()">Opslagen</button>
+        <div>
+            <button @click="saveAanbod()" class="button">Opslagen</button>
         </div>
     </div>
 </template>

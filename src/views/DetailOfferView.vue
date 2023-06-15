@@ -1,72 +1,29 @@
 <template>
-    <div>
-        <router-link to="/vragen">Terug naar overzicht</router-link>
+    <div class="back-arrow">
+        <router-link to="#" @click="goBack"><img src="../assets/icons/previous.png" alt=""></router-link>
     </div>
-    <div class="vraag-preview">
-
-        <!-- Goedkeuring -->
-        <!-- <div>
-            <label for="abonnement">abonnement</label>
-            <select name="abonnement" id="abonnement" v-model="abonnement">
-                <option value="Silver">Silver</option>
-                <option value="Gold">Gold</option>
-                <option value="Platinum">Platinum</option>
-            </select>
-        </div> -->
-        
-        
-        <!-- search bar - docenten database -->
-        <div class="docent">
-            <p>Docent:</p>
-            <p>{{docent}}</p>
+    <div class="vraag-detail">
+        <div class="vraag-titel">
+            <h2>{{vraag.naam}}</h2>
         </div>
-
-        <div class="naam">
-            <p>Naam:</p>
-            <p>{{currentVraag.naam}}</p>
+        <div class="vraag-info">
+            <p>{{vraag.informatie}}</p>
         </div>
-
-        <div class="beschrijving">
-            <p>Beschrijving:</p>
-            <p>{{currentVraag.informatie}}</p>
+        <div class="contacten">
+            <h4>{{docent}} - {{type}} / {{topic}} / {{vak}}</h4>
         </div>
-
-        <div class="typeData">
-            <p>Type:</p>
-            <p>{{type}}</p>
-        </div>
-        
-        <div class="topic">
-            <p>Topic:</p>
-            <p>{{topic}}</p>
-        </div>
-
-        <div class="vak">
-            <p>Vak:</p>
-            <p>{{vak}}</p>
-        </div>
-        
-        <div class="fase">
-            <p>Fase:</p>
-            <p>{{currentVraag.fase}}</p>
-        </div>
-
-        <div class="periode">
-            <p>Periodes:</p>
-            <p>{{currentVraag.periodes}}</p>
-        </div>
-        
-        <div class="views">
-            <p>Solicitanten /  views:</p>
-            <p>{{currentVraag.solicitanten}} / {{currentVraag.views}}</p>
-        </div>
-
-        <div class="status" v-show="adminWatching">
-            <p>Admin prrivillege:</p>
-            <p>Change Status: "{{currentVraag.status}}"</p>
-            <button v-show="currentVraag.status  != 'pending'" @click="changeStatus('pending')">Pending</button>
-            <button v-show="currentVraag.status  != 'active'" @click="changeStatus('active')">Active</button>
-            <button v-show="currentVraag.status  != 'done'" @click="changeStatus('done')">Done</button>
+        <div class="vraag-bottom">
+            <div class="specificaties">
+                <p>Prijs: € {{vraag.prijs}}</p>
+                <p v-if="docentAsUser">Status: {{vraag.status}}</p>
+                <p v-if="vraag.views">Views: {{vraag.views}}</p>
+                <p v-else>views: 0</p>
+                <p>Solicitanten: {{vraag.solicitanten}}</p>
+                <p class="periode" v-if="vraag.periodes != ''">{{periode[0]}}: {{periode[1]}} <span v-if="periode.length > 2">tot {{periode[2]}}</span></p>
+            </div>
+            <div class="soliciteren" v-if="!docentAsUser">
+                <button class="button" @click="soliciteren(vraag.id)">soliciteren</button>
+            </div>
         </div>
     </div>
 </template>
@@ -79,12 +36,13 @@ import {getAuth} from 'firebase/auth';
 export default{
     data(){
         return{
-            currentVraag: {},
+            vraag: {},
             adminWatching: false,
             docent: "",
             type: "",
             topic: "",
-            vak: ""
+            vak: "",
+            periode: []
         }
     },
     props: {
@@ -97,7 +55,9 @@ export default{
             await DocentDataService.findByEmail(user.email)
                 .then(response => {
                     console.log(response.data)
-                    this.adminWatching = true
+                    if (response.data.admin) {
+                        this.adminWatching = true
+                    }
                     return true
                 })
                 .catch(e => {
@@ -108,17 +68,18 @@ export default{
         getVraag(id){
             VraagDataService.get(id)
                 .then(response => {
-                    this.currentVraag = response.data;
+                    this.vraag = response.data;
                     this.docent =  response.data.docent.naam
                     this.type =  response.data.type.naam
                     this.topic =  response.data.topic.naam
                     this.vak =  response.data.vak.naam
-                    console.log(this.currentVraag)
+                    this.periode = response.data.periodes.split(',')
+                    console.log(this.vraag)
 
                     if(!this.docentAsUser){
                          // Niet doen als een docent  of het school deze  bekijkt ------
-                        this.currentVraag.views +=  1;
-                        VraagDataService.update(this.currentVraag.id, this.currentVraag)
+                        this.vraag.views +=  1;
+                        VraagDataService.update(this.vraag.id, this.vraag)
                             .then(response => {
                             this.data.status = to;
                         })
@@ -135,18 +96,21 @@ export default{
         },
         changeStatus(to){
             var updateData = {
-                id: this.currentVraag.id,
+                id: this.vraag.id,
                 status: to
             };
 
-            VraagDataService.update(this.currentVraag.id, updateData)
+            VraagDataService.update(this.vraag.id, updateData)
                 .then(response => {
-                    this.currentVraag.status = to;
+                    this.vraag.status = to;
                     console.log(response.data);
                 })
                 .catch(e => {
                     console.log(e);
                 });
+        },
+        goBack(){
+            history.back()
         }
     },
     mounted(){

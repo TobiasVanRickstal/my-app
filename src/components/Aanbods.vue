@@ -1,17 +1,13 @@
 <template>
-    <!-- TODO -- change to bedrijven! -->
+    <h2>Aanbod</h2>
     <div class="aanbods">
-        <h2>Aanbod</h2>
         <div class="aanbod" v-for="aanbod in aanbods">
             <div class="info">
-                <div class="head">
-                    <p v-if="aanbod.naam">{{aanbod.bedrijf.naam }}</p>
-                </div>
                 <div class="title">
-                    <h3>{{aanbod.naam}}</h3>
+                    <router-link :to="{path: '/aanbod/'  + aanbod.id}"><h3>{{aanbod.naam}}</h3></router-link>
                 </div>
-                <div class="bottom">
-                    <p>{{ aanbod.werknemer.naam }}<span v-if="aanbod.docent"> - {{aanbod.docent}}</span></p>
+                <div class="head">
+                    <p>{{aanbod.bedrijf.naam }} - {{ aanbod.werknemer.naam }}<span v-if="aanbod.docent"> - {{aanbod.docent}}</span></p>
                 </div>
             </div>
         </div>

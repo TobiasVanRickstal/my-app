@@ -1,17 +1,15 @@
 <template>
+    <h2>Vragen</h2>
     <div class="vragen">
-        <h2>Vraag</h2>
-        <div class="vraag" v-for="vraag in vragen">
-            <div class="difficulty" :class="fetchColor(vraag.difficulty)">
-                
-            </div>
+        <div class="vraag" v-for="vraag in sortedVragen">
             <div class="info">
-                <div class="head">
-                    <p v-if="vraag.docent">{{ vraag.docent.naam }} - {{vraag.topic }}</p>
-                    <p v-else>loading...</p>
-                </div>
                 <div class="title">
-                    <h3>{{vraag.naam}}</h3>
+                    <router-link :to="{path: '/vragen/'  + vraag.id}"><h3>{{vraag.naam}}</h3></router-link>
+                </div>
+                <div class="head">
+                    <p v-if="vraag.docent">{{ vraag.docent.naam }} - {{vraag.topic.naam }}</p>
+                    <p v-else>loading...</p>
+                    <p><span v-if="vraag.difficulty  === 3">!DRINGEND!</span></p>
                 </div>
             </div>
         </div>
@@ -27,6 +25,11 @@ export default{
         return{
             vragen:[],
             docentNaam: ""
+        }
+    },
+    computed:{
+        sortedVragen(){
+            return this.vragen.sort((a,b) =>  b.difficulty - a.difficulty);
         }
     },
     methods: {
@@ -64,41 +67,3 @@ export default{
     }
 }
 </script>
-
-<style>
-.vragen{
-    margin: 5px;
-    display: flex;
-    flex-direction: column;
-    background-color: dimgrey;
-    padding: 25px 5px;
-}
-.vraag{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 80%;
-    background-color: grey;
-    margin: 10px auto;
-    padding: 10px 15px;
-    border: 1px solid black;
-}
-.difficulty{
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-}
-.orange{
-    background-color: orange;
-}
-.green{
-    background-color: green;
-}
-.red{
-    background-color: red;
-}
-.info{
-    text-align: left;
-    width: 80%;
-}
-</style>

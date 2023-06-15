@@ -6,11 +6,11 @@
 
     <div class="filter-segment">
         <div class="add" v-if="docentAsUser">
-            <div class="button" @click="addItem = !addItem" :class="{activeButton: addItem}"><span v-show="!addItem">+ voeg toe</span><span v-show="addItem">x sluiten</span></div>
+            <div class="button" @click="addItem = !addItem" :class="{activeButton: addItem}"><span v-show="!addItem">+ Voeg toe</span><span v-show="addItem" class="close">x Sluiten</span></div>
         </div>
         <div class="filter" v-show="!addItem">
-            <button class="button" @click="typeBox = !typeBox; filterBox = false" :class="{activeButton: typeBox}"><span v-if="type === 'all'">type</span><span v-else>{{typeNaam}}</span></button>
-            <button class="button" @click="filterBox = !filterBox; typeBox = false" :class="{activeButton: filterBox}">filter</button>
+            <button class="button" @click="typeBox = !typeBox; filterBox = false" :class="{activeButton: typeBox}"><span v-if="type === 'all'">Type</span><span v-else>{{typeNaam}}</span></button>
+            <button class="button" @click="filterBox = !filterBox; typeBox = false" :class="{activeButton: filterBox}">Filter</button>
         </div>
     </div>
     <div class="form" v-show="addItem">
@@ -24,18 +24,22 @@
         <Filter @clicked-show-detail="SendDataBack"/>
     </div>
     
-    <div class="items" v-show="!addItem" v-for="vraag in vragen">
+    <div class="items" v-show="!addItem" v-for="vraag in sortedVragen">
         <div class="item" v-if="(type ==  vraag.type.id || type == 'all') && getFilteredVraags(vraag)">
             <!-- can be added -->
-            <div class="top-bar">
+            <!-- <div class="top-bar">
                 <div class="difficulty" :class="'diff' + vraag.difficulty">
-                    <div class="circle" :class="{color: (vraag.difficulty >= i)}" v-for="i in 3" :key="i"></div>
+                    <div class="circle" :class="{color: (vraag.difficulty >= i)}" v-for="i in 3" :key="i"></div> 
                 </div>
-            </div>
+            </div> -->
             
 
             <div class="titel">
                 <router-link :to="{path: '/vragen/'  + vraag.id}"><h2>{{vraag.naam}}</h2></router-link>
+                <div>
+                    <p v-if="vraag.difficulty ===  3" class="bold">!DRINGEND!</p>
+                    <p v-else-if="vraag.difficulty ===  1">Geen noodzaak</p>
+                </div>
             </div>
 
             <div class="beschrijving">
@@ -44,10 +48,14 @@
             <div class="bottom-info">
                 <div class="infographics">
                     <div class="bekeken">
-                        <span><img src="../assets/icons/home.png" alt="">{{vraag.views}}</span>
+                        <p>{{vraag.views}}</p>
+                        <img src="../assets/icons/eye.png" alt="">
+                        <!-- <a href="https://www.flaticon.com/free-icons/person" title="person icons">Person icons created by Freepik - Flaticon</a> -->
                     </div>
                     <div class="solicitanten">
-                        <span><img src="../assets/icons/hover-state.png" alt="">{{vraag.solicitanten}}</span>
+                        <p>{{vraag.solicitanten}}</p>
+                        <img src="../assets/icons/person.png" alt="">
+                        <!-- <a href="https://www.flaticon.com/free-icons/eye" title="eye icons">Eye icons created by Freepik - Flaticon</a> -->
                     </div>
                     <div class="kostprijs">
                         <span>€{{vraag.prijs}}</span>
@@ -112,6 +120,11 @@ export default{
         Form,
         TypeFilter,
         Filter
+    },
+    computed:{
+        sortedVragen(){
+            return this.vragen.sort((a,b) =>  b.difficulty - a.difficulty);
+        }
     },
     methods: {
         async retrieveVraags() {

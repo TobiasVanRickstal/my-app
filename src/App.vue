@@ -4,6 +4,7 @@
       <NavView :status="isLoggedIn" :navSelect="userIsDocent" :idUser="userId"/>
     </template>
   </nav>
+  <BreadCrump/>
   <template v-if="(userIsDocent !== null || !isLoggedIn)">
     <router-view :user-id="userId" :docentAsUser="userIsDocent"/>
   </template>
@@ -84,6 +85,7 @@ onMounted(() => {
 
 <script>
 import NavView from '@/components/NavView.vue'
+import BreadCrump from './components/BreadCrump.vue';
 
 export default {
   data(){
@@ -94,6 +96,7 @@ export default {
   },
   components: {
     NavView,
+    BreadCrump
   }
 }
 </script>

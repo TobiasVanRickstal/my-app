@@ -7,24 +7,26 @@
             <input type="text" placeholder="Email" v-model="NewAccount.email">
             <div class="radio-buttons">
                 <div>
-                    <input type="radio" v-model="extern" value="false">
-                    <label>Ik ben een docent</label>
-                </div>
-                <div>
-                    <input type="radio" v-model="extern" value="true">
+                    <input type="checkbox" v-model="extern" value="true">
                     <label>Ik ben een werknemer van een extern bedrijf</label>
                 </div>
+                    
             </div>
-            <div class="extern" v-show="extern">
+            <div class="extern" v-if="extern">
                 <div>
                     <p>Medewerker  van dit bedrijf:</p>
-                    <select name="bedrijf" id="bedrijf" v-model="NewAccount.bedrijf">
+                    <select name="bedrijf" id="bedrijf" v-model="NewAccount.bedrijfId">
                         <option v-for="bedrijf in bedrijven" :value="bedrijf.id">{{bedrijf.naam}}</option>
                     </select>
+                    <p class="error-message">Als uw bedrijf hier niet tussenstaat, neem dan contact op met <a href="mailto:">geert@thomas.more</a></p>
                 </div>
                 <div>
                     <p>Dit is mijn  specialisatie:</p>
                     <input type="text" v-model="NewAccount.specialisatie">
+                </div>
+                <div>
+                    <p>Telefoon:</p>
+                    <input type="text" v-model="NewAccount.telefoon">
                 </div>
             </div>
             <div class="checkbox">
@@ -55,7 +57,8 @@
                     naam: "",
                     email: user.email,
                     specialisatie: "",
-                    bedrijf: ""
+                    bedrijfId: "",
+                    telefoon: ""
                     // Get eamil from logged in user!
                 },
                 extern: false,
@@ -73,7 +76,7 @@
                     DocentDataService.create(this.NewAccount)
                         .then(response => {
                             console.log(response.data);
-                            // router.push("/")
+                            router.push("/")
                         })
                         .catch(e => {
                             console.log(e);

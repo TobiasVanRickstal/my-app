@@ -1,13 +1,11 @@
 <template>
-  <div class="home">
-    <h1>Home</h1>
-  </div>
-  <div class="body">
+  <div class="home" :class="{ reverse : !companiesView}">
     <div class="left-side">
       <div class="blok">
         <Aanbods/>
       </div>
     </div>
+    <div class="line"></div>
     <div class="right-side">
       <Vragen />
     </div>
@@ -28,12 +26,15 @@ export default({
     Vragen,
     Aanbods
   },
+  props:{
+    companiesView: Boolean
+  },
+  mounted(){
+    if(this.companiesView){
+      console.log("DOCENT")
+    }else{
+      console.log("WERKNEMER")
+    }
+  }
 })
 </script>
-<style>
-.body{
-  width: fit-content;
-  display: flex;
-  justify-content: space-evenly;
-}
-</style>

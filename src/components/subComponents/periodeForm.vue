@@ -44,7 +44,8 @@
     </div>
 </div>
 <div>
-    <button v-show="periodeSelected" @click="showDetailModal()">Ok</button>
+    <p class="error-message" v-show="errorMessage && !message">{{errorMessage}}</p>
+    <button class="button" v-show="periodeSelected" @click="showDetailModal()">Leg periode vast</button>
     <p v-show="!periodeSelected">geselecteerd: {{message}}</p>
     <button v-show="!periodeSelected" @click="periodeSelected = !periodeSelected">Verander</button>
 </div>
@@ -65,7 +66,8 @@ export default{
                 eindDatum: null
             },
             periodeSelected: true,
-            message: ""
+            message: "",
+            errorMessage: null
         }
     },
     methods:{
@@ -103,7 +105,9 @@ export default{
                 this.message  = data.toString()
                 this.periodeSelected = false
             }
-            
+            else{
+                this.errorMessage = "kies een periode / datum"
+            }
         }
     }
 }

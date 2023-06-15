@@ -1,16 +1,7 @@
 <template>
     <div class="vraag-create">
-
-        <!-- Goedkeuring -->
-        <!-- <div>
-            <label for="abonnement">abonnement</label>
-            <select name="abonnement" id="abonnement" v-model="abonnement">
-                <option value="Silver">Silver</option>
-                <option value="Gold">Gold</option>
-                <option value="Platinum">Platinum</option>
-            </select>
-        </div> -->
         
+        <h3 class="error-message">Gelive alle velden in te vullen</h3>
         
         <!-- search bar - docenten database -->
         <div class="input docent">
@@ -36,8 +27,8 @@
         </div>
 
         <div class="input difficulty">
-            <label for="difficulty">difficulty</label>
-            <p>(makkelijkst) 1 - 2 - 3 (moeilijkst)</p>
+            <label for="difficulty">belangerijkheidsgraad</label>
+            <p  class="ernst"><span>geen noodzaak</span><span>!DRINGEND!</span></p>
             <input type="range" name="difficulty" id="difficulty" v-model="vraag.difficulty" min="1" max="3">
         </div>
 
@@ -73,8 +64,8 @@
             <periodeForm @clicked-show-detail="clickedShowDetailModal"/>
         </div>
 
-        <div class="button">
-            <button @click="saveVraag()">Opslagen</button>
+        <div>
+            <button @click="saveVraag()" class="button">Opslagen</button>
         </div>
     </div>
 </template>
@@ -100,7 +91,6 @@ export default{
                 fase: 0,
                 periodes: "",
                 prijs:  "",
-                serie: false,
                 difficulty: 2,
             },
             types: {},
@@ -184,7 +174,6 @@ export default{
                 solicitanten: 0,
                 periodes: this.vraag.periodes,
                 prijs: this.vraag.prijs,
-                serie: this.vraag.serie,
                 difficulty: this.vraag.difficulty,
             };
             console.log(data)

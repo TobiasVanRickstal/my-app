@@ -5,35 +5,56 @@
     </div>
 
     <div class="filter-segment">
-        <div class="add">
-            <div class="button" v-if="!docentAsUser" @click="addItem = !addItem" :class="{activeButton: addItem}"><span v-show="!addItem">+ voeg toe</span><span v-show="addItem">x sluiten</span></div>
+        <div class="add" v-if="!docentAsUser">
+            <div class="button" @click="addItem = !addItem" :class="{activeButton: addItem}"><span v-show="!addItem">+ Voeg toe</span><span v-show="addItem" class="close">x Sluiten</span></div>
+        </div>
+        <div class="filter" v-show="!addItem">
+            <button class="button" @click="filterBox = !filterBox" :class="{activeButton: filterBox}"><span v-if="bedrijf === 'all'">Bedrijf</span><span v-else>{{bedrijfNaam}}</span></button>
         </div>
     </div>
-    <div class="form" v-show="addItem">
-        <CreateAanbod :user-id="userId"  v-if="!docentAsUser"/>
+
+
+    <div class="form" v-show="addItem" v-if="!docentAsUser">
+        <CreateAanbod :user-id="userId"  />
+    </div>
+
+
+    <div class="typeSelect" v-if="filterBox">
+        <AanbodFilter @clicked-show-detail="activeType" :selectedType="bedrijf" />
+    </div>
+
+    <div class="aanbods-pagina">
+        <div class="aanbods"  v-show="!addItem" v-for="aanbod in aanbods">
+            <div class="aanbod" v-if="bedrijf ==  aanbod.bedrijf.id || bedrijf == 'all'">
+                <router-link :to="`/aanbod/${aanbod.id}`"><h2>{{aanbod.naam}}</h2></router-link>
+                <p>{{aanbod.informatie}}</p>
+                <!-- <p  class="small">{{aanbod.bedrijf.naam}} - {{aanbod.werknemer.naam}}</p> -->
+            </div>
+        </div>
     </div>
     
-    <div class="aanbods"  v-show="!addItem">
-        <div class="aanbod" v-for="aanbod in aanbods">
-            <router-link :to="`/aanbod/${aanbod.id}`"><h3>{{aanbod.naam}}</h3></router-link>
-        </div>
-    </div>
 </template>
 <script>
 import CreateAanbod from '@/components/CreateAanbod.vue';
 import AanbodsDataService from '@/services/AanbodsDataService';
+import AanbodFilter from '@/components/subComponents/AanbodFilter.vue';
+import BedrijfDataService from '@/services/BedrijfDataService';
 
 export default{
     data() {
         return {
             addItem:  false,
             aanbods: {},
-            werknemerId: null
+            werknemerId: null,
+            filterBox: false,
+            bedrijf: "all",
+            bedrijfNaam:  "",
+            filters: null
         };
     },
     props:{
         userId: {
-            type: String, // Specify the prop type
+            bedrijf: String, // Specify the prop bedrijf
             required: true // Set it as required if necessary
         },
         docentAsUser: Boolean
@@ -48,15 +69,31 @@ export default{
                 .catch(e => {
                 console.log(e);
             });
-        }
+        },
+        activeType: function (value) {
+            this.bedrijf = value;
+            this.getNameBedrijf(value)
+            this.filterBox = false
+        },
+        SendDataBack: function (data){
+            this.filters = data[0]
+        },
+        getNameBedrijf(id){
+            BedrijfDataService.get(id)
+            .then(response => {
+                this.bedrijfNaam = response.data.naam
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+        },
     },
     mounted(){
         this.getAanbods()
     },
-    components: { 
-        CreateAanbod 
-    }
+    components: {
+    CreateAanbod,
+    AanbodFilter
+}
 }
 </script>
-<style>
-</style>
