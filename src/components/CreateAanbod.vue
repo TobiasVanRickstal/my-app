@@ -2,8 +2,6 @@
     <div class="container aanbod-create">
         <h1>Maak een aanbod aan!</h1>
 
-
-        
         <div><h4>Aanmaken als: {{currentUser.naam}}</h4></div>
         <div class="input naam">
             <label for="naam">Titel</label>
@@ -27,12 +25,14 @@
         <div>
             <button @click="saveAanbod()" class="button">Opslagen</button>
         </div>
+
     </div>
 </template>
 <script>
 import WerknemerDataService from '@/services/WerknemerDataService';
 import periodeForm from './subComponents/periodeForm.vue';
 import AanbodsDataService from '@/services/AanbodsDataService';
+import router from '@/router';
 
 export default{
     data(){
@@ -44,7 +44,7 @@ export default{
                 datum: "",
                 status: "pending",
                 werknemerId: null,
-                bedrijfId: null
+                bedrijfId: null,
             },
             currentUser: {},
             selectDatum: false
@@ -72,7 +72,7 @@ export default{
             AanbodsDataService.create(data)
             .then(response =>{
                 console.log(response.data)
-                window.location.reload();
+                window.location.reload()
             })
             .catch(e =>{
                 console.log(e)

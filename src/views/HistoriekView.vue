@@ -1,7 +1,7 @@
 <template>
     <h1>historiek</h1>
-    <HistoriekSchool v-if="docentAsUser"/>
-    <HistoriekBedrijf v-else/>
+    <HistoriekSchool v-if="docentAsUser" :user="userId"/>
+    <HistoriekBedrijf v-else :user="id"/>
     
 </template>
 <script>
@@ -11,7 +11,7 @@ import HistoriekBedrijf from '@/components/HistoriekBedrijf.vue';
 export default{
     data(){
         return{
-
+            id: ""
         }
     },
     props:{
@@ -28,6 +28,8 @@ export default{
     created(){
         console.log(this.docentAsUser)
         console.log(this.userId)
+        this.id  = this.userId
+        console.log(this.id)
     }
 }
 </script>

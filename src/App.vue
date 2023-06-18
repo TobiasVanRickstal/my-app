@@ -1,7 +1,7 @@
 <template>
   <nav>
     <template v-if="(userIsDocent !== null || !isLoggedIn) || isLoggedIn">
-      <NavView :status="isLoggedIn" :navSelect="userIsDocent" :idUser="userId" :bedrijf-id="bedrijf"/>
+      <NavView :status="isLoggedIn" :docentAsUser="userIsDocent" :idUser="userId" :bedrijf-id="bedrijf"/>
     </template>
   </nav>
   <BreadCrump/>

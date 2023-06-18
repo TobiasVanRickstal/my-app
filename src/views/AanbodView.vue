@@ -30,8 +30,9 @@
                 <router-link :to="`/aanbod/${aanbod.id}`"><h2>{{aanbod.naam}}</h2></router-link>
                 <p>{{aanbod.informatie}}</p>
                 <!-- <p  class="small">{{aanbod.bedrijf.naam}} - {{aanbod.werknemer.naam}}</p> -->
-                <div class="bewerk" v-if="docentAsUser ||( aanbod.werknemerId === werknemer.id)">
+                <div class="bewerk" v-if="docentAsUser ||( aanbod.bedrijfId === werknemer.bedrijfId)">
                     <router-link :to="{path: '/bewerk-aanbod/' +aanbod.id}" class="button-edit">bewerk</router-link>
+                    <button class="button-edit" @click="deleteAanbod(aanbod.id)">delete</button>
                 </div>
             </div>
         </div>
@@ -100,6 +101,16 @@ export default{
                 console.log(e)
             })
         },
+        deleteAanbod(id){
+            AanbodsDataService.delete(id)
+            .then(response=>{
+                console.log("anbod deleted:" + response.data)
+                this.getAanbods()
+            })
+            .catch(e=>{
+                console.log(e)
+            })
+        }
     },
     mounted(){
         this.getAanbods()

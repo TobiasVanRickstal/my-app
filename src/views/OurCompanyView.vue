@@ -71,7 +71,7 @@ export default{
         }
     },
     created(){
-        this.getBedrijf(this.$route.params.id);
+        this.getBedrijf(this.$route.params.bedrijf);
         this.getUser(this.userId);
     },
     props:{

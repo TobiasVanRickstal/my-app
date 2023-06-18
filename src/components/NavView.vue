@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <NavSchool :user="idUser" v-if="status && userType === 'docent' && idUser" />
+    <NavSchool :user="idUser" v-if="status && userType === 'docent'" />
     <NavCompany :v-if="bedrijfId && idUser" :user="idUser" :bedrijf="bedrijfId" v-if="status && userType === 'werknemer'" />
     <NavNotLoggedIn v-if="!status"/>
   </nav>
@@ -26,7 +26,7 @@ export default {
   },
   props: {
     status: Boolean,
-    navSelect: Boolean,
+    docentAsUser: Boolean,
     idUser: Number,
     bedrijfId: Number
   },
@@ -38,11 +38,12 @@ export default {
   },
   methods:{
     getTypeNav(){
-      if(this.navSelect){
+      console.log(this.docentAsUser)
+      if(this.docentAsUser){
         this.userType = 'docent'
         // console.log("docent - nav")
       }
-      else if(!this.navSelect){
+      else if(!this.docentAsUser){
         this.userType = 'werknemer'
         // console.log("werknemer - nav")
           // await this.getBedrijfWerknemer()

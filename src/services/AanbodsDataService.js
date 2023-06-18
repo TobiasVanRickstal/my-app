@@ -34,7 +34,7 @@ class AanbodDataService {
   }
 
   findAllByBedrijfId(id) {
-    return http.get(`/aanbods/bedrijven/${id}/aanbods`);
+    return http.get(`/aanbods/bedrijfs/${id}/aanbods`);
   }
 }
 

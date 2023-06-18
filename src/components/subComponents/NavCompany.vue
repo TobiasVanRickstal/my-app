@@ -7,7 +7,7 @@
       <router-link to="/aanbod">Aanbod</router-link>
       <router-link to="/vragen">Vraag</router-link>
       <router-link :to="`/ons-bedrijf/${bedrijf}`">Ons bedrijf</router-link>
-      <router-link to="/historiek">Historiek</router-link>
+      <router-link :to="`/historiek/${bedrijf}`">Historiek</router-link>
     </div>
     <router-link :to="`/profile/${user}`" class="no-active"><img src="@/assets/icons/user.png" class="hide" alt="mainLogo"><img src="@/assets/icons/user-orange.png" class="show" alt="mainLogo"></router-link>
     <!-- <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a> -->

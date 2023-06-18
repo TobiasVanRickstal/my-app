@@ -70,7 +70,7 @@ const router = createRouter({
       }
     },
     { 
-      path: "/ons-bedrijf/:id",
+      path: "/ons-bedrijf/:bedrijf",
       component: () => import("../views/OurCompanyView.vue"),
       meta: {
         requiresAuth: true,
@@ -78,7 +78,7 @@ const router = createRouter({
       },
     },
     { 
-      path: "/historiek",
+      path: "/historiek/:id",
       component: () => import("../views/HistoriekView.vue"),
       meta: {
         requiresAuth: true,
