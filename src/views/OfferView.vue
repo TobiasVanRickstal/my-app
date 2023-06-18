@@ -33,7 +33,9 @@
                 </div>
             </div> -->
             
-
+            <div class="bewerk" v-if="docentAsUser && (userId  ===  vraag.docentId || docent.admin)">
+                <router-link :to="{path: '/bewerk-vraag/' +vraag.id}" class="button-edit">bewerk</router-link>
+            </div>
             <div class="titel">
                 <router-link :to="{path: '/vragen/'  + vraag.id}"><h2>{{vraag.naam}}</h2></router-link>
                 <div>
@@ -104,6 +106,8 @@ export default{
             filterBox: false,
             vragen:[],
             filters:null,
+            adminFlag: null,
+            docent: {}
         }
     },
     props:{
@@ -137,14 +141,14 @@ export default{
             }
         },
 
-        async getDocentName(id) {
-            try {
-                const response = await DocentDataService.get(id);
-                return response.data.naam;
-            } catch (error) {
-                console.log(error);
-                return "";
-            }
+        getDocent(id) {
+            DocentDataService.get(id)
+            .then(response=>{
+                this.docent =response.data
+            })
+            .catch(e=>{
+                console.log(e)
+            })
         },
         activeType: function (value) {
             this.type = value;
@@ -230,6 +234,7 @@ export default{
     },
     mounted() {
         this.retrieveVraags();
+        this.getDocent(this.userId)
     },
 }
 </script>

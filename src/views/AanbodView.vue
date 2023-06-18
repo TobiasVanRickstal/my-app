@@ -26,9 +26,13 @@
     <div class="aanbods-pagina">
         <div class="aanbods"  v-show="!addItem" v-for="aanbod in aanbods">
             <div class="aanbod" v-if="bedrijf ==  aanbod.bedrijf.id || bedrijf == 'all'">
+                
                 <router-link :to="`/aanbod/${aanbod.id}`"><h2>{{aanbod.naam}}</h2></router-link>
                 <p>{{aanbod.informatie}}</p>
                 <!-- <p  class="small">{{aanbod.bedrijf.naam}} - {{aanbod.werknemer.naam}}</p> -->
+                <div class="bewerk" v-if="docentAsUser ||( aanbod.werknemerId === werknemer.id)">
+                    <router-link :to="{path: '/bewerk-aanbod/' +aanbod.id}" class="button-edit">bewerk</router-link>
+                </div>
             </div>
         </div>
     </div>
@@ -39,6 +43,7 @@ import CreateAanbod from '@/components/CreateAanbod.vue';
 import AanbodsDataService from '@/services/AanbodsDataService';
 import AanbodFilter from '@/components/subComponents/AanbodFilter.vue';
 import BedrijfDataService from '@/services/BedrijfDataService';
+import WerknemerDataService from '@/services/WerknemerDataService';
 
 export default{
     data() {
@@ -49,7 +54,8 @@ export default{
             filterBox: false,
             bedrijf: "all",
             bedrijfNaam:  "",
-            filters: null
+            filters: null,
+            werknemer: {}
         };
     },
     props:{
@@ -69,6 +75,13 @@ export default{
                 .catch(e => {
                 console.log(e);
             });
+            WerknemerDataService.get(this.userId)
+            .then(response=>{
+                this.werknemer = response.data
+            })
+            .catch(e=>{
+                console.log(e)
+            })
         },
         activeType: function (value) {
             this.bedrijf = value;

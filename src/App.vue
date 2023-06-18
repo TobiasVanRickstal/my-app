@@ -1,11 +1,11 @@
 <template>
   <nav>
-    <template v-if="(userIsDocent !== null || !isLoggedIn)">
-      <NavView :status="isLoggedIn" :navSelect="userIsDocent" :idUser="userId"/>
+    <template v-if="(userIsDocent !== null || !isLoggedIn) || isLoggedIn">
+      <NavView :status="isLoggedIn" :navSelect="userIsDocent" :idUser="userId" :bedrijf-id="bedrijf"/>
     </template>
   </nav>
   <BreadCrump/>
-  <template v-if="(userIsDocent !== null || !isLoggedIn)">
+  <template v-if="(userIsDocent !== null || !isLoggedIn)  || isLoggedIn">
     <router-view :user-id="userId" :docentAsUser="userIsDocent"/>
   </template>
 </template>
@@ -22,6 +22,7 @@ const isLoggedIn = ref(null);
 const id = ref(null);
 const userId = ref(null);
 const userIsDocent = ref(null);
+const bedrijf = ref(null);
 
 let auth;
 onMounted(() => {
@@ -48,6 +49,8 @@ onMounted(() => {
             var werknemer = werknemerResponse.data[0];
             // console.log(werknemerResponse.data)
             id.value = werknemer.id;
+            bedrijf.value = werknemer.bedrijfId;
+            console.log("bedrijf  id : " + bedrijf.value)
             userIsDocent.value = false;
           } else {
             console.log("Email does not exist in Werknemer table");

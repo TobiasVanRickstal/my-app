@@ -22,7 +22,7 @@
                 <p class="periode" v-if="vraag.periodes != ''">{{periode[0]}}: {{periode[1]}} <span v-if="periode.length > 2">tot {{periode[2]}}</span></p>
             </div>
             <div class="soliciteren" v-if="!docentAsUser">
-                <button class="button" @click="soliciteren(vraag.id)">soliciteren</button>
+                <router-link class="button" :to="`/soliciteren/${vraag.id}`" :props="{vraag : vraag.id}">soliciteren</router-link>
             </div>
         </div>
     </div>

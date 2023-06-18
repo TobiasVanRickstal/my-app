@@ -22,7 +22,7 @@
                 <p v-if="aanbod.datum">Datum: {{aanbod.datum}}</p>
             </div>
             <div class="soliciteren" v-if="docentAsUser">
-                <button class="button" @click="soliciteren(aanbod.id)">soliciteren</button>
+                <router-link class="button" :to="`/soliciteren/${aanbod.id}`" :props="{aanbod : aanbod.id}">soliciteren</router-link>
             </div>
         </div>
     </div>

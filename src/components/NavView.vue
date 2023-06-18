@@ -16,6 +16,7 @@ import WerknemerDataService from '@/services/WerknemerDataService'
 export default {
   created(){
     console.log(this.status)
+    console.log(this.bedrijfId)
     this.getTypeNav()
   },
   components: {
@@ -26,12 +27,13 @@ export default {
   props: {
     status: Boolean,
     navSelect: Boolean,
-    idUser: Number
+    idUser: Number,
+    bedrijfId: Number
   },
   data(){
     return{
       userType: null,
-      bedrijfId: null
+      // bedrijfId: null
     }
   },
   methods:{
@@ -43,30 +45,24 @@ export default {
       else if(!this.navSelect){
         this.userType = 'werknemer'
         // console.log("werknemer - nav")
-        if(this.idUser){
-          // console.log("idUser")
-          // console.log(this.idUser)
-          this.getBedrijfWerknemer()
-        }
-        else{
+          // await this.getBedrijfWerknemer()
           console.log("no idUser")
-        }
       }
       else{
         console.log("are you logged  in?")
       }
     },
-    getBedrijfWerknemer(){
-      WerknemerDataService.get(this.idUser)
-                .then(response => {
-                    // console.log('Werknemer found')
-                    this.bedrijfId = response.data.bedrijfId
-                    // console.log(this.bedrijfId)
-                })
-                .catch(e => {
-                    console.log(e);
-                });
-    }
+    // async getBedrijfWerknemer(){
+    //   await WerknemerDataService.get(this.idUser)
+    //             .then(response => {
+    //                 console.log('Werknemer found')
+    //                 this.bedrijfId = response.data.bedrijfId
+    //                 console.log(this.bedrijfId)
+    //             })
+    //             .catch(e => {
+    //                 console.log(e);
+    //             });
+    // }
   },
 }
 </script>

@@ -23,6 +23,7 @@ export default {
   },
   created(){
     console.log('COMPANY NAV')
+    console.log(this.bedrijf)
   }
 }
 </script>

@@ -8,23 +8,32 @@
         <EditBedrijfWerknemers v-if="edit"/>
         <div class="line"></div>
         <h2>Werknemers</h2>
+
         <div class="personen" v-if="!edit">  
             <div class="persoon" v-for="werknemer in werknemers">
-                <div class="personen-foto" :class="{admin : werknemer.admin}"><img src="../assets/bedrijven/profile.jpg" alt=""></div>
+                <div class="personen-foto" :class="{admin : werknemer.admin}">
+                    <img src="../assets/bedrijven/profile.jpg" alt="">
+                </div>
                 <div class="personen-info">
                     <p>{{werknemer.naam}}</p>
                     <p>{{werknemer.specialisatie}}</p>
                     <p>{{werknemer.telefoon}}</p>
                 </div>
-                <div class="personen-edit">
-                    <p>delete</p>
-                    <p>edit</p>
-                    <p>admin</p>
+                <div class="personen-edit"  v-if="docentAsUser || admin">
+                    <p class="button-edit" @click="deleteWerknemer(werknemer.id)">delete</p>
+                    <p class="button-edit" @click="editWerknemer(werknemer)">edit</p>
                 </div>
             </div>
         </div>
         <div class="bewerk-personen">
-
+            <div v-if="editingWerknemer">
+                <h4>Bewerk werknemer</h4>
+                <input class="input" type="text" v-model="editingWerknemer.naam">
+                <input class="input" type="text" v-model="editingWerknemer.specialisatie">
+                <input class="input" type="text" v-model="editingWerknemer.telefoon">
+                <input type="checkbox" v-model="editingWerknemer.admin">Admin
+                <button class="button" @click="updateWerknemer">Opslaan</button>
+              </div>
         </div>
         <div class="bottom">
             <div class="contact">
@@ -47,6 +56,7 @@
     </div>
 </template>
 <script>
+import router from '@/router';
 import BedrijfDataService from '@/services/BedrijfDataService';
 import WerknemerDataService from '@/services/WerknemerDataService';
 
@@ -56,8 +66,13 @@ export default{
             bedrijf: {},
             werknemers: {},
             admin:null,
-            edit: false
+            edit: false,
+            editingWerknemer:null
         }
+    },
+    created(){
+        this.getBedrijf(this.$route.params.id);
+        this.getUser(this.userId);
     },
     props:{
         docentAsUser: Boolean,
@@ -78,6 +93,35 @@ export default{
                     this.admin = false
                 }
             })
+        },
+        editWerknemer(werknemer) {
+            this.editingWerknemer = { ...werknemer };
+        },
+        deleteWerknemer(id){
+            if(confirm('are you sure about that?')){
+                WerknemerDataService.delete(id)
+                .then(response=>{
+                    window.location.reload();
+                    console.log(response)
+                })
+                .catch(e => {
+                        console.log(e)
+                })
+            }
+        },
+        updateWerknemer() {
+            if (this.editingWerknemer) {
+                const { id, ...data } = this.editingWerknemer;
+                WerknemerDataService.update(id, data)
+                .then(response => {
+                    console.log('Werknemer updated:', response.data);
+                    this.editingWerknemer = null;
+                    this.getAllWerknemers(this.bedrijf.id)
+                })
+                .catch(error => {
+                    console.log('Error updating werknemer:', error);
+                });
+            }
         },
         getBedrijf(id){
             console.log('test')
@@ -106,9 +150,9 @@ export default{
                 console.log(e)
             })
         },
-        getAllWerknemers(id){
+        async getAllWerknemers(id){
             if(id){
-                WerknemerDataService.findAllByBedrijfId(id)
+                await WerknemerDataService.findAllByBedrijfId(id)
                 .then(response => {
                     console.log(response.data)
                     this.werknemers = response.data
@@ -122,9 +166,5 @@ export default{
             return require(`../assets/bedrijven/${naam}/bedrijf.jpg`);
         },
     },
-    created(){
-        this.getBedrijf(this.$route.params.id);
-        this.getUser(this.userId);
-    }
 }
 </script>

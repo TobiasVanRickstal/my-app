@@ -2,7 +2,7 @@
    <div class="bedrijven">
         <div class="bedrijf" :id="bedrijf.naam" v-for="(bedrijf, index) in bedrijven" :key="index">
             <div class="logo">
-                <img class="bedrijf-img" :class="{activeButton: showMore[index]}"  @click="showMore[index] =  !showMore[index]" :src="getBedrijfImage(bedrijf.naam)" :alt="bedrijf.naam">
+                <img class="bedrijf-img" :class="{activeButton: showMore[index]}"  @click="toggleShowMore(index)" :src="getBedrijfImage(bedrijf.naam)" :alt="bedrijf.naam">
                 <h2 v-show="showMore[index]">{{bedrijf.naam}}</h2>
                 <div class="beschrijving" v-show="showMore[index]">
                     <p>{{bedrijf.beschrijving}}</p>
@@ -37,7 +37,7 @@
                     <div class="gegevens-mail">{{bedrijf.email}}</div>
                 </div>
             </div>
-            <button class="button" v-show="showMore[index]" @click="showMore[index] =  !showMore[index]"><span>Sluiten</span></button>
+            <button class="button" v-show="showMore[index]" @click="showMore[index] = !showMore[index]"><span>Sluiten</span></button>
         </div>
    </div> 
 </template>
@@ -53,7 +53,7 @@ export default{
             werknemers: {},
             bedrijven: {},
             showMore:  [],
-            aantalWerknemers: 4
+            aantalWerknemers: 3
         }
     },
     methods:{
@@ -91,7 +91,16 @@ export default{
         },
         showMoreWerknemers(){
             this.aantalWerknemers += 4
-        }
+        },
+        toggleShowMore(index) {
+            // Close the previously open item if it exists
+            const prevOpenIndex = this.showMore.findIndex((isOpen) => isOpen);
+            if (prevOpenIndex !== -1) {
+                this.showMore[prevOpenIndex] = false;
+            }
+            // Toggle the current item
+            this.showMore[index] = !this.showMore[index];
+        },
     },
     computed: {
         getCorrectWerknemers() {

@@ -86,6 +86,31 @@ const router = createRouter({
       }
     },
     { 
+      path: "/soliciteren/:id",
+      component: () => import("../views/SoliciterenView.vue"),
+      meta: {
+        requiresAuth: true,
+        breadcrumb: "Soliciteren"
+      },
+      props: true
+    },
+    { 
+      path: "/bewerk-vraag/:id",
+      component: () => import("../views/BewerkVraagView.vue"),
+      meta: {
+        requiresAuth: true,
+        breadcrumb: "bewerk vraag"
+      },
+    },
+    { 
+      path: "/bewerk-aanbod/:id",
+      component: () => import("../views/BewerkAanbodView.vue"),
+      meta: {
+        requiresAuth: true,
+        breadcrumb: "bewerk aanbod"
+      },
+    },
+    { 
       path: "/:pathMatch(.*)*",
       name: "PageNotFound",
       component: () => import("../views/PageNotFound.vue"),

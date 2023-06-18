@@ -31,11 +31,11 @@
                 <div>
                     <div>
                         <p>Naam</p>
-                        <input type="text" v-model="currentUser.naam">
+                        <input type="text" class="input" v-model="currentUser.naam">
                     </div>
                     <div>
                         <p>Mail</p>
-                        <input type="text" v-model="currentUser.email">
+                        <input type="text" class="input" v-model="currentUser.email">
                     </div>
                 </div>
                 <div v-if="currentUser.telefoon || currentUser.specialisatie">
